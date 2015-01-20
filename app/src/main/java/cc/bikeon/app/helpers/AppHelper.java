@@ -7,16 +7,15 @@ import android.app.Application;
  *
  *  Methods related to the Application in general
  */
-public class AppHelper extends Application {
-    private static AppHelper instance;
+public class AppHelper {
+    private static Application instance;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        instance = this;
+    public static void init(Application application)
+    {
+        instance = application;
     }
 
-    public static Application getInstance()
+    public static Application getApplication()
     {
         return instance;
     }
