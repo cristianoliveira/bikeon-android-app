@@ -19,12 +19,12 @@ public class ActivityBuilder {
         this.currentActivity = context;
     }
 
-    public static ActivityBuilder from(Activity currentActivity)
+    public static ActivityBuilder Builder(Activity currentActivity)
     {
         return new ActivityBuilder(currentActivity);
     }
 
-    public ActivityBuilder goTo(Class<?> toActivity)
+    public ActivityBuilder activity(Class<?> toActivity)
     {
         intent = new Intent(currentActivity, toActivity);
         return this;
@@ -38,11 +38,13 @@ public class ActivityBuilder {
     public ActivityBuilder start()
     {
         currentActivity.startActivity(intent);
+        return this;
     }
 
     public ActivityBuilder startForResult(int returnCode)
     {
         currentActivity.startActivityForResult(intent, returnCode);
+        return this;
     }
 
     public void finishCurrent()

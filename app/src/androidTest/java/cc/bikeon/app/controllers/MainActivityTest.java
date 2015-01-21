@@ -1,12 +1,9 @@
 package cc.bikeon.app.controllers;
 
 import android.content.Intent;
-import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.transition.Visibility;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.facebook.widget.LoginButton;
@@ -14,16 +11,16 @@ import com.facebook.widget.LoginButton;
 /**
  * Created by cristian.rosa on 1/20/2015.
  */
-public class MainActivityTest extends android.test.ActivityUnitTestCase<MainActivity>
+public class MainActivityTest extends android.test.ActivityUnitTestCase<LoginActivity>
 {
 
-    MainActivity mainActivity;
+    LoginActivity mainActivity;
     ImageView logo;
     LoginButton facebookLoginBtn;
 
     public MainActivityTest()
     {
-        super(MainActivity.class);
+        super(LoginActivity.class);
     }
 
     @Override
@@ -31,7 +28,7 @@ public class MainActivityTest extends android.test.ActivityUnitTestCase<MainActi
         super.setUp();
 
         Intent mLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), MainActivity.class);
+                .getTargetContext(), LoginActivity.class);
         startActivity(mLaunchIntent, null, null);
 
         mainActivity = getActivity();

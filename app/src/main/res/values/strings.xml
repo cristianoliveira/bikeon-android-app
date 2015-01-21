@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="string_test_case">bikeon</string>
 
     <string name="app_name">BikeOn</string>
+    <!-- Login -->
     <string name="action_settings">Configurações</string>
+    <string name="login_title_facebook_login">Login</string>
 
-    <string name="title_facebook_login">Login</string>
+    <!-- Main -->
+    <string name="main_title_activity_main">BikeOn - Home</string>
+    <string name="main_title_bikego">Bike Go</string>
+    <string name="main_title_wheather">Clima</string>
+    <string name="main_title_info">Informações</string>
+    <string name="main_navigation_drawer_open">Open navigation drawer</string>
+    <string name="main_navigation_drawer_close">Close navigation drawer</string>
+    <string name="main_action_example">Example action</string>
 
+    <!-- Messages -->
+    <string name="message_title_alert">Atenção</string>
+    <string name="message_error_login">Não foi possível realizar o login.</string>
+
+    <!-- Others -->
+    <string name="string_test_case">bikeon</string>
 </resources>

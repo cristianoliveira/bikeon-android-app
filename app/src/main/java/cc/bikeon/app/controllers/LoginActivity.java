@@ -1,6 +1,8 @@
 package cc.bikeon.app.controllers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +42,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
     }
 
@@ -66,12 +68,16 @@ public class LoginActivity extends Activity {
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
-            Log.i(TAG, "Logged in...");
+
+            BikeOnApplication.setFacebookSession(session);
+            startActivity(new Intent(this, MainActivity.class));
+
         } else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
+            new AlertDialog.Builder(this)
+                           .setTitle(R.string.message_title_alert)
+                           .setMessage(R.string.message_error_login).show();
         }
-
-        BikeOnApplication.setFacebookSession(session);
     }
 
     class InitialLoadingTask extends AsyncTask<Object, Integer, Object>
