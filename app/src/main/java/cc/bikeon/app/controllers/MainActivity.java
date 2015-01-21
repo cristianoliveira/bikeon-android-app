@@ -1,22 +1,21 @@
 package cc.bikeon.app.controllers;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.widget.LoginButton;
 
-import java.text.Annotation;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 
 
@@ -28,6 +27,8 @@ public class MainActivity extends Activity {
     ImageView logo;
     @InjectView(R.id.facebookLoginButton)
     LoginButton facebookLoginBtn;
+
+    Session state;
 
     Session.StatusCallback sessionCallback = new Session.StatusCallback() {
         @Override
@@ -47,10 +48,20 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        LogoAnimation logoAnimation = new LogoAnimation();
-        logoAnimation.start();
-
         AppEventsLogger.activateApp(this);
+
+        if(!BikeOnApplication.hasSessionOpen())
+           new InitialLoadingTask().execute();
+    }
+
+    private void changeLayout() {
+        RelativeLayout.LayoutParams  lp =
+                (RelativeLayout.LayoutParams) logo.getLayoutParams();
+
+        lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+
+        logo.setLayoutParams(lp);
+        facebookLoginBtn.setVisibility(View.VISIBLE);
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
@@ -59,30 +70,24 @@ public class MainActivity extends Activity {
         } else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
         }
+
+        BikeOnApplication.setFacebookSession(session);
     }
 
-    class LogoAnimation extends Animation{
-
-        LogoAnimation()
-        {
-            this.setAnimationListener(new AnimationListener() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    facebookLoginBtn.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
-
-                @Override
-                public void onAnimationStart(Animation animation) {}
-            });
+    class InitialLoadingTask extends AsyncTask<Object, Integer, Object>
+    {
+        @Override
+        protected Object doInBackground(Object... params) {
+            return null;
         }
 
         @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t)
-        {
-            logo.setTop(LAST_VALUE_TOP_LOGO);
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+
+            changeLayout();
+
         }
     }
+
 }

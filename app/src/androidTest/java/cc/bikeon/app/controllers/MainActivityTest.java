@@ -6,6 +6,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.transition.Visibility;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.facebook.widget.LoginButton;
 
@@ -60,7 +62,8 @@ public class MainActivityTest extends android.test.ActivityUnitTestCase<MainActi
 
         int visibility = mainActivity.facebookLoginBtn.getVisibility();
         assertEquals(visibility, View.VISIBLE);
-        int top        = mainActivity.logo.getTop();
-        assertEquals(top, 30);
+        RelativeLayout.LayoutParams lp        =
+                (RelativeLayout.LayoutParams)mainActivity.logo.getLayoutParams();
+        assertEquals(lp.getRules()[RelativeLayout.ALIGN_TOP], mainActivity.logo.getId());
     }
 }
