@@ -5,12 +5,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.facebook.AppEventsLogger;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,7 +26,7 @@ import cc.bikeon.app.account.LoginRequester;
 
 
 public class LoginActivity extends Activity
-				implements View.OnClickListener, ILoginCallback {
+				implements View.OnClickListener, ILoginCallback{
 
   private static final String TAG = "MainActivity";
 
@@ -32,6 +36,7 @@ public class LoginActivity extends Activity
 	ImageView logo;
 	@InjectView(R.id.btnFacebookLogin)
 	ImageButton btnFacebookLogin;
+	private UiLifecycleHelper uiHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,6 @@ public class LoginActivity extends Activity
 		AppEventsLogger.activateApp(this);
 
 		btnFacebookLogin.setOnClickListener(this);
-
-		if(!BikeOnApplication.hasSessionOpen())
-		  new InitialLoadingTask().execute();
 	}
 
 	private void changeLayout() {
@@ -76,31 +78,19 @@ public class LoginActivity extends Activity
 	}
 
 	@Override
-	public void onSuccess() {
+	public void onLoginSuccess() {
 
-
+		Intent intent = new Intent(this, StartActivity.class);
+		startActivity(intent);
+    this.finish();
 	}
 
 	@Override
-	public void onError(String messageError) {
-
-		new AlertDialog.Builder(this).setMessage(messageError).create().show();
-
+	public void onLoginError(String messageError) {
+		new AlertDialog
+						.Builder(this)
+						.setMessage(messageError)
+						.create()
+						.show();
 	}
-
-	class InitialLoadingTask extends AsyncTask<Object, Integer, Object>
-	{
-		@Override
-		protected Object doInBackground(Object... params) {
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object o) {
-			super.onPostExecute(o);
-
-			changeLayout();
-		}
-	}
-
 }

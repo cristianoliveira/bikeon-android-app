@@ -1,5 +1,7 @@
 package cc.bikeon.app.account;
 
+import android.util.Log;
+
 import com.facebook.Session;
 import com.facebook.SessionState;
 
@@ -19,17 +21,19 @@ public class FacebookSessionCallback implements Session.StatusCallback{
 
 		@Override
 		public void call(Session session, SessionState sessionState, Exception e) {
+			Log.v("FACEBOOKLOG", "Token::" + session.getAccessToken());
 			if(session.isOpened())
 			{
 				BikeOnApplication.setFacebookSession(session);
-				callback.onSuccess();
+				callback.onLoginSuccess();
 			}
 			else
 			{
-				if(e!=null) //is oppening
+				if(e!=null)
 				{
-					callback.onError(e.getMessage());
+					callback.onLoginError(e.getMessage());
 				}
+				//else is oppening
 			}
 		}
 }

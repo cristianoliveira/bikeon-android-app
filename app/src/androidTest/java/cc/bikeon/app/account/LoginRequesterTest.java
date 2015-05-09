@@ -13,18 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginRequesterTest extends TestCase{
 
-//	@Test(expected = NullPointerException.class)
-//	public void testWhenItDoesntReceiveAnStrategyShouldRaiseNullPointer()
-//	{
-//		// given
-//		ILoginStrategy strategy = null;
-//
-//		// when
-//		new LoginRequester().requestLogin(new StubLoginCallback());
-//
-//		// then raise NullPointer
-//	}
-
   @Test
 	public void testWhenItReceiveAnStrategySuccessShouldReturnCallback()
 	{
@@ -34,7 +22,7 @@ public class LoginRequesterTest extends TestCase{
 		strategy.setSuccess(expected);
 		LoginRequester loginRequester = new LoginRequester();
 		loginRequester.setStrategy(strategy);
-		StubLoginCallback callback = new StubLoginCallback();
+		StubLoginCallBack callback = new StubLoginCallBack();
 
 
 		// when
@@ -54,7 +42,7 @@ public class LoginRequesterTest extends TestCase{
 		strategy.setErrorMessage(expected);
 		LoginRequester loginRequester = new LoginRequester();
 		loginRequester.setStrategy(strategy);
-		StubLoginCallback callback = new StubLoginCallback();
+		StubLoginCallBack callback = new StubLoginCallBack();
 
 
 		// when
@@ -73,10 +61,10 @@ public class LoginRequesterTest extends TestCase{
 		public void doLogin(ILoginCallback callback) {
 			if(success)
 			{
-				callback.onSuccess();
+				callback.onLoginSuccess();
 			}else
 			{
-				callback.onError(getErrorMessage());
+				callback.onLoginError(getErrorMessage());
 			}
 
 		}
@@ -102,29 +90,4 @@ public class LoginRequesterTest extends TestCase{
 		}
 	}
 
-	private class StubLoginCallback implements ILoginCallback{
-
-		private boolean success;
-		private String errorMessage;
-
-		@Override
-		public void onSuccess() {
-			success = true;
-		}
-
-		@Override
-		public void onError(String messageError) {
-      this.errorMessage = messageError;
-		}
-
-		public boolean isSuccess()
-		{
-			return success;
-		}
-
-		public String getErrorMessage()
-		{
-			return errorMessage;
-		}
-	}
 }
