@@ -27,7 +27,6 @@ import cc.bikeon.app.services.RestClient;
 import cc.bikeon.app.services.weather.OpenWeatherProvider;
 import cc.bikeon.app.services.weather.WeatherService;
 
-
 public class LoginActivity extends Activity
                 implements View.OnClickListener, ILoginCallback{
 
