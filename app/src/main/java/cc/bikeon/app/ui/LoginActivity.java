@@ -24,7 +24,10 @@ import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.ILoginCallback;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.services.RestClient;
+<<<<<<< HEAD
 import cc.bikeon.app.services.weather.OpenWeatherProvider;
+=======
+>>>>>>> 0d4079f070f216ec70a480e02b9f6fdf074dac2e
 import cc.bikeon.app.services.weather.WeatherService;
 
 
@@ -47,8 +50,12 @@ public class LoginActivity extends Activity
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
+<<<<<<< HEAD
         RestClient service = new RestClient(new OpenWeatherProvider());
         WeatherService weatherService = (WeatherService) service.getService(WeatherService.class);
+=======
+        WeatherService service = new RestClient(new WeatherPro)
+>>>>>>> 0d4079f070f216ec70a480e02b9f6fdf074dac2e
     }
 
     @Override
