@@ -23,74 +23,80 @@ import cc.bikeon.app.R;
 import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.ILoginCallback;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.services.RestClient;
+import cc.bikeon.app.services.weather.OpenWeatherProvider;
+import cc.bikeon.app.services.weather.WeatherService;
 
 
 public class LoginActivity extends Activity
-				implements View.OnClickListener, ILoginCallback{
+                implements View.OnClickListener, ILoginCallback{
 
-  private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
-	private static final int LAST_VALUE_TOP_LOGO = 30;
+    private static final int LAST_VALUE_TOP_LOGO = 30;
 
-	@InjectView(R.id.logo)
-	ImageView logo;
-	@InjectView(R.id.btnFacebookLogin)
-	ImageButton btnFacebookLogin;
-	private UiLifecycleHelper uiHelper;
+    @InjectView(R.id.logo)
+    ImageView logo;
+    @InjectView(R.id.btnFacebookLogin)
+    ImageButton btnFacebookLogin;
+    private UiLifecycleHelper uiHelper;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.activity_login);
-			ButterKnife.inject(this);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.inject(this);
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+        RestClient service = new RestClient(new OpenWeatherProvider());
+        WeatherService weatherService = (WeatherService) service.getService(WeatherService.class);
+    }
 
-		AppEventsLogger.activateApp(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-		btnFacebookLogin.setOnClickListener(this);
-	}
+        AppEventsLogger.activateApp(this);
 
-	private void changeLayout() {
-			RelativeLayout.LayoutParams  lp =
-							(RelativeLayout.LayoutParams) logo.getLayoutParams();
+        btnFacebookLogin.setOnClickListener(this);
+    }
 
-			lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+    private void changeLayout() {
+            RelativeLayout.LayoutParams  lp =
+                            (RelativeLayout.LayoutParams) logo.getLayoutParams();
 
-			logo.setLayoutParams(lp);
-			btnFacebookLogin.setVisibility(View.VISIBLE);
-	}
+            lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-	@Override
-	public void onClick(View v) {
+            logo.setLayoutParams(lp);
+            btnFacebookLogin.setVisibility(View.VISIBLE);
+    }
 
-		LoginRequester loginRequester = new LoginRequester();
+    @Override
+    public void onClick(View v) {
 
-		switch (v.getId()) {
-			case R.id.btnFacebookLogin:
-				loginRequester.setStrategy(new FacebookLoginStrategy(this));
-		}
+        LoginRequester loginRequester = new LoginRequester();
 
-		loginRequester.requestLogin(this);
-	}
+        switch (v.getId()) {
+            case R.id.btnFacebookLogin:
+                loginRequester.setStrategy(new FacebookLoginStrategy(this));
+        }
 
-	@Override
-	public void onLoginSuccess() {
+        loginRequester.requestLogin(this);
+    }
 
-		Intent intent = new Intent(this, StartActivity.class);
-		startActivity(intent);
+    @Override
+    public void onLoginSuccess() {
+
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
     this.finish();
-	}
+    }
 
-	@Override
-	public void onLoginError(String messageError) {
-		new AlertDialog
-						.Builder(this)
-						.setMessage(messageError)
-						.create()
-						.show();
-	}
+    @Override
+    public void onLoginError(String messageError) {
+        new AlertDialog
+                        .Builder(this)
+                        .setMessage(messageError)
+                        .create()
+                        .show();
+    }
 }
