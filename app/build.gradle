@@ -26,6 +26,7 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 }
 
@@ -35,15 +36,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.jakewharton:butterknife:6.0.0'
+    compile 'org.apache.httpcomponents:httpclient:4.+'
+
+    // json
     compile 'com.google.code.gson:gson:2.3.1'
+
+    // Rest API client
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'org.parceler:parceler:0.2.13'
 
     // Social Login
     compile 'com.facebook.android:facebook-android-sdk:3.21.1'
-
-    // Wheater libs
-    compile 'com.survivingwithandroid:weatherlib:1.5.4'
-    compile 'com.survivingwithandroid:weatherlib_okhttpclient:1.5.4'
-    compile 'com.squareup.okhttp:okhttp:2.0.+'
 
     androidTestCompile "junit:junit:4.+"
     androidTestCompile "org.mockito:mockito-core:1.+"
