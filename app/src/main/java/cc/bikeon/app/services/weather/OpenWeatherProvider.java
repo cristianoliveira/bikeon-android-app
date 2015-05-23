@@ -11,6 +11,6 @@ public class OpenWeatherProvider implements IRestProvider {
 
     @Override
     public String getBaseUrl() {
-        return null;
+        return BASE_URL;
     }
 }

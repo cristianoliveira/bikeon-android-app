@@ -21,7 +21,6 @@ public class FacebookSessionCallback implements Session.StatusCallback{
 
 		@Override
 		public void call(Session session, SessionState sessionState, Exception e) {
-			Log.v("FACEBOOKLOG", "Token::" + session.getAccessToken());
 			if(session.isOpened())
 			{
 				BikeOnApplication.setFacebookSession(session);

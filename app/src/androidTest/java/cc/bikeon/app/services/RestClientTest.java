@@ -19,11 +19,10 @@ public class RestClientTest extends AndroidTestCase {
     {
         // given
         IRestProvider provider = new StubProvider();
-        Class serviceClass = WeatherService.class;
         RestClient restClient = new RestClient(provider);
 
         // when
-        WeatherService service = (WeatherService) restClient.getService(serviceClass);
+        WeatherService service = (WeatherService) restClient.getService(WeatherService.class);
 
         // then
         assertNotNull(service);

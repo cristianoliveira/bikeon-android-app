@@ -3,7 +3,7 @@ package cc.bikeon.app.account;
 /**
  * Created by cristianoliveira on 07/05/15.
  */
-class StubLoginCallBack implements ILoginCallback{
+class StubLoginCallback implements ILoginCallback{
 
 	private boolean isSuccess = false;
 	private String errorMessage;

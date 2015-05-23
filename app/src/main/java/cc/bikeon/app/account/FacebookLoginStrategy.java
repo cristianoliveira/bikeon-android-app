@@ -16,7 +16,7 @@ public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
 
 	private Activity activity;
 	private UiLifecycleHelper uiHelper;
-  private FacebookSessionCallback facebookSessionCallback;
+    private FacebookSessionCallback facebookSessionCallback;
 
 	public FacebookLoginStrategy(Activity activity)
 	{
@@ -26,7 +26,7 @@ public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
 	@Override
 	public void doLogin(ILoginCallback callback) {
 
-	  closeActiveSession();
+	    closeActiveSession();
 
 		FacebookSessionCallback facebookSessionCallback  = getCallBack(callback);
 
@@ -47,7 +47,7 @@ public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
 		}
 	}
 
-  public FacebookSessionCallback getCallBack(ILoginCallback callback)
+    public FacebookSessionCallback getCallBack(ILoginCallback callback)
 	{
 		if(facebookSessionCallback==null)
 		{

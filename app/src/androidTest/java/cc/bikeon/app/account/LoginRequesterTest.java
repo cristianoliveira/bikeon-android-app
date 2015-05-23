@@ -13,81 +13,80 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginRequesterTest extends TestCase{
 
-  @Test
-	public void testWhenItReceiveAnStrategySuccessShouldReturnCallback()
-	{
-    // given
-		boolean expected = true;
-		StubStrategy strategy = new StubStrategy();
-		strategy.setSuccess(expected);
-		LoginRequester loginRequester = new LoginRequester();
-		loginRequester.setStrategy(strategy);
-		StubLoginCallBack callback = new StubLoginCallBack();
+    @Test
+    public void testWhenItReceiveAnStrategySuccessShouldReturnCallback()
+    {
+        // given
+        boolean expected = true;
+        StubStrategy strategy = new StubStrategy();
+        strategy.setSuccess(expected);
+        LoginRequester loginRequester = new LoginRequester();
+        loginRequester.setStrategy(strategy);
+        StubLoginCallback callback = new StubLoginCallback();
+
+        // when
+        loginRequester.requestLogin(callback);
+
+        // then
+        assertEquals(callback.isSuccess(), expected);
+    }
+
+    @Test
+    public void testWhenItReceiveAnStrategySuccessShouldReturnCallbackWhitErrorMessage()
+    {
+        // given
+        String expected = "My error message";
+        StubStrategy strategy = new StubStrategy();
+        strategy.setSuccess(false);
+        strategy.setErrorMessage(expected);
+        LoginRequester loginRequester = new LoginRequester();
+        loginRequester.setStrategy(strategy);
+        StubLoginCallback callback = new StubLoginCallback();
 
 
-		// when
-		loginRequester.requestLogin(callback);
+        // when
+        loginRequester.requestLogin(callback);
 
-		// then
-		assertEquals(callback.isSuccess(), expected);
-	}
+        // then
+        assertEquals(callback.getErrorMessage(), expected);
+    }
 
-	@Test
-	public void testWhenItReceiveAnStrategySuccessShouldReturnCallbackWhitErrorMessage()
-	{
-		// given
-		String expected = "My error message";
-		StubStrategy strategy = new StubStrategy();
-		strategy.setSuccess(false);
-		strategy.setErrorMessage(expected);
-		LoginRequester loginRequester = new LoginRequester();
-		loginRequester.setStrategy(strategy);
-		StubLoginCallBack callback = new StubLoginCallBack();
+    private class StubStrategy implements ILoginStrategy{
 
+        private boolean success;
+        private String errorMessage;
 
-		// when
-		loginRequester.requestLogin(callback);
+        @Override
+        public void doLogin(ILoginCallback callback) {
+            if(success)
+            {
+                callback.onLoginSuccess();
+            }else
+            {
+                callback.onLoginError(getErrorMessage());
+            }
 
-		// then
-		assertEquals(callback.getErrorMessage(), expected);
-	}
+        }
 
-	private class StubStrategy implements ILoginStrategy{
+        public void setSuccess(boolean success)
+        {
+            this.success = success;
+        }
 
-		private boolean success;
-		private String errorMessage;
+        public boolean success()
+    {
+        return success;
+    }
 
-		@Override
-		public void doLogin(ILoginCallback callback) {
-			if(success)
-			{
-				callback.onLoginSuccess();
-			}else
-			{
-				callback.onLoginError(getErrorMessage());
-			}
+        public void setErrorMessage(String errorMessage)
+    {
+        this.errorMessage = errorMessage;
+    }
 
-		}
-
-		public void setSuccess(boolean success)
-		{
-			this.success = success;
-		}
-
-	  public boolean success()
-		{
-			return success;
-		}
-
-		public void setErrorMessage(String errorMessage)
-		{
-			this.errorMessage = errorMessage;
-		}
-
-		public String getErrorMessage()
-		{
-			return errorMessage;
-		}
-	}
+        public String getErrorMessage()
+    {
+        return errorMessage;
+    }
+    }
 
 }

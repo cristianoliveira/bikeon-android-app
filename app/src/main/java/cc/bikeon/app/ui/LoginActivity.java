@@ -21,6 +21,7 @@ import butterknife.InjectView;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.FacebookLoginStrategy;
+import cc.bikeon.app.account.FakeLoginStrategy;
 import cc.bikeon.app.account.ILoginCallback;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.services.RestClient;
@@ -30,9 +31,9 @@ import cc.bikeon.app.services.weather.WeatherService;
 public class LoginActivity extends Activity
                 implements View.OnClickListener, ILoginCallback{
 
-    private static final String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
 
-    private static final int LAST_VALUE_TOP_LOGO = 30;
+    private final int LAST_VALUE_TOP_LOGO = 30;
 
     @InjectView(R.id.logo)
     ImageView logo;
@@ -60,13 +61,13 @@ public class LoginActivity extends Activity
     }
 
     private void changeLayout() {
-            RelativeLayout.LayoutParams  lp =
+         RelativeLayout.LayoutParams  lp =
                             (RelativeLayout.LayoutParams) logo.getLayoutParams();
 
-            lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+         lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-            logo.setLayoutParams(lp);
-            btnFacebookLogin.setVisibility(View.VISIBLE);
+         logo.setLayoutParams(lp);
+         btnFacebookLogin.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -76,7 +77,8 @@ public class LoginActivity extends Activity
 
         switch (v.getId()) {
             case R.id.btnFacebookLogin:
-                loginRequester.setStrategy(new FacebookLoginStrategy(this));
+//TODO: TESTS                loginRequester.setStrategy(new FacebookLoginStrategy(this));
+            loginRequester.setStrategy(new FakeLoginStrategy());
         }
 
         loginRequester.requestLogin(this);
@@ -87,15 +89,14 @@ public class LoginActivity extends Activity
 
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
-    this.finish();
+        this.finish();
     }
 
     @Override
     public void onLoginError(String messageError) {
-        new AlertDialog
-                        .Builder(this)
-                        .setMessage(messageError)
-                        .create()
-                        .show();
+        new AlertDialog.Builder(this)
+                       .setMessage(messageError)
+                       .create()
+                       .show();
     }
 }
