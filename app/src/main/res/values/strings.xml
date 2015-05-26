@@ -18,6 +18,8 @@
     <!-- Messages -->
     <string name="message_title_alert">Atenção</string>
     <string name="message_error_login">Não foi possível realizar o login.</string>
+    <string name="message_error_location">Serviço de localização desabilitado. Favor habilite.</string>
+
 
     <!-- Others -->
     <string name="string_test_case">bikeon</string>
@@ -30,7 +32,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="drawer_open">Menu opened</string>
+    <string name="drawer_close">Menu closed</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+
 
 </resources>

@@ -1,13 +1,11 @@
-package cc.bikeon.app.services.weather;
+package cc.bikeon.app.services.rest.weather;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
-import cc.bikeon.app.services.IRestProvider;
-import cc.bikeon.app.services.weather.OpenWeatherProvider;
+import cc.bikeon.app.services.rest.IRestProvider;
 
 /**
  * Created by cristianoliveira on 13/05/15.

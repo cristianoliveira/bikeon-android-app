@@ -1,4 +1,4 @@
-package cc.bikeon.app.services;
+package cc.bikeon.app.services.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

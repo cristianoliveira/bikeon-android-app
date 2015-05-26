@@ -3,10 +3,9 @@ package cc.bikeon.app.services;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import junit.framework.TestCase;
-
-import org.junit.Test;
-import cc.bikeon.app.services.weather.WeatherService;
+import cc.bikeon.app.services.rest.IRestProvider;
+import cc.bikeon.app.services.rest.RestClient;
+import cc.bikeon.app.services.rest.weather.WeatherService;
 import static junit.framework.Assert.assertNotNull;
 
 /**

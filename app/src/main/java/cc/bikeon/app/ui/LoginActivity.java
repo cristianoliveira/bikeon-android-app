@@ -3,30 +3,21 @@ package cc.bikeon.app.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.facebook.AppEventsLogger;
-import com.facebook.Session;
-import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.FakeLoginStrategy;
 import cc.bikeon.app.account.ILoginCallback;
 import cc.bikeon.app.account.LoginRequester;
-import cc.bikeon.app.services.RestClient;
-import cc.bikeon.app.services.weather.OpenWeatherProvider;
-import cc.bikeon.app.services.weather.WeatherService;
 
 public class LoginActivity extends Activity
                 implements View.OnClickListener, ILoginCallback{
@@ -47,8 +38,6 @@ public class LoginActivity extends Activity
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
-        RestClient service = new RestClient(new OpenWeatherProvider());
-        WeatherService weatherService = (WeatherService) service.getService(WeatherService.class);
     }
 
     @Override
@@ -87,7 +76,7 @@ public class LoginActivity extends Activity
     @Override
     public void onLoginSuccess() {
 
-        Intent intent = new Intent(this, StartActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }

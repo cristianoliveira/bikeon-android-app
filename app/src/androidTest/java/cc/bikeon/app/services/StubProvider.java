@@ -1,5 +1,7 @@
 package cc.bikeon.app.services;
 
+import cc.bikeon.app.services.rest.IRestProvider;
+
 /**
  * Created by cristianoliveira on 12/05/15.
  */

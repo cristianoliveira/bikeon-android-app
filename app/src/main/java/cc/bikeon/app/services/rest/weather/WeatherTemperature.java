@@ -1,4 +1,4 @@
-package cc.bikeon.app.services.weather;
+package cc.bikeon.app.services.rest.weather;
 
 import com.google.gson.annotations.SerializedName;
 

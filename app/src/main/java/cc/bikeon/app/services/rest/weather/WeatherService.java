@@ -1,4 +1,4 @@
-package cc.bikeon.app.services.weather;
+package cc.bikeon.app.services.rest.weather;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -18,5 +18,5 @@ public interface WeatherService
     public void getWeatherByGeo(
             @Query("lat") double latitude,
             @Query("lon") double longitude,
-            Callback<WeatherService> callback);
+            Callback<WeatherResponse> callback);
 }
