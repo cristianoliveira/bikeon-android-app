@@ -26,8 +26,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity
         implements INavigationDrawerCallbacks,
-                   LocationFragment.OnFragmentInteractionListener,
-                   LocationListener {
+                   LocationFragment.OnFragmentInteractionListener {
 
 
     private static final String TAG = "MainActivity";
@@ -52,20 +51,6 @@ public class MainActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer),
                 mToolbar);
 
-        BikeOnApplication application = (BikeOnApplication) getApplication();
-
-        application.getLocationTracker().startListener(this);
-
-//
-//        Location location = bikeOnApplication.getLocationUpdateManager().getGpsLocation();
-//
-//        Toast.makeText(this, location.toString(), Toast.LENGTH_LONG);
-
-
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5000, this);
-
     }
 
     @Override
@@ -83,13 +68,9 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
@@ -113,34 +94,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    /**
-     *
-     * @param uri
-     */
-
     @Override
     public void onFragmentInteraction(Uri uri) {
         Toast.makeText(this, "aaaaa", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
 
-        new AlertDialog.Builder(this).setMessage("TEST").show();
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
 }

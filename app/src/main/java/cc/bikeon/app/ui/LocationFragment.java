@@ -1,7 +1,6 @@
 package cc.bikeon.app.ui;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
@@ -13,14 +12,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.services.rest.RestClient;
 import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
+import cc.bikeon.app.services.rest.weather.Weather;
+import cc.bikeon.app.services.rest.weather.WeatherConstants;
+import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.services.rest.weather.WeatherResponse;
 import cc.bikeon.app.services.rest.weather.WeatherService;
+import cc.bikeon.app.services.rest.weather.WeatherTemperature;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -34,7 +39,7 @@ import retrofit.client.Response;
  *  Also is the first fragment after login
  *
  */
-public class LocationFragment extends Fragment implements LocationListener ,Callback<WeatherResponse> {
+public class LocationFragment extends Fragment implements LocationListener , Callback<WeatherResponse>{
 
     private OnFragmentInteractionListener mListener;
 
@@ -43,6 +48,12 @@ public class LocationFragment extends Fragment implements LocationListener ,Call
 
     @InjectView(R.id.txtWeatherCondition)
     TextView txtWeatherCondition;
+    @InjectView(R.id.txtWeatherTemperature)
+    TextView txtWeatherTemperature;
+    @InjectView(R.id.txtWeatherTemperatureMin)
+    TextView txtWeatherTemperatureMin;
+    @InjectView(R.id.txtWeatherTemperatureMax)
+    TextView txtWeatherTemperatureMax;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +74,10 @@ public class LocationFragment extends Fragment implements LocationListener ,Call
 
         Location location = application.getLocationTracker().getLastKnowLocation();
 
-        onLocationChanged(location);
+        if(location!= null)
+        {
+            onLocationChanged(location);
+        }
 
         return view;
     }
@@ -95,26 +109,26 @@ public class LocationFragment extends Fragment implements LocationListener ,Call
     @Override
     public void success(WeatherResponse weatherResponse, Response response) {
 
-        txtWeatherCondition.setText(weatherResponse.getWeather().get(0).getDescription());
-
+        if(!response.getUrl().contains("png")){
+            setWeatherInfo(weatherResponse);
+        }
     }
 
     @Override
     public void failure(RetrofitError error) {
-
-        Toast.makeText(getActivity(), "Weather service indisponível", Toast.LENGTH_LONG);
-        txtWeatherCondition.setVisibility(View.INVISIBLE);
-
+        Toast.makeText(getActivity(),
+                R.string.message_error_unavailable_service,
+                Toast.LENGTH_LONG);
     }
 
     // LOCATION SERVICE
     @Override
     public void onLocationChanged(Location location) {
-
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
-
-        weatherService.getWeatherByGeo(lat, lon, this);
+        weatherService.getWeatherByGeo(WeatherConstants.METRIC,
+                WeatherConstants.LANGUAGE,
+                location.getLatitude(),
+                location.getLongitude(),
+                this);
     }
 
     @Override
@@ -139,6 +153,24 @@ public class LocationFragment extends Fragment implements LocationListener ,Call
      */
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private void setWeatherInfo(WeatherResponse weatherResponse)
+    {
+        List<Weather> weathers = weatherResponse.getWeather();
+        if(weathers!= null){
+            txtWeatherCondition.setText(weathers.get(0).getDescription());
+        }
+
+        WeatherTemperature temperature = weatherResponse.getTemperature();
+        if(temperature!=null) {
+            txtWeatherTemperature.setText(
+                    WeatherFormatter.formatCelsius(temperature.getTemp()));
+            txtWeatherTemperatureMax.setText(
+                    WeatherFormatter.formatCelsius(temperature.getTempMax()));
+            txtWeatherTemperatureMin.setText(
+                    WeatherFormatter.formatCelsius(temperature.getTempMin()));
+        }
     }
 
 }

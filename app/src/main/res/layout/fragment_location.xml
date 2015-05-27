@@ -9,7 +9,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="@dimen/default_margin"
             android:src="@drawable/bikeon_logo_text"
             android:id="@+id/imageView" />
@@ -26,39 +26,47 @@
             android:layout_alignParentStart="true" />
 
         <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/etxWhereYouGo"
             android:layout_alignLeft="@+id/etxWhereYouGo"
-            android:layout_alignStart="@+id/etxWhereYouGo">
+            android:layout_alignStart="@+id/etxWhereYouGo"
+            android:stretchColumns="*"
+            >
             <TableRow>
                 <TextView android:id="@+id/txtWeatherCondition"
-                    android:layout_column="1"
-                    android:layout_span="2"
-                    android:textSize="40dp"
-                    android:text="Sol"
+                    android:layout_column="0"
+                    android:layout_span="4"
+                    android:textSize="20sp"
+                    android:text="@string/default_label_unavailable_service"
                     android:textColor="@color/white"
                     android:layout_gravity="center"/>
             </TableRow>
             <TableRow>
-                <TextView android:id="@+id/txtWeatherMin"
-                    android:layout_column="1"
+                <TextView
                     android:textSize="20dp"
-                    android:text="v 25"
+                    android:text="-"
+                    android:textColor="@color/white"/>
+                <TextView android:id="@+id/txtWeatherTemperatureMin"
+                    android:textSize="20dp"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:layout_marginRight="@dimen/default_margin"/>
-                <TextView android:id="@+id/txtWeatherMax"
-                    android:layout_column="1"
+                <TextView
                     android:textSize="20dp"
-                    android:text="^ 32"
+                    android:text="+"
+                    android:textColor="@color/white"/>
+                <TextView android:id="@+id/txtWeatherTemperatureMax"
+                    android:textSize="20sp"
+                    android:text="0"
                     android:textColor="@color/white"/>
             </TableRow>
             <TableRow>
                 <TextView android:id="@+id/txtWeatherTemperature"
-                    android:layout_column="1"
-                    android:layout_span="2"
+                    android:layout_column="0"
+                    android:layout_span="4"
                     android:textSize="60dp"
-                    android:text="30˚"
+                    android:text="0˚"
                     android:textColor="@color/white"
                     android:layout_gravity="center"/>
             </TableRow>

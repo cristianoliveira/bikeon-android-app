@@ -1,7 +1,9 @@
 package cc.bikeon.app.services.rest.weather;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -11,12 +13,18 @@ public interface WeatherService
 {
     @GET("/data/2.5/weather")
     public void getWeather(
+            @Query("lang") String language,
             @Query("q") String strCity,
             Callback<WeatherResponse> callback);
 
     @GET("/data/2.5/weather")
     public void getWeatherByGeo(
+            @Query("units") String metric,
+            @Query("lang") String language,
             @Query("lat") double latitude,
             @Query("lon") double longitude,
             Callback<WeatherResponse> callback);
+
+    @GET("/img/w/{icon}.png")
+    public void getWeatherConditionIcon(@Path("icon") String icon, Callback<Response> callback);
 }
