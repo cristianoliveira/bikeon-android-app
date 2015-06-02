@@ -44,8 +44,9 @@ public class LoginActivity extends Activity
     protected void onResume() {
         super.onResume();
 
-        AppEventsLogger.activateApp(this);
+//        AppEventsLogger.activateApp(this);
 
+        ImageButton btnFacebookLogin = (ImageButton) findViewById(R.id.btnFacebookLogin);
         btnFacebookLogin.setOnClickListener(this);
     }
 

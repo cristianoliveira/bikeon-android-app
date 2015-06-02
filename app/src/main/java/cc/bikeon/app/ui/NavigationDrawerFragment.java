@@ -25,12 +25,12 @@ import cc.bikeon.app.R;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements INavigationDrawerCallbacks {
+public class NavigationDrawerFragment extends Fragment implements NavigationDrawerCallbacks {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    private INavigationDrawerCallbacks mCallbacks;
+    private NavigationDrawerCallbacks mCallbacks;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
@@ -174,9 +174,9 @@ public class NavigationDrawerFragment extends Fragment implements INavigationDra
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallbacks = (INavigationDrawerCallbacks) activity;
+            mCallbacks = (NavigationDrawerCallbacks) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement INavigationDrawerCallbacks.");
+            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
     }
 

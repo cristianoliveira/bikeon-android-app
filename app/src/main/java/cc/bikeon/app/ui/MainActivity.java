@@ -1,32 +1,21 @@
 package cc.bikeon.app.ui;
 
-import android.app.AlertDialog;
-import android.location.Location;
-import android.location.LocationListener;
+import android.app.Activity;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
-import cc.bikeon.app.services.rest.RestClient;
-import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
-import cc.bikeon.app.services.rest.weather.WeatherService;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
-public class MainActivity extends AppCompatActivity
-        implements INavigationDrawerCallbacks,
-                   LocationFragment.OnFragmentInteractionListener {
+public class MainActivity extends android.support.v7.app.ActionBarActivity
+        implements NavigationDrawerCallbacks, FragmentInteractionListner {
 
 
     private static final String TAG = "MainActivity";
@@ -95,9 +84,14 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        Toast.makeText(this, "aaaaa", Toast.LENGTH_SHORT).show();
+    public void onFragmentInteraction(Class fragment, Uri uri) {
+
+        Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
     }
 
+    public void openMap(String destiny){
+        Intent mapActivity = new Intent(this, MapNavigationActivity.class);
+        startActivity(mapActivity);
+    }
 
 }

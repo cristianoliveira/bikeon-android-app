@@ -20,10 +20,19 @@
             android:layout_height="50dp"
             android:background="@drawable/textfield_rounded"
             android:layout_margin="@dimen/default_margin"
-            android:hint="Vai para onde?"
+            android:hint="@string/main_label_where_u_go"
             android:layout_below="@+id/imageView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:id="@+id/btnWhereUGo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/arrow_right"
+            android:layout_alignTop="@+id/etxWhereYouGo"
+            android:layout_alignRight="@+id/etxWhereYouGo"
+            android:layout_alignEnd="@+id/etxWhereYouGo" />
 
         <TableLayout
             android:layout_width="150dp"
@@ -32,7 +41,7 @@
             android:layout_alignLeft="@+id/etxWhereYouGo"
             android:layout_alignStart="@+id/etxWhereYouGo"
             android:stretchColumns="*"
-            >
+            android:id="@+id/tableLayout">
             <TableRow>
                 <TextView android:id="@+id/txtWeatherCondition"
                     android:layout_column="0"

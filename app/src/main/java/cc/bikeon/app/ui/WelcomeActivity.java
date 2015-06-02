@@ -1,35 +1,28 @@
 package cc.bikeon.app.ui;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.services.local.location.LocationTracker;
 
-public class WelcomeActivity extends AppCompatActivity implements LocationListener, Dialog.OnClickListener {
+public class WelcomeActivity extends FragmentActivity implements DialogInterface.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        setUpLocationUpdateManager();
-    }
-
-    private void setUpLocationUpdateManager()
-    {
-
-        BikeOnApplication application = (BikeOnApplication) this.getApplication();
+        BikeOnApplication application =
+                (BikeOnApplication) getApplication();
 
         LocationManager locationManager = (LocationManager)
                 application.getSystemService(Context.LOCATION_SERVICE);
@@ -57,30 +50,29 @@ public class WelcomeActivity extends AppCompatActivity implements LocationListen
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_welcome, menu);
+        return true;
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
-
-        Intent gpsSettings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(gpsSettings);
 
     }
 }

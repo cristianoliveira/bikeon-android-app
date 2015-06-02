@@ -5,7 +5,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import junit.framework.Assert;
 
-import cc.bikeon.app.services.rest.IRestProvider;
+import cc.bikeon.app.services.rest.RestProvider;
 
 /**
  * Created by cristianoliveira on 13/05/15.
@@ -15,7 +15,7 @@ public class OpenWeatherProviderTest extends AndroidTestCase {
     @SmallTest
     public void testWhenRequestUrlItShouldNotNull(){
         // given
-        IRestProvider provider = new OpenWeatherProvider();
+        RestProvider provider = new OpenWeatherProvider();
 
         // when
         String result = provider.getBaseUrl();

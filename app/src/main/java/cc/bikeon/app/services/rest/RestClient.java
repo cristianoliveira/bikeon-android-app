@@ -11,11 +11,10 @@ import retrofit.converter.GsonConverter;
  */
 public class RestClient {
 
-    IRestProvider provider;
+    RestProvider provider;
     RestAdapter restAdapter;
 
-
-    public RestClient(IRestProvider provider)
+    public RestClient(RestProvider provider)
     {
         this.provider = provider;
     }

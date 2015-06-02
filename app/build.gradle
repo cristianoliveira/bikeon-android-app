@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.robolectric'
 
 android {
     compileSdkVersion 21
@@ -10,7 +11,13 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
+
+    dexOptions {
+        javaMaxHeapSize "2048M"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,6 +35,8 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
@@ -39,22 +48,29 @@ repositories { mavenCentral() }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-//    compile 'com.android.support:appcompat-v7:21.0.3'
-    // json
-    // Rest API client
-    // Social Login
-    androidTestCompile 'junit:junit:4.+'
-    androidTestCompile 'org.mockito:mockito-core:1.+'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.+'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.+'
-    //    androidTestCompile "org.robolectric:robolectric:3.+"
+
     compile 'com.jakewharton:butterknife:6.0.0'
-    compile 'org.apache.httpcomponents:httpclient:4.+'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'org.parceler:parceler:0.2.13'
     compile 'com.facebook.android:facebook-android-sdk:3.21.1'
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:22.+'
     compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile 'com.google.android.gms:play-services:6.+'
+    compile 'com.google.maps:google-maps-services:0.1.7'
+
+    androidTestCompile 'junit:junit:4.+'
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.+'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.+'
+
+//    testCompile 'junit:junit:4.+'
+//    testCompile 'org.mockito:mockito-core:1.9.5'
+//    testCompile 'com.google.dexmaker:dexmaker-mockito:1.+'
+//    testCompile 'com.google.dexmaker:dexmaker:1.+'
+//    testCompile "org.robolectric:robolectric:3.+"
+//    testCompile 'org.robolectric:shadows-httpclient:+'
+
 }

@@ -3,7 +3,7 @@ package cc.bikeon.app.services;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import cc.bikeon.app.services.rest.IRestProvider;
+import cc.bikeon.app.services.rest.RestProvider;
 import cc.bikeon.app.services.rest.RestClient;
 import cc.bikeon.app.services.rest.weather.WeatherService;
 import static junit.framework.Assert.assertNotNull;
@@ -17,7 +17,7 @@ public class RestClientTest extends AndroidTestCase {
     public void testWhenRequestARestApiItShouldReturnService()
     {
         // given
-        IRestProvider provider = new StubProvider();
+        RestProvider provider = new StubProvider();
         RestClient restClient = new RestClient(provider);
 
         // when

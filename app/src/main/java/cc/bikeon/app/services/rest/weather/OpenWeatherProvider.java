@@ -1,16 +1,15 @@
 package cc.bikeon.app.services.rest.weather;
 
-import cc.bikeon.app.services.rest.IRestProvider;
+import cc.bikeon.app.services.rest.RestProvider;
 
 /**
  * Created by cristianoliveira on 13/05/15.
  */
-public class OpenWeatherProvider implements IRestProvider {
-
-    private final String BASE_URL = "http://api.openweathermap.org";
+public class OpenWeatherProvider implements RestProvider {
 
     @Override
     public String getBaseUrl() {
-        return BASE_URL;
+        return WeatherConstants.OPEN_WEATHER_URL_PROVIDER;
     }
+
 }

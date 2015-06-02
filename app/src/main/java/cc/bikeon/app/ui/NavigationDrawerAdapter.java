@@ -15,7 +15,7 @@ import cc.bikeon.app.R;
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {
 
     private List<NavigationItem> mData;
-    private INavigationDrawerCallbacks mINavigationDrawerCallbacks;
+    private NavigationDrawerCallbacks mINavigationDrawerCallbacks;
     private View mSelectedView;
     private int mSelectedPosition;
 
@@ -23,11 +23,11 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         mData = data;
     }
 
-    public INavigationDrawerCallbacks getNavigationDrawerCallbacks() {
+    public NavigationDrawerCallbacks getNavigationDrawerCallbacks() {
         return mINavigationDrawerCallbacks;
     }
 
-    public void setNavigationDrawerCallbacks(INavigationDrawerCallbacks INavigationDrawerCallbacks) {
+    public void setNavigationDrawerCallbacks(NavigationDrawerCallbacks INavigationDrawerCallbacks) {
         mINavigationDrawerCallbacks = INavigationDrawerCallbacks;
     }
 

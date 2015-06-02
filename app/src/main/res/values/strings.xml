@@ -14,6 +14,7 @@
     <string name="main_navigation_drawer_open">Open navigation drawer</string>
     <string name="main_navigation_drawer_close">Close navigation drawer</string>
     <string name="main_action_example">Example action</string>
+    <string name="main_label_where_u_go">Vai para onde?</string>
 
     <!-- Messages -->
     <string name="message_title_alert">Atenção</string>
@@ -30,6 +31,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_map_navigation">Bike GO</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 
 </resources>

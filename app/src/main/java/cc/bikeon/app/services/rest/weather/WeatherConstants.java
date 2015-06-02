@@ -5,6 +5,7 @@ package cc.bikeon.app.services.rest.weather;
  */
 public class WeatherConstants {
 
+    public final static String OPEN_WEATHER_URL_PROVIDER = "http://api.openweathermap.org";
     public final static String LANGUAGE = "pt";
     public final static String METRIC = "metric";  //celsius
 }

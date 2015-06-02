@@ -1,14 +1,20 @@
 package cc.bikeon.app.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
+import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.RestClient;
 import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
 import cc.bikeon.app.services.rest.weather.Weather;
@@ -39,12 +46,15 @@ import retrofit.client.Response;
  *  Also is the first fragment after login
  *
  */
-public class LocationFragment extends Fragment implements LocationListener , Callback<WeatherResponse>{
+public class LocationFragment extends AbstractWeatherFragment implements
+        View.OnClickListener {
 
-    private OnFragmentInteractionListener mListener;
+    private FragmentInteractionListner mListener;
 
-    RestClient service;
-    WeatherService weatherService;
+    @InjectView(R.id.etxWhereYouGo)
+    TextView etxWhereYouGo;
+    @InjectView(R.id.btnWhereUGo)
+    ImageView btnWhereUGo;
 
     @InjectView(R.id.txtWeatherCondition)
     TextView txtWeatherCondition;
@@ -69,33 +79,29 @@ public class LocationFragment extends Fragment implements LocationListener , Cal
 
         BikeOnApplication application = (BikeOnApplication) getActivity().getApplication();
 
-        service = new RestClient(new OpenWeatherProvider());
-        weatherService = (WeatherService) service.getService(WeatherService.class);
+        LocationTracker locationTracker = application.getLocationTracker();
+        locationTracker.startListener(this);
 
-        Location location = application.getLocationTracker().getLastKnowLocation();
+        Location location = locationTracker.getLastKnowLocation();
 
         if(location!= null)
         {
             onLocationChanged(location);
         }
 
-        return view;
-    }
+        btnWhereUGo.setOnClickListener(this);
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return view;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (FragmentInteractionListner) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement FragmentInteractionListner");
         }
     }
 
@@ -105,58 +111,14 @@ public class LocationFragment extends Fragment implements LocationListener , Cal
         mListener = null;
     }
 
-    // WEATHER SERVICE
     @Override
-    public void success(WeatherResponse weatherResponse, Response response) {
-
-        if(!response.getUrl().contains("png")){
-            setWeatherInfo(weatherResponse);
-        }
+    public void onClick(View view) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.openMap(etxWhereYouGo.getText().toString());
     }
 
     @Override
-    public void failure(RetrofitError error) {
-        Toast.makeText(getActivity(),
-                R.string.message_error_unavailable_service,
-                Toast.LENGTH_LONG);
-    }
-
-    // LOCATION SERVICE
-    @Override
-    public void onLocationChanged(Location location) {
-        weatherService.getWeatherByGeo(WeatherConstants.METRIC,
-                WeatherConstants.LANGUAGE,
-                location.getLatitude(),
-                location.getLongitude(),
-                this);
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
-
-    /**
-     *
-     *  Each activity that hold this Fragment must implement it.
-     *
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
-    private void setWeatherInfo(WeatherResponse weatherResponse)
-    {
+    public void onWeatherResultSuccess(WeatherResponse weatherResponse, Response response) {
         List<Weather> weathers = weatherResponse.getWeather();
         if(weathers!= null){
             txtWeatherCondition.setText(weathers.get(0).getDescription());
@@ -172,5 +134,4 @@ public class LocationFragment extends Fragment implements LocationListener , Cal
                     WeatherFormatter.formatCelsius(temperature.getTempMin()));
         }
     }
-
 }
