@@ -2,17 +2,10 @@ package cc.bikeon.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.test.ActivityTestCase;
 import android.test.ActivityUnitTestCase;
-import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.view.WindowManager;
-
-import junit.framework.TestCase;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class LoginActivityTest extends ActivityUnitTestCase<LoginActivity> {
 

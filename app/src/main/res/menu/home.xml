@@ -4,9 +4,9 @@
       tools:context="cc.bikeon.app.ui.HomeActivity">
     <item android:id="@+id/action_example"
           android:title="@string/action_settings"
-          android:showAsAction="withText|ifRoom"/>
+          app:showAsAction="withText|ifRoom"/>
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"
-          android:showAsAction="never"/>
+          app:showAsAction="never"/>
 </menu>

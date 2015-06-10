@@ -1,6 +1,4 @@
-package cc.bikeon.app.services.rest.directions;
-
-import com.google.gson.JsonElement;
+package cc.bikeon.app.services.rest.directions.google;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -9,7 +7,7 @@ import retrofit.http.Query;
 /**
  * Created by cristianoliveira on 31/05/15.
  */
-public interface DirectionService {
+public interface GoogleDirectionService {
 
     @GET("/maps/api/directions/json")
     public void getByDestinationName(
@@ -17,5 +15,5 @@ public interface DirectionService {
             @Query("mode") String mode,
             @Query("origin") String origin,
             @Query("destination") String destination,
-            Callback<DirectionResponse> callback);
+            Callback<GoogleDirectionResponse> callback);
 }

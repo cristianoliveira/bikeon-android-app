@@ -7,27 +7,50 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
+ *
+ *  Allow to create Web Services requester
+ *
  * Created by cristianoliveira on 12/05/15.
  */
 public class RestClient {
 
-    RestProvider provider;
-    RestAdapter restAdapter;
+    private RestProvider provider;
+    private RestAdapter restAdapter;
 
+    /**
+     *
+     *  Initialize Client providing a REST API provider
+     *
+     * @param provider REST API provider
+     */
     public RestClient(RestProvider provider)
     {
         this.provider = provider;
     }
 
-    public Object getService(Class apiServiceInterface)
-    {
+    /**
+     *
+     *  Register a Service with a given interface
+     *
+     * @param apiServiceInterface Service Interface
+     * @param <T> Type of Service Interface
+     * @return Service registered to use
+     */
+    public <T> T getService(Class<T> apiServiceInterface){
         return getRestAdapter().create(apiServiceInterface);
     }
 
-    public RestAdapter getRestAdapter()
-    {
-        if(restAdapter == null)
-        {
+    /**
+     *
+     *  Return a Adapter to registre Services.
+     *  Adapts a Java interface to a REST API.
+     *
+     *  http://square.github.io/retrofit/javadoc/retrofit/RestAdapter.html
+     *
+     * @return RestAdapter
+     */
+    public RestAdapter getRestAdapter(){
+        if(restAdapter == null){
             Gson gson = new GsonBuilder()
                             .registerTypeAdapterFactory(new JsonTypeAdapterFactory())
                             .create();

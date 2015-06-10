@@ -51,13 +51,13 @@ public class LoginRequesterTest extends TestCase{
         assertEquals(callback.getErrorMessage(), expected);
     }
 
-    private class StubStrategy implements ILoginStrategy{
+    private class StubStrategy implements LoginStrategy {
 
         private boolean success;
         private String errorMessage;
 
         @Override
-        public void doLogin(ILoginCallback callback) {
+        public void doLogin(LoginCallback callback) {
             if(success)
             {
                 callback.onLoginSuccess();

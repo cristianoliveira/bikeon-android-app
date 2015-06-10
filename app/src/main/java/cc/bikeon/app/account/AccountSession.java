@@ -3,7 +3,7 @@ package cc.bikeon.app.account;
 /**
  * Created by cristianoliveira on 05/05/15.
  */
-public interface IAccountSession {
+public interface AccountSession {
 
 	public boolean isSessionOpened();
 

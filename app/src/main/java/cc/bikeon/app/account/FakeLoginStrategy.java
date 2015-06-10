@@ -6,9 +6,9 @@ package cc.bikeon.app.account;
  *  CLASS to use during tests.
  *
  */
-public class FakeLoginStrategy implements ILoginStrategy {
+public class FakeLoginStrategy implements LoginStrategy {
     @Override
-    public void doLogin(ILoginCallback callback) {
+    public void doLogin(LoginCallback callback) {
         callback.onLoginSuccess();
     }
 }

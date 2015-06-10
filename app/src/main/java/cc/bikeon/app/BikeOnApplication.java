@@ -1,6 +1,8 @@
 package cc.bikeon.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.location.LocationManager;
 
 import com.facebook.Session;
 
@@ -17,12 +19,29 @@ public class BikeOnApplication extends Application {
     private LocationTracker locationTracker;
     private static Session facebookSession;
 
+    private static BikeOnApplication instance;
+
+    public static BikeOnApplication getInstance()
+    {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
     }
 
     public LocationTracker getLocationTracker() {
+
+        if (locationTracker == null)
+        {
+            LocationManager locationManager = (LocationManager)
+                    this.getSystemService(Context.LOCATION_SERVICE);
+
+            locationTracker = new LocationTracker(locationManager);
+        }
+
         return locationTracker;
     }
 

@@ -2,18 +2,39 @@ package cc.bikeon.app.services.rest.directions;
 
 import android.location.Location;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 /**
+ *
+ *
+ *
  * Created by cristianoliveira on 31/05/15.
  */
 public class DirectionFormatter {
 
-    public static String fromLocation(Location location)
-    {
-        StringBuilder locationString = new StringBuilder();
-        locationString.append(location.getLatitude());
-        locationString.append(",");
-        locationString.append(location.getLongitude());
+    private final static String CHARSET = "UTF-8";
 
-        return locationString.toString();
+    /**
+     *
+     * Parse the location to a URL like format
+     *
+     * @param location
+     * @return String formatted location by coma
+     */
+    public static String format(Location location)
+    {
+        return String.format("%s,%s", location.getLatitude(), location.getLongitude());
+    }
+
+    /**
+     *
+     * Parse the string to a URL like format (UTF-8)
+     *
+     * @param location name
+     * @return String formatted location by coma
+     */
+    public static String format(String location) throws UnsupportedEncodingException {
+        return URLDecoder.decode(location, CHARSET);
     }
 }

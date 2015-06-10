@@ -5,14 +5,14 @@ package cc.bikeon.app.account;
  */
 public class LoginRequester {
 
-	private ILoginStrategy strategy;
+	private LoginStrategy strategy;
 
-	public void setStrategy(ILoginStrategy strategy)
+	public void setStrategy(LoginStrategy strategy)
 	{
 		this.strategy = strategy;
 	}
 
-	public void requestLogin(ILoginCallback callback)
+	public void requestLogin(LoginCallback callback)
 	{
 		strategy.doLogin(callback);
 	}

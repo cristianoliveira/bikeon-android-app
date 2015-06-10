@@ -1,20 +1,29 @@
 package cc.bikeon.app.ui;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+
+import butterknife.ButterKnife;
 import cc.bikeon.app.R;
+import cc.bikeon.app.services.rest.RestServiceFactory;
+import cc.bikeon.app.services.rest.directions.DirectionRequester;
+import cc.bikeon.app.services.rest.directions.google.GoogleDirectionProvider;
+import cc.bikeon.app.services.rest.directions.google.GoogleDirectionRequester;
+import cc.bikeon.app.services.rest.directions.google.GoogleDirectionService;
 
 
-public class MainActivity extends android.support.v7.app.ActionBarActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationDrawerCallbacks, FragmentInteractionListner {
 
 
@@ -24,6 +33,13 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity
     private Toolbar mToolbar;
 
     private LocationManager locationManager;
+    private String destination;
+
+    private Fragment currentFragment;
+    private LocationFragment locationFragment;
+    private MapNavigationFragment mapFragment;
+
+    private DirectionRequester directionRequester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +56,9 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer),
                 mToolbar);
 
+        ButterKnife.inject(this);
+
+//        setLocationFragment();
     }
 
     @Override
@@ -82,16 +101,64 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onFragmentInteraction(Class fragment, Uri uri) {
 
         Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    public void openMap(String destiny){
-        Intent mapActivity = new Intent(this, MapNavigationActivity.class);
-        startActivity(mapActivity);
+    private void setLocationFragment() {
+        replaceContentFragmentWith(getLocationFragment());
+    }
+
+    public void openMap(String destination) {
+        this.destination = destination;
+
+        MapNavigationFragment mapFragment = getMapFragment();
+
+        try {
+            getDirectionRequester().request("Porto Alegre", destination, mapFragment);
+            replaceContentFragmentWith(mapFragment);
+        }catch (UnsupportedEncodingException unex) {
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.message_error_encode)
+                    .show();
+        }
+
+    }
+
+    private DirectionRequester getDirectionRequester() {
+        if(directionRequester == null) {
+            directionRequester = new GoogleDirectionRequester(getString(R.string.google_maps_key));
+        }
+        return directionRequester;
+    }
+
+    private void replaceContentFragmentWith(Fragment newFragment) {
+        currentFragment = newFragment;
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_drawer, newFragment)
+                .commit();
+    }
+
+    public String getDestination() {
+        return this.destination;
+    }
+
+    public LocationFragment getLocationFragment() {
+        if (locationFragment == null) {
+            locationFragment = new LocationFragment();
+        }
+        return locationFragment;
+    }
+
+    public MapNavigationFragment getMapFragment() {
+        if (mapFragment == null) {
+            mapFragment = new MapNavigationFragment();
+        }
+        return mapFragment;
     }
 
 }

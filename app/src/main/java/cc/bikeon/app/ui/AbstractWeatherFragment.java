@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
-
 import cc.bikeon.app.R;
 import cc.bikeon.app.services.rest.RestClient;
 import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
@@ -27,11 +27,12 @@ import retrofit.client.Response;
 public abstract class AbstractWeatherFragment extends Fragment
         implements Callback<WeatherResponse>, LocationListener {
 
+    private final String TAG = "AbstractWeatherFragment";
+
     private RestClient service;
     private WeatherService weatherService;
 
-    AbstractWeatherFragment()
-    {
+    AbstractWeatherFragment() {
         service = new RestClient(new OpenWeatherProvider());
         weatherService = (WeatherService) service.getService(WeatherService.class);
     }
@@ -41,7 +42,6 @@ public abstract class AbstractWeatherFragment extends Fragment
 
     @Override
     public void success(WeatherResponse weatherResponse, Response response) {
-
         onWeatherResultSuccess(weatherResponse, response);
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractWeatherFragment extends Fragment
     public void failure(RetrofitError error) {
         Toast.makeText(getActivity(),
                 R.string.message_error_unavailable_service,
-                Toast.LENGTH_LONG);
+                Toast.LENGTH_LONG).show();
     }
 
     // Location Service
@@ -66,16 +66,16 @@ public abstract class AbstractWeatherFragment extends Fragment
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
+        Log.d(TAG, "onStatusChanged "+s);
     }
 
     @Override
     public void onProviderEnabled(String s) {
-
+        Log.d(TAG, "onProviderEnabled "+s);
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        Log.d(TAG, "onProviderDisabled "+s);
     }
 }

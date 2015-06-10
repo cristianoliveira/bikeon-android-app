@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.Session;
-import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
-
-import cc.bikeon.app.BikeOnApplication;
 
 /**
  * Created by cristianoliveira on 04/05/15.
  */
-public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
+public class FacebookLoginStrategy extends Activity implements LoginStrategy {
 
 	private Activity activity;
 	private UiLifecycleHelper uiHelper;
@@ -24,7 +21,7 @@ public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
 	}
 
 	@Override
-	public void doLogin(ILoginCallback callback) {
+	public void doLogin(LoginCallback callback) {
 
 	    closeActiveSession();
 
@@ -47,7 +44,7 @@ public class FacebookLoginStrategy extends Activity implements ILoginStrategy {
 		}
 	}
 
-    public FacebookSessionCallback getCallBack(ILoginCallback callback)
+    public FacebookSessionCallback getCallBack(LoginCallback callback)
 	{
 		if(facebookSessionCallback==null)
 		{

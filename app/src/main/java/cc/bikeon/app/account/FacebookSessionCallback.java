@@ -1,7 +1,5 @@
 package cc.bikeon.app.account;
 
-import android.util.Log;
-
 import com.facebook.Session;
 import com.facebook.SessionState;
 
@@ -12,9 +10,9 @@ import cc.bikeon.app.BikeOnApplication;
  */
 public class FacebookSessionCallback implements Session.StatusCallback{
 
-		ILoginCallback callback;
+		LoginCallback callback;
 
-		public FacebookSessionCallback(ILoginCallback callback)
+		public FacebookSessionCallback(LoginCallback callback)
 		{
 			this.callback = callback;
 		}

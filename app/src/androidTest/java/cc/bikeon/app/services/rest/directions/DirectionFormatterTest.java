@@ -7,6 +7,9 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 /**
  * Created by cristianoliveira on 02/06/15.
  */
@@ -25,7 +28,21 @@ public class DirectionFormatterTest extends TestCase {
         mockedLocation.setLongitude(longitude);
 
         // when
-        String result = DirectionFormatter.fromLocation(mockedLocation);
+        String result = DirectionFormatter.format(mockedLocation);
+
+        // then
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    public void testGivenLocationNameItShouldFormatToUTF8URLString() throws UnsupportedEncodingException {
+        // given
+        String locationName = "A name with spaces";
+        String expected = URLDecoder.decode(locationName, "UTF-8");
+
+        // when
+        String result = DirectionFormatter.format(locationName);
 
         // then
         assertEquals(expected, result);

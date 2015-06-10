@@ -2,6 +2,7 @@ package cc.bikeon.app;
 
 import android.test.ActivityUnitTestCase;
 import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import junit.framework.TestCase;
 
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 //import org.robolectric.Robolectric;
 //import org.robolectric.RobolectricTestRunner;
 
+import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.ui.LoginActivity;
 import cc.bikeon.app.ui.WelcomeActivity;
 
@@ -29,5 +31,18 @@ public class ApplicationTest extends ActivityUnitTestCase<WelcomeActivity> {
     {
         WelcomeActivity welcomeActivity = (WelcomeActivity) getActivity();
         org.junit.Assert.assertNotNull(welcomeActivity);
+    }
+
+    @SmallTest
+    public void testWhenRequestLocationTrackerItShouldCreateNewOne()
+    {
+        // given
+        BikeOnApplication application = BikeOnApplication.getInstance();
+
+        // when
+        LocationTracker locationTracker = application.getLocationTracker();
+
+        // then
+        assertNotNull(locationTracker);
     }
 }

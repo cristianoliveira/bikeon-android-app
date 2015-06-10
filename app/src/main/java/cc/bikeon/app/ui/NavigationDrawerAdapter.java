@@ -42,11 +42,11 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                                                        if (mSelectedView != null) {
                                                            mSelectedView.setSelected(false);
                                                        }
-                                                       mSelectedPosition = viewHolder.getPosition();
+                                                       mSelectedPosition = viewHolder.getLayoutPosition();
                                                        v.setSelected(true);
                                                        mSelectedView = v;
                                                        if (mINavigationDrawerCallbacks != null)
-                                                           mINavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getPosition());
+                                                           mINavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getLayoutPosition());
                                                    }
                                                }
         );

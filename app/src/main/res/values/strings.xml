@@ -21,6 +21,7 @@
     <string name="message_error_login">Não foi possível realizar o login.</string>
     <string name="message_error_location">Serviço de localização desabilitado. Favor habilite.</string>
     <string name="message_error_unavailable_service">Serviço indisponível</string>
+    <string name="message_error_encode">Não foi possível conpreender sua requisição</string>
 
     <!-- Default labels -->
     <string name="default_label_unavailable_service">Indisponível</string>

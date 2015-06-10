@@ -77,8 +77,7 @@ public class LocationFragment extends AbstractWeatherFragment implements
         View view = inflater.inflate(R.layout.fragment_location, container, false);
         ButterKnife.inject(this, view);
 
-        BikeOnApplication application = (BikeOnApplication) getActivity().getApplication();
-
+        BikeOnApplication application = BikeOnApplication.getInstance();
         LocationTracker locationTracker = application.getLocationTracker();
         locationTracker.startListener(this);
 

@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,8 +13,19 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_actionbar">
 
-        <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
-            android:clickable="true" android:layout_height="match_parent" />
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <fragment android:id="@+id/fragment_content"
+                android:tag="FRAGMENT_CONTENT"
+                android:name="cc.bikeon.app.ui.LocationFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="start"
+                android:layout="@layout/fragment_location"
+                tools:layout="@layout/fragment_location"
+                />
+        </FrameLayout>
 
         <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
         <fragment android:id="@+id/fragment_drawer"
@@ -23,16 +33,10 @@
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            app:layout="@layout/fragment_navigation_drawer"
-            tools:layout="@layout/fragment_navigation_drawer"
+            android:layout="@layout/fragment_navigation_drawer"
             android:background="@color/white"
-            />
+            tools:layout="@layout/fragment_navigation_drawer" />
 
-        <fragment android:name="cc.bikeon.app.ui.LocationFragment"
-            android:id="@+id/location_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout="@layout/fragment_location"
-            tools:layout="@layout/fragment_location" />
+
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

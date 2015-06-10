@@ -9,18 +9,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.facebook.AppEventsLogger;
 import com.facebook.UiLifecycleHelper;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.FakeLoginStrategy;
-import cc.bikeon.app.account.ILoginCallback;
+import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
 
 public class LoginActivity extends Activity
-                implements View.OnClickListener, ILoginCallback{
+                implements View.OnClickListener, LoginCallback {
 
     private final String TAG = "MainActivity";
 

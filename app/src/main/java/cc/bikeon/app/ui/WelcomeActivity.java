@@ -21,13 +21,9 @@ public class WelcomeActivity extends FragmentActivity implements DialogInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        BikeOnApplication application =
-                (BikeOnApplication) getApplication();
+        BikeOnApplication application = BikeOnApplication.getInstance();
 
-        LocationManager locationManager = (LocationManager)
-                application.getSystemService(Context.LOCATION_SERVICE);
-
-        LocationTracker locationTracker = new LocationTracker(locationManager);
+        LocationTracker locationTracker = application.getLocationTracker();
         boolean isServiceEnabled = locationTracker.isLocationServiceEnabled();
 
         if(isServiceEnabled){
