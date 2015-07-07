@@ -5,5 +5,5 @@ package cc.bikeon.app.services.rest.directions;
  */
 public class DirectionConstants {
     public static final String GOOGLE_URL_PROVIDER = "https://maps.googleapis.com";
-    public static final String DIRECTION_MODE = "walking";
+    public static final String DIRECTION_MODE = "bicycling";
 }

@@ -7,19 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.facebook.UiLifecycleHelper;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.FakeLoginStrategy;
-import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.presenter.LoginPresenter;
 
 public class LoginActivity extends Activity
-                implements View.OnClickListener, LoginCallback {
+                implements LoginView {
 
     private final String TAG = "MainActivity";
 
@@ -31,61 +29,48 @@ public class LoginActivity extends Activity
     ImageButton btnFacebookLogin;
     private UiLifecycleHelper uiHelper;
 
+    private LoginPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-
+        presenter = new LoginPresenter(this, new LoginRequester());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-//        AppEventsLogger.activateApp(this);
-
-        ImageButton btnFacebookLogin = (ImageButton) findViewById(R.id.btnFacebookLogin);
-        btnFacebookLogin.setOnClickListener(this);
+        setEvents();
     }
 
-    private void changeLayout() {
-         RelativeLayout.LayoutParams  lp =
-                            (RelativeLayout.LayoutParams) logo.getLayoutParams();
-
-         lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-
-         logo.setLayoutParams(lp);
-         btnFacebookLogin.setVisibility(View.VISIBLE);
+    private void setEvents() {
+        btnFacebookLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO remove after tests
+                presenter.requestLogin(10);
+            }
+        });
     }
 
     @Override
-    public void onClick(View v) {
-
-        LoginRequester loginRequester = new LoginRequester();
-
-        switch (v.getId()) {
-            case R.id.btnFacebookLogin:
-//TODO: TESTS                loginRequester.setStrategy(new FacebookLoginStrategy(this));
-            loginRequester.setStrategy(new FakeLoginStrategy());
-        }
-
-        loginRequester.requestLogin(this);
-    }
-
-    @Override
-    public void onLoginSuccess() {
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
-    }
-
-    @Override
-    public void onLoginError(String messageError) {
+    public void showLoginError(String messageError) {
         new AlertDialog.Builder(this)
                        .setMessage(messageError)
                        .create()
                        .show();
+    }
+
+    @Override
+    public void gotoMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public Activity getActivity() {
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package cc.bikeon.app.services.rest.weather;
 
+import cc.bikeon.app.domain.WeatherResponse;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.GET;

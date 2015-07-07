@@ -17,7 +17,7 @@ public class FacebookLoginStrategy extends Activity implements LoginStrategy {
 
 	public FacebookLoginStrategy(Activity activity)
 	{
-    this.activity = activity;
+		this.activity = activity;
 	}
 
 	@Override
@@ -29,10 +29,7 @@ public class FacebookLoginStrategy extends Activity implements LoginStrategy {
 
 		uiHelper = new UiLifecycleHelper(activity, facebookSessionCallback);
 
-		Session.openActiveSession(
-						activity,
-						true,
-						facebookSessionCallback);
+		Session.openActiveSession( activity, true, facebookSessionCallback);
 
 	}
 

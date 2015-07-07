@@ -21,26 +21,6 @@ public class JsonTypeAdapterFactory implements TypeAdapterFactory {
         final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
         final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
 
-        return new TypeAdapter<T>() {
-
-            @Override
-            public void write(JsonWriter out, T value) throws IOException {
-                delegate.write(out, value);
-            }
-
-            @Override
-            public T read(JsonReader in) throws IOException {
-
-                JsonElement jsonElement = elementAdapter.read(in);
-                if (jsonElement.isJsonObject()) {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    if (jsonObject.has("cod") && jsonObject.get("cod").getAsInt() == 404) {
-                        throw new IllegalArgumentException(jsonObject.get("message").getAsString());
-                    }
-                }
-
-                return delegate.fromJsonTree(jsonElement);
-            }
-        }.nullSafe();
+        return new JsonTypeAdapter<T>(delegate, elementAdapter);
     }
 }

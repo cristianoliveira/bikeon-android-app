@@ -24,6 +24,6 @@ public interface DirectionRequester {
      * @param callback Callback will be result the request (Success/Error)
      * @throws UnsupportedEncodingException When try convert the origin/destination to UTF-8 encode
      */
-    public void request(String origin, String destination, Callback callback) throws UnsupportedEncodingException;
+    public void request(String origin, String destination, DirectionCallback callback) throws UnsupportedEncodingException;
 
 }

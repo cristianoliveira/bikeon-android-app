@@ -26,6 +26,10 @@ public class BikeOnApplication extends Application {
         return instance;
     }
 
+    public static String getStringResource(int resId) {
+        return instance.getString(resId);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -1,5 +1,7 @@
 package cc.bikeon.app.account;
 
+import com.facebook.*;
+
 /**
  * Created by cristianoliveira on 23/05/15.
  *
@@ -9,6 +11,6 @@ package cc.bikeon.app.account;
 public class FakeLoginStrategy implements LoginStrategy {
     @Override
     public void doLogin(LoginCallback callback) {
-        callback.onLoginSuccess();
+        callback.onLoginSuccess(null);
     }
 }

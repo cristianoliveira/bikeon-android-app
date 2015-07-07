@@ -1,15 +1,14 @@
 package cc.bikeon.app.services.rest.directions.google;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cc.bikeon.app.services.rest.directions.DirectionParser;
+import cc.bikeon.app.domain.Coordinate;
 import cc.bikeon.app.services.rest.directions.GeocodeResponse;
 
 /**
@@ -29,15 +28,16 @@ public class GoogleDirectionResponse implements GeocodeResponse {
     }
 
     @Override
-    public List<LatLng> getData() {
+    public List<Coordinate> getData() {
+        Gson parser = new Gson();
 
         JsonArray legs = routes.get(0).getAsJsonArray("legs");
 
-        List<LatLng> directions = null;
+        List<Coordinate> directions = null;
 
         if (legs.size() > 0) {
 
-            directions = new ArrayList<LatLng>();
+            directions = new ArrayList<Coordinate>();
 
             for (int i = 0; i < legs.size(); i++) {
                 JsonObject leg = (JsonObject)legs.get(i);
@@ -48,14 +48,10 @@ public class GoogleDirectionResponse implements GeocodeResponse {
                     JsonObject step = (JsonObject) steps.get(i);
 
                     JsonObject startPoint = step.getAsJsonObject("start_location");
-
-                    LatLng start = DirectionParser.parseToLatLng(startPoint);
-                    directions.add(start);
+                    directions.add(parser.fromJson(startPoint, Coordinate.class));
 
                     JsonObject endPoint = step.getAsJsonObject("end_location");
-
-                    LatLng end = DirectionParser.parseToLatLng(endPoint);
-                    directions.add(end);
+                    directions.add(parser.fromJson(endPoint, Coordinate.class));
 
                 }
             }

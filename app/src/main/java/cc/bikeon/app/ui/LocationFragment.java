@@ -1,41 +1,25 @@
 package cc.bikeon.app.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
-import cc.bikeon.app.services.local.location.LocationTracker;
-import cc.bikeon.app.services.rest.RestClient;
-import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
-import cc.bikeon.app.services.rest.weather.Weather;
-import cc.bikeon.app.services.rest.weather.WeatherConstants;
+import cc.bikeon.app.domain.Weather;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
-import cc.bikeon.app.services.rest.weather.WeatherResponse;
-import cc.bikeon.app.services.rest.weather.WeatherService;
-import cc.bikeon.app.services.rest.weather.WeatherTemperature;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import cc.bikeon.app.domain.WeatherTemperature;
+import cc.bikeon.app.presenter.WeatherPresenter;
+import cc.bikeon.app.presenter.WeatherPresenterFactory;
+import cc.bikeon.app.ui.weather.WeatherView;
 
 
 /**
@@ -46,7 +30,7 @@ import retrofit.client.Response;
  *  Also is the first fragment after login
  *
  */
-public class LocationFragment extends AbstractWeatherFragment implements
+public class LocationFragment extends Fragment implements WeatherView,
         View.OnClickListener {
 
     private FragmentInteractionListner mListener;
@@ -65,6 +49,24 @@ public class LocationFragment extends AbstractWeatherFragment implements
     @InjectView(R.id.txtWeatherTemperatureMax)
     TextView txtWeatherTemperatureMax;
 
+    private WeatherPresenter presenter;
+
+    public LocationFragment() {
+        super();
+    }
+
+    @VisibleForTesting
+    protected WeatherPresenter getWeatherPresenter() {
+        if (presenter == null) {
+            presenter = WeatherPresenterFactory.createFor(this);
+        }
+        return presenter;
+    }
+
+    public void setPresenter(WeatherPresenter presenter) {
+        this.presenter = presenter;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,31 +79,11 @@ public class LocationFragment extends AbstractWeatherFragment implements
         View view = inflater.inflate(R.layout.fragment_location, container, false);
         ButterKnife.inject(this, view);
 
-        BikeOnApplication application = BikeOnApplication.getInstance();
-        LocationTracker locationTracker = application.getLocationTracker();
-        locationTracker.startListener(this);
-
-        Location location = locationTracker.getLastKnowLocation();
-
-        if(location!= null)
-        {
-            onLocationChanged(location);
-        }
+        getWeatherPresenter().requestWeatherData(null);
 
         btnWhereUGo.setOnClickListener(this);
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (FragmentInteractionListner) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement FragmentInteractionListner");
-        }
     }
 
     @Override
@@ -113,24 +95,33 @@ public class LocationFragment extends AbstractWeatherFragment implements
     @Override
     public void onClick(View view) {
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.openMap(etxWhereYouGo.getText().toString());
+        mainActivity.showMapNavigationFragment(etxWhereYouGo.getText().toString());
     }
 
     @Override
-    public void onWeatherResultSuccess(WeatherResponse weatherResponse, Response response) {
-        List<Weather> weathers = weatherResponse.getWeather();
-        if(weathers!= null){
-            txtWeatherCondition.setText(weathers.get(0).getDescription());
-        }
+    public void setEnableRequestDirections(boolean isEnabled) {
+        etxWhereYouGo.setEnabled(isEnabled);
+    }
 
-        WeatherTemperature temperature = weatherResponse.getTemperature();
-        if(temperature!=null) {
-            txtWeatherTemperature.setText(
-                    WeatherFormatter.formatCelsius(temperature.getTemp()));
-            txtWeatherTemperatureMax.setText(
-                    WeatherFormatter.formatCelsius(temperature.getTempMax()));
-            txtWeatherTemperatureMin.setText(
-                    WeatherFormatter.formatCelsius(temperature.getTempMin()));
-        }
+    @Override
+    public void showWeather(Weather weather) {
+        txtWeatherCondition.setText(weather.getDescription());
+    }
+
+    @Override
+    public void showTemperature(WeatherTemperature temperature) {
+        txtWeatherTemperature.setText(
+                WeatherFormatter.formatCelsius(temperature.getTemp()));
+        txtWeatherTemperatureMax.setText(
+                WeatherFormatter.formatCelsius(temperature.getTempMax()));
+        txtWeatherTemperatureMin.setText(
+                WeatherFormatter.formatCelsius(temperature.getTempMin()));
+    }
+
+    @Override
+    public void showMessageOnRequestError() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.message_error_unavailable_service)
+                .show();
     }
 }

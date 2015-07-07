@@ -22,7 +22,7 @@ public class FacebookSessionCallback implements Session.StatusCallback{
 			if(session.isOpened())
 			{
 				BikeOnApplication.setFacebookSession(session);
-				callback.onLoginSuccess();
+				callback.onLoginSuccess(session);
 			}
 			else
 			{

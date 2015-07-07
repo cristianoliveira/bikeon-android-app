@@ -5,10 +5,13 @@ import android.location.Location;
 import java.io.UnsupportedEncodingException;
 
 import cc.bikeon.app.services.rest.RestServiceFactory;
+import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionConstants;
 import cc.bikeon.app.services.rest.directions.DirectionFormatter;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
 import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by cristianoliveira on 09/06/15.
@@ -28,14 +31,22 @@ public class GoogleDirectionRequester implements DirectionRequester {
     }
 
     @Override
-    public void request(String origin, String destination, Callback callback)
-            throws UnsupportedEncodingException {
+    public void request(String origin, String destination, final DirectionCallback callback) throws UnsupportedEncodingException {
         googleDirectionService.getByDestinationName(googleDirectionKey,
                 DirectionConstants.DIRECTION_MODE,
                 DirectionFormatter.format(origin),
                 DirectionFormatter.format(destination),
-                callback
-                );
-    }
+                new Callback<GoogleDirectionResponse>() {
+                    @Override
+                    public void success(GoogleDirectionResponse googleDirectionResponse, Response response) {
+                        callback.onSuccess(googleDirectionResponse.getData());
+                    }
 
+                    @Override
+                    public void failure(RetrofitError error) {
+                        callback.onFailure(error.getMessage());
+                    }
+                }
+        );
+    }
 }
