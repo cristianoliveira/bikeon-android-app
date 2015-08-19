@@ -14,8 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.domain.weather.Weather;
-import cc.bikeon.app.internal.validator.EmptyTextViewValidation;
-import cc.bikeon.app.internal.validator.TextViewValidator;
+import cc.bikeon.app.internal.validators.EmptyTextViewValidation;
+import cc.bikeon.app.internal.validators.TextViewValidator;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
@@ -99,6 +99,7 @@ public class LocationFragment extends Fragment implements WeatherView,
 
         if (error == null) {
             String destination = etxWhereYouGo.getText().toString();
+            etxWhereYouGo.clearFocus();
             mainActivity.showMapNavigationFragment(destination);
         } else {
             etxWhereYouGo.setError(error);

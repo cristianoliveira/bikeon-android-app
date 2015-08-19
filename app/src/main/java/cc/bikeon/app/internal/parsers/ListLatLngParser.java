@@ -12,7 +12,7 @@ import cc.bikeon.app.domain.directions.Coordinate;
  * Responsible for Parse a given set of coordinates to list of LatLng points
  * Created by cristianoliveira on 18/08/15.
  */
-public class CollectionLatLngParser implements Parser<List<LatLng>, Collection<Coordinate>> {
+public class ListLatLngParser implements Parser<List<LatLng>, Collection<Coordinate>> {
     /**
      * Parse a given set of coordinates to list of LatLng points
      * @param coordinates

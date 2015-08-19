@@ -1,8 +1,6 @@
-package cc.bikeon.app.internal.validator;
+package cc.bikeon.app.internal.validators;
 
 import android.widget.TextView;
-
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;

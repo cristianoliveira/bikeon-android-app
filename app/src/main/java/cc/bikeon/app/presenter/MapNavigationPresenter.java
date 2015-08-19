@@ -6,7 +6,7 @@ import java.util.List;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.domain.directions.Coordinate;
-import cc.bikeon.app.internal.parsers.CollectionLatLngParser;
+import cc.bikeon.app.internal.parsers.ListLatLngParser;
 import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
 import cc.bikeon.app.ui.navigation.MapNavigationView;
@@ -40,7 +40,7 @@ public class MapNavigationPresenter implements DirectionCallback {
 
     @Override
     public void onSuccess(List<Coordinate> directions) {
-        CollectionLatLngParser latLngParser = new CollectionLatLngParser();
+        ListLatLngParser latLngParser = new ListLatLngParser();
         view.setMapRoute(latLngParser.parse(directions));
     }
 

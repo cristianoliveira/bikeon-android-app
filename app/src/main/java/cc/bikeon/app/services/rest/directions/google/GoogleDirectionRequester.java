@@ -5,7 +5,7 @@ import java.util.List;
 
 import cc.bikeon.app.domain.directions.Coordinate;
 import cc.bikeon.app.domain.directions.GoogleDirection;
-import cc.bikeon.app.internal.parsers.ListCoordinateParser;
+import cc.bikeon.app.internal.extractors.DirectionsExtractor;
 import cc.bikeon.app.services.rest.RestServiceFactory;
 import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionConstants;
@@ -16,6 +16,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
+ * Responsible for manage requests for Google Directions API
+ *
  * Created by cristianoliveira on 09/06/15.
  */
 public class GoogleDirectionRequester implements DirectionRequester {
@@ -41,9 +43,9 @@ public class GoogleDirectionRequester implements DirectionRequester {
                 new Callback<GoogleDirection>() {
                     @Override
                     public void success(GoogleDirection googleDirectionResponse, Response response) {
-                        ListCoordinateParser parser = new ListCoordinateParser();
-                        List<Coordinate> coordinates = parser.parse(googleDirectionResponse.getRoutes());
-                        callback.onSuccess(coordinates);
+                        List<Coordinate> steps =
+                                new DirectionsExtractor().extractSteps(googleDirectionResponse);
+                        callback.onSuccess(steps);
                     }
 
                     @Override

@@ -1,4 +1,4 @@
-package cc.bikeon.app.internal.validator;
+package cc.bikeon.app.internal.validators;
 
 import android.widget.TextView;
 
@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class TextViewValidatorTest {
         // given
         TextView textView = mock(TextView.class);
         given(textView.getText()).willReturn("");
-        Set<Validation> validations = new HashSet<Validation>();
+        Set<Validation<TextView>> validations = new HashSet<Validation<TextView>>();
         validator = new TextViewValidator(validations);
 
         // when
@@ -53,7 +54,7 @@ public class TextViewValidatorTest {
         given(failValidate.validate(textView)).willReturn(expected);
 
 
-        Set<Validation> validations = new HashSet<Validation>();
+        Set<Validation<TextView>> validations = new HashSet<Validation<TextView>>();
         validations.add(failValidate);
         validations.add(notFailValidate);
 
@@ -72,14 +73,14 @@ public class TextViewValidatorTest {
         // given
         TextView textView = mock(TextView.class);
 
-        Validation notFailValidate = mock(Validation.class);
+        Validation<TextView> notFailValidate = mock(Validation.class);
         given(notFailValidate.validate(textView)).willReturn(null);
 
-        Validation notFailValidate2 = mock(Validation.class);
+        Validation<TextView> notFailValidate2 = mock(Validation.class);
         given(notFailValidate2.validate(textView)).willReturn(null);
 
 
-        Set<Validation> validations = new HashSet<Validation>();
+        Collection<Validation<TextView>> validations = new HashSet<Validation<TextView>>();
         validations.add(notFailValidate);
         validations.add(notFailValidate2);
 

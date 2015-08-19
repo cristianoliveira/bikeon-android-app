@@ -1,4 +1,4 @@
-package cc.bikeon.app.services.rest;
+package cc.bikeon.app.internal.parsers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,19 +11,23 @@ import retrofit.client.Response;
 /**
  * Created by cristianoliveira on 26/05/15.
  */
-public class ResponseParser {
+public class BitmapResponseParser implements Parser<Bitmap, Response> {
 
     /**
-     *
      * Method to parser Response from Rest to bitmap
      *
      * @param response
      * @return Bitmap from Body of response
      * @throws IOException can raise this exception when parse body to InputStream
      */
-    public Bitmap parseToBitmap(Response response) throws IOException {
-        InputStream in = response.getBody().in();
-        return BitmapFactory.decodeStream(in);
+    @Override
+    public Bitmap parse(Response response) {
+        InputStream in = null;
+        try {
+            in = response.getBody().in();
+            return BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            return null;
+        }
     }
-
 }

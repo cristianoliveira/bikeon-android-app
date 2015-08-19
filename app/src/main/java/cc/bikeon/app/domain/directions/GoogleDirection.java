@@ -15,13 +15,13 @@ public class GoogleDirection {
     private String status;
 
     @SerializedName("routes")
-    private List<JsonObject> routes;
+    private List<Route> routes;
 
     public String getStatus() {
         return status;
     }
 
-    public List<JsonObject> getRoutes() {
+    public List<Route> getRoutes() {
         return routes;
     }
 }

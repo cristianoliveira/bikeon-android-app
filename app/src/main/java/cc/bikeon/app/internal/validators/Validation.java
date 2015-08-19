@@ -1,6 +1,4 @@
-package cc.bikeon.app.internal.validator;
-
-import android.widget.TextView;
+package cc.bikeon.app.internal.validators;
 
 /**
  * Interface for validators

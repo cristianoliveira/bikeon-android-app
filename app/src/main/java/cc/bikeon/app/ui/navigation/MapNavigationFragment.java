@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -23,9 +24,12 @@ import cc.bikeon.app.presenter.factories.MapNavigationPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
 
 /**
+ * Fragment View that contain a navigable map.
+ *
  * Created by cristianoliveira on 06/06/15.
  */
-public class MapNavigationFragment extends MapFragment implements OnMapReadyCallback, MapNavigationView {
+public class MapNavigationFragment extends MapFragment
+                                   implements OnMapReadyCallback, MapNavigationView {
 
     private final String TAG = "MapNavigationFragment";
     private final int FIRST = 0;
@@ -52,6 +56,7 @@ public class MapNavigationFragment extends MapFragment implements OnMapReadyCall
         ButterKnife.inject(this, view);
 
         mainActivity = (MainActivity) getActivity();
+        getMapAsync(this);
 
         return view;
     }
@@ -60,20 +65,27 @@ public class MapNavigationFragment extends MapFragment implements OnMapReadyCall
     public void setMapRoute(List<LatLng> points) {
         if (googleMap != null && points != null && points.size() > 0) {
 
+            CameraPosition cameraPosition =
+                    new CameraPosition.Builder()
+                            .target(points.get(FIRST))
+                            .zoom(MapNavigationConstants.NAVIGATION_ZOOM)
+                            .build();
+
             googleMap.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(points.get(FIRST),
-                            MapNavigationConstants.NAVIGATION_ZOOM)
+                    CameraUpdateFactory.newCameraPosition(cameraPosition)
             );
 
             googleMap.animateCamera(
                     CameraUpdateFactory.zoomTo(
                             MapNavigationConstants.NAVIGATION_ZOOM),
-                            MapNavigationConstants.ZOOM_DURATION, null);
+                    MapNavigationConstants.ZOOM_DURATION, null);
 
             PolylineOptions polynesOpt = new PolylineOptions();
             polynesOpt.addAll(points);
 
             googleMap.addPolyline(polynesOpt);
+
+            googleMap.clear();
         }
     }
 
@@ -97,6 +109,12 @@ public class MapNavigationFragment extends MapFragment implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+
+        googleMap.animateCamera(
+                CameraUpdateFactory.zoomTo(
+                        MapNavigationConstants.NAVIGATION_ZOOM),
+                MapNavigationConstants.ZOOM_DURATION, null);
+
         presenter.requestDirections();
     }
 }

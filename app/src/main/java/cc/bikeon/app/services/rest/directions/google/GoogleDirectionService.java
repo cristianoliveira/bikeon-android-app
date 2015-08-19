@@ -6,6 +6,8 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
+ * Google Directions API Service interface
+ *
  * Created by cristianoliveira on 31/05/15.
  */
 public interface GoogleDirectionService {
