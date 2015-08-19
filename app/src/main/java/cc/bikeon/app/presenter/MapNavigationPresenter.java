@@ -20,13 +20,15 @@ public class MapNavigationPresenter implements DirectionCallback {
 
     private MapNavigationView view;
     private DirectionRequester directionRequester;
+    private String origin;
+    private String destination;
 
     public MapNavigationPresenter(MapNavigationView view, DirectionRequester directionRequester) {
         this.view = view;
         this.directionRequester = directionRequester;
     }
 
-    public void requestDirections(String origin, String destination){
+    public void requestDirections(){
         try {
             directionRequester.request(origin, destination, this);
         } catch (UnsupportedEncodingException uenc) {
@@ -45,9 +47,12 @@ public class MapNavigationPresenter implements DirectionCallback {
     @Override
     public void onFailure(String error) {
         view.showMessageError(
-            BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
+                BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
         );
     }
 
-
+    public void setDirections(String origin, String destination) {
+        this.origin = origin;
+        this.destination = destination;
+    }
 }
