@@ -1,5 +1,6 @@
 package cc.bikeon.app.services.rest.directions.google;
 
+import cc.bikeon.app.domain.directions.GoogleDirectionResponse;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;

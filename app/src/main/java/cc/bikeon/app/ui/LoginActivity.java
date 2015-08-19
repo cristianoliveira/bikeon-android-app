@@ -15,6 +15,7 @@ import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.presenter.LoginPresenter;
+import cc.bikeon.app.ui.main.MainActivity;
 
 public class LoginActivity extends Activity
                 implements LoginView {

@@ -1,7 +1,6 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.ui.main;
 
 import android.app.Fragment;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import cc.bikeon.app.R;
 import cc.bikeon.app.presenter.MainPresenter;
-import cc.bikeon.app.services.rest.directions.DirectionRequester;
 
 
 public class MainActivity extends AppCompatActivity
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity
     public void replaceFragmentWith(Fragment newFragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_drawer, newFragment)
+                .replace(R.id.fragment_content, newFragment)
                 .commit();
     }
 

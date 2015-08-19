@@ -46,16 +46,20 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherRespo
 
     public void requestWeatherData(Location location) {
 
-        if(location == null) {
+        if (location == null) {
             location = locationTracker.getLastKnowLocation();
         }
 
-        weatherService.getWeatherByGeo(WeatherConstants.METRIC,
-                WeatherConstants.LANGUAGE,
-                location.getLatitude(),
-                location.getLongitude(),
-                this);
-        view.setEnableRequestDirections(true);
+        if (location != null) {
+            weatherService.getWeatherByGeo(WeatherConstants.METRIC,
+                    WeatherConstants.LANGUAGE,
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    this);
+            view.setEnableRequestDirections(true);
+        } else {
+            view.showLocationRequestError();
+        }
     }
 
     @Override
@@ -78,9 +82,7 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherRespo
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location != null) {
-            requestWeatherData(location);
-        }
+        requestWeatherData(location);
     }
 
     @Override
@@ -97,7 +99,5 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherRespo
     public void onProviderDisabled(String s) {
         Log.d(TAG, "onProviderDisabled "+s);
     }
-
-
 
 }

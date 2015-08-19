@@ -1,8 +1,7 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.ui.main;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
@@ -15,10 +14,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.domain.Weather;
+import cc.bikeon.app.internal.validator.EmptyTextViewValidation;
+import cc.bikeon.app.internal.validator.TextViewValidator;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.domain.WeatherTemperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
-import cc.bikeon.app.presenter.WeatherPresenterFactory;
+import cc.bikeon.app.presenter.factories.WeatherPresenterFactory;
 import cc.bikeon.app.ui.weather.WeatherView;
 
 
@@ -32,8 +33,6 @@ import cc.bikeon.app.ui.weather.WeatherView;
  */
 public class LocationFragment extends Fragment implements WeatherView,
         View.OnClickListener {
-
-    private FragmentInteractionListner mListener;
 
     @InjectView(R.id.etxWhereYouGo)
     TextView etxWhereYouGo;
@@ -50,6 +49,7 @@ public class LocationFragment extends Fragment implements WeatherView,
     TextView txtWeatherTemperatureMax;
 
     private WeatherPresenter presenter;
+    private TextViewValidator textViewValidator;
 
     public LocationFragment() {
         super();
@@ -83,19 +83,26 @@ public class LocationFragment extends Fragment implements WeatherView,
 
         btnWhereUGo.setOnClickListener(this);
 
-        return view;
-    }
+        textViewValidator =
+                new TextViewValidator.Builder()
+                              .addValidation(new EmptyTextViewValidation("Campo deve ser informado."))
+                              .build();
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        return view;
     }
 
     @Override
     public void onClick(View view) {
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.showMapNavigationFragment(etxWhereYouGo.getText().toString());
+
+        String error = textViewValidator.validate(etxWhereYouGo);
+
+        if (error == null) {
+            String destination = etxWhereYouGo.getText().toString();
+            mainActivity.showMapNavigationFragment(destination);
+        } else {
+            etxWhereYouGo.setError(error);
+        }
     }
 
     @Override
@@ -122,6 +129,13 @@ public class LocationFragment extends Fragment implements WeatherView,
     public void showMessageOnRequestError() {
         new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.message_error_unavailable_service)
+                .show();
+    }
+
+    @Override
+    public void showLocationRequestError() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.message_error_location)
                 .show();
     }
 }

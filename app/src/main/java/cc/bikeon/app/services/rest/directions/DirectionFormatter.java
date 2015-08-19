@@ -6,9 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 /**
- *
- *
- *
+ * Responsible for format a given location
  * Created by cristianoliveira on 31/05/15.
  */
 public class DirectionFormatter {

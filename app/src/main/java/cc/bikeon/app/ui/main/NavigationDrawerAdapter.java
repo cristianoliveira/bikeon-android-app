@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.ui.main;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cc.bikeon.app.R;
+import cc.bikeon.app.domain.ui.NavigationItem;
 
 
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {

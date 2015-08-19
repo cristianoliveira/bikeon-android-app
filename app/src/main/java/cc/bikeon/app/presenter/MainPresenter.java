@@ -1,6 +1,6 @@
 package cc.bikeon.app.presenter;
 
-import cc.bikeon.app.ui.LocationFragment;
+import cc.bikeon.app.ui.main.LocationFragment;
 import cc.bikeon.app.ui.navigation.MapNavigationFragment;
 
 /**
@@ -26,6 +26,10 @@ public class MainPresenter {
         mapFragment.setDestination(destination);
 
         return mapFragment;
+    }
+
+    public void getDirections() {
+
     }
 
 }

@@ -139,6 +139,19 @@ public class WeatherPresenterTest {
     }
 
     @Test
+    public void whenLastKnowLocationIsNullItShouldRequestViewToShowError() {
+        // given
+        when(locationTracker.getLastKnowLocation()).thenReturn(null);
+
+        // when
+        weatherPresenter.requestWeatherData(null);
+
+        // then
+        verify(view).showLocationRequestError();
+
+    }
+
+    @Test
     public void whenWeatherRequestFailsItShouldShowErrorOnView() {
         // given
         RetrofitError stubRestError = mock(RetrofitError.class);
@@ -187,6 +200,7 @@ public class WeatherPresenterTest {
         // then
         verify(view).showTemperature(expectedTemperature);
     }
+
 
 
     private Location createStubLocation() {

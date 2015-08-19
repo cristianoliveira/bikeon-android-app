@@ -1,5 +1,6 @@
 package cc.bikeon.app.presenter;
 
+import com.google.android.gms.internal.ca;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
@@ -28,10 +29,14 @@ public class MapNavigationPresenter implements DirectionCallback {
         this.directionRequester = directionRequester;
     }
 
-    public void requestDirections(String origin, String destination)
-            throws UnsupportedEncodingException {
-        String googleKey = BikeOnApplication.getStringResource(R.string.google_maps_key);
-        directionRequester.request(origin, destination, this);
+    public void requestDirections(String origin, String destination){
+        try {
+            directionRequester.request(origin, destination, this);
+        } catch (UnsupportedEncodingException uenc) {
+            view.showMessageError(
+               BikeOnApplication.getStringResource(R.string.message_error_encode)
+            );
+        }
     }
 
     @Override
@@ -48,7 +53,7 @@ public class MapNavigationPresenter implements DirectionCallback {
     @Override
     public void onFailure(String error) {
         view.showMessageError(
-                BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
+             BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
         );
     }
 

@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.ui.main;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.bikeon.app.R;
+import cc.bikeon.app.domain.ui.NavigationItem;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

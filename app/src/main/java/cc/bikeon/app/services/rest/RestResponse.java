@@ -23,6 +23,6 @@ public interface RestResponse<T> {
      *
      * @return data
      */
-    public List<Coordinate> getData();
+    public List<T> getData();
 
 }

@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.domain.ui;
 
 
 import android.graphics.drawable.Drawable;
