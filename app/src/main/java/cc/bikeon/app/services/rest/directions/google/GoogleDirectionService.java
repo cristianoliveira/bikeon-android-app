@@ -1,6 +1,6 @@
 package cc.bikeon.app.services.rest.directions.google;
 
-import cc.bikeon.app.domain.directions.GoogleDirectionResponse;
+import cc.bikeon.app.domain.directions.GoogleDirection;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -16,5 +16,5 @@ public interface GoogleDirectionService {
             @Query("mode") String mode,
             @Query("origin") String origin,
             @Query("destination") String destination,
-            Callback<GoogleDirectionResponse> callback);
+            Callback<GoogleDirection> callback);
 }

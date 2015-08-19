@@ -1,6 +1,6 @@
 package cc.bikeon.app.services.rest.weather;
 
-import cc.bikeon.app.domain.WeatherResponse;
+import cc.bikeon.app.domain.weather.WeatherInformation;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.GET;
@@ -16,7 +16,7 @@ public interface WeatherService
     public void getWeather(
             @Query("lang") String language,
             @Query("q") String strCity,
-            Callback<WeatherResponse> callback);
+            Callback<WeatherInformation> callback);
 
     @GET("/data/2.5/weather")
     public void getWeatherByGeo(
@@ -24,7 +24,7 @@ public interface WeatherService
             @Query("lang") String language,
             @Query("lat") double latitude,
             @Query("lon") double longitude,
-            Callback<WeatherResponse> callback);
+            Callback<WeatherInformation> callback);
 
     @GET("/img/w/{icon}.png")
     public void getWeatherConditionIcon(@Path("icon") String icon, Callback<Response> callback);

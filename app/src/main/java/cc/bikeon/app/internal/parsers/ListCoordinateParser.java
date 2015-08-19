@@ -1,20 +1,19 @@
-package cc.bikeon.app.services.rest.directions.google;
+package cc.bikeon.app.internal.parsers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import cc.bikeon.app.domain.Coordinate;
+import cc.bikeon.app.domain.directions.Coordinate;
 
 /**
  * Responsible to parse a given JsonObject to Coordinate
  * Created by cristianoliveira on 18/08/15.
  */
-public class CoordinateParser {
+public class ListCoordinateParser implements Parser<List<Coordinate>, List<JsonObject>>{
 
     /**
      * Parse a list of JsonObjects in to a List of Coordinates

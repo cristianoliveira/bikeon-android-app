@@ -2,8 +2,6 @@ package cc.bikeon.app.services.rest;
 
 import java.util.List;
 
-import cc.bikeon.app.domain.Coordinate;
-
 /**
  * Created by cristianoliveira on 06/06/15.
  */

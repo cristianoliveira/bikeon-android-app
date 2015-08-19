@@ -2,7 +2,6 @@ package cc.bikeon.app.internal.validator;
 
 import android.widget.TextView;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -30,7 +29,7 @@ public class TextViewValidatorTest {
         // given
         TextView textView = mock(TextView.class);
         given(textView.getText()).willReturn("");
-        Set<TextViewValidation> validations = new HashSet<TextViewValidation>();
+        Set<Validation> validations = new HashSet<Validation>();
         validator = new TextViewValidator(validations);
 
         // when
@@ -47,14 +46,14 @@ public class TextViewValidatorTest {
         String expected = "Some error message";
         TextView textView = mock(TextView.class);
 
-        TextViewValidation notFailValidate = mock(TextViewValidation.class);
+        Validation notFailValidate = mock(Validation.class);
         given(notFailValidate.validate(textView)).willReturn(null);
 
-        TextViewValidation failValidate = mock(TextViewValidation.class);
+        Validation failValidate = mock(Validation.class);
         given(failValidate.validate(textView)).willReturn(expected);
 
 
-        Set<TextViewValidation> validations = new HashSet<TextViewValidation>();
+        Set<Validation> validations = new HashSet<Validation>();
         validations.add(failValidate);
         validations.add(notFailValidate);
 
@@ -73,14 +72,14 @@ public class TextViewValidatorTest {
         // given
         TextView textView = mock(TextView.class);
 
-        TextViewValidation notFailValidate = mock(TextViewValidation.class);
+        Validation notFailValidate = mock(Validation.class);
         given(notFailValidate.validate(textView)).willReturn(null);
 
-        TextViewValidation notFailValidate2 = mock(TextViewValidation.class);
+        Validation notFailValidate2 = mock(Validation.class);
         given(notFailValidate2.validate(textView)).willReturn(null);
 
 
-        Set<TextViewValidation> validations = new HashSet<TextViewValidation>();
+        Set<Validation> validations = new HashSet<Validation>();
         validations.add(notFailValidate);
         validations.add(notFailValidate2);
 

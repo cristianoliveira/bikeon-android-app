@@ -13,11 +13,11 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
-import cc.bikeon.app.domain.Weather;
+import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.internal.validator.EmptyTextViewValidation;
 import cc.bikeon.app.internal.validator.TextViewValidator;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
-import cc.bikeon.app.domain.WeatherTemperature;
+import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
 import cc.bikeon.app.presenter.factories.WeatherPresenterFactory;
 import cc.bikeon.app.ui.weather.WeatherView;
@@ -116,7 +116,7 @@ public class LocationFragment extends Fragment implements WeatherView,
     }
 
     @Override
-    public void showTemperature(WeatherTemperature temperature) {
+    public void showTemperature(Temperature temperature) {
         txtWeatherTemperature.setText(
                 WeatherFormatter.formatCelsius(temperature.getTemp()));
         txtWeatherTemperatureMax.setText(

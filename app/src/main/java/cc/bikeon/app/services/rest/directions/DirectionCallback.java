@@ -2,7 +2,7 @@ package cc.bikeon.app.services.rest.directions;
 
 import java.util.List;
 
-import cc.bikeon.app.domain.Coordinate;
+import cc.bikeon.app.domain.directions.Coordinate;
 
 /**
  * Callback for {@ling DirectionRequester.class} requests

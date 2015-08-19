@@ -6,7 +6,7 @@ import android.widget.TextView;
  * Responsible for validate empty text views.
  * Created by cristianoliveira on 18/08/15.
  */
-public class EmptyTextViewValidation implements TextViewValidation {
+public class EmptyTextViewValidation implements Validation<TextView> {
 
     private String errorMessage;
 

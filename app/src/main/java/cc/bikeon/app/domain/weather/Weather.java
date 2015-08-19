@@ -1,4 +1,4 @@
-package cc.bikeon.app.domain;
+package cc.bikeon.app.domain.weather;
 
 /**
  * Created by cristianoliveira on 12/05/15.

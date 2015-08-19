@@ -3,8 +3,9 @@ package cc.bikeon.app.services.rest.directions.google;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import cc.bikeon.app.domain.Coordinate;
-import cc.bikeon.app.domain.directions.GoogleDirectionResponse;
+import cc.bikeon.app.domain.directions.Coordinate;
+import cc.bikeon.app.domain.directions.GoogleDirection;
+import cc.bikeon.app.internal.parsers.ListCoordinateParser;
 import cc.bikeon.app.services.rest.RestServiceFactory;
 import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionConstants;
@@ -37,10 +38,10 @@ public class GoogleDirectionRequester implements DirectionRequester {
                 DirectionConstants.DIRECTION_MODE,
                 DirectionFormatter.format(origin),
                 DirectionFormatter.format(destination),
-                new Callback<GoogleDirectionResponse>() {
+                new Callback<GoogleDirection>() {
                     @Override
-                    public void success(GoogleDirectionResponse googleDirectionResponse, Response response) {
-                        CoordinateParser parser = new CoordinateParser();
+                    public void success(GoogleDirection googleDirectionResponse, Response response) {
+                        ListCoordinateParser parser = new ListCoordinateParser();
                         List<Coordinate> coordinates = parser.parse(googleDirectionResponse.getRoutes());
                         callback.onSuccess(coordinates);
                     }

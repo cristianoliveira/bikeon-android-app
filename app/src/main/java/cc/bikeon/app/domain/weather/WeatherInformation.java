@@ -1,4 +1,4 @@
-package cc.bikeon.app.domain;
+package cc.bikeon.app.domain.weather;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by cristianoliveira on 12/05/15.
  */
-public class WeatherResponse {
+public class WeatherInformation {
     @SerializedName("coord")
     private JsonObject coord;
 
@@ -19,7 +19,7 @@ public class WeatherResponse {
     private ArrayList<Weather> weather;
 
     @SerializedName("main")
-    private WeatherTemperature temperature;
+    private Temperature temperature;
 
     @SerializedName("wind")
     private JsonObject wind;
@@ -42,7 +42,7 @@ public class WeatherResponse {
         return weather;
     }
 
-    public WeatherTemperature getTemperature()
+    public Temperature getTemperature()
     {
         return temperature;
     }

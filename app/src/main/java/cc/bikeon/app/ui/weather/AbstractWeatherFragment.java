@@ -10,7 +10,7 @@ import cc.bikeon.app.R;
 import cc.bikeon.app.services.rest.RestClient;
 import cc.bikeon.app.services.rest.weather.OpenWeatherProvider;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
-import cc.bikeon.app.domain.WeatherResponse;
+import cc.bikeon.app.domain.weather.WeatherInformation;
 import cc.bikeon.app.services.rest.weather.WeatherService;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -25,7 +25,7 @@ import retrofit.client.Response;
  * Created by cristianoliveira on 28/05/15.
  */
 public abstract class AbstractWeatherFragment extends Fragment
-        implements Callback<WeatherResponse>, LocationListener {
+        implements Callback<WeatherInformation>, LocationListener {
 
     private final String TAG = "AbstractWeatherFragment";
 
@@ -38,10 +38,10 @@ public abstract class AbstractWeatherFragment extends Fragment
     }
 
     // Weather Service
-    public abstract void onWeatherResultSuccess(WeatherResponse weatherResponse, Response response);
+    public abstract void onWeatherResultSuccess(WeatherInformation weatherResponse, Response response);
 
     @Override
-    public void success(WeatherResponse weatherResponse, Response response) {
+    public void success(WeatherInformation weatherResponse, Response response) {
         onWeatherResultSuccess(weatherResponse, response);
     }
 

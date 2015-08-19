@@ -1,4 +1,4 @@
-package cc.bikeon.app.domain;
+package cc.bikeon.app.domain.directions;
 
 import com.google.gson.annotations.SerializedName;
 

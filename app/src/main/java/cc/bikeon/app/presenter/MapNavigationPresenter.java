@@ -1,15 +1,12 @@
 package cc.bikeon.app.presenter;
 
-import com.google.android.gms.internal.ca;
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
-import cc.bikeon.app.domain.Coordinate;
+import cc.bikeon.app.domain.directions.Coordinate;
+import cc.bikeon.app.internal.parsers.CollectionLatLngParser;
 import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
 import cc.bikeon.app.ui.navigation.MapNavigationView;
@@ -41,19 +38,14 @@ public class MapNavigationPresenter implements DirectionCallback {
 
     @Override
     public void onSuccess(List<Coordinate> directions) {
-        List<LatLng> points = new ArrayList<LatLng>();
-        for (int i = 0; i < directions.size(); i++) {
-            points.add(
-                    new LatLng(directions.get(i).getLatitude(), directions.get(i).getLongitude())
-            );
-        }
-        view.setMapRoute(points);
+        CollectionLatLngParser latLngParser = new CollectionLatLngParser();
+        view.setMapRoute(latLngParser.parse(directions));
     }
 
     @Override
     public void onFailure(String error) {
         view.showMessageError(
-             BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
+            BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
         );
     }
 

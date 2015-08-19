@@ -1,11 +1,11 @@
-package cc.bikeon.app.domain;
+package cc.bikeon.app.domain.weather;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by cristianoliveira on 12/05/15.
  */
-public class WeatherTemperature {
+public class Temperature {
 
     double temp;
 

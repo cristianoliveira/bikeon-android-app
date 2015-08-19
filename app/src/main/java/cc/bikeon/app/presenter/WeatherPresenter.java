@@ -4,16 +4,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import java.util.List;
 
-import cc.bikeon.app.domain.Weather;
-import cc.bikeon.app.domain.WeatherResponse;
-import cc.bikeon.app.domain.WeatherTemperature;
+import cc.bikeon.app.domain.weather.Weather;
+import cc.bikeon.app.domain.weather.WeatherInformation;
+import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
-import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.services.rest.weather.WeatherService;
 import cc.bikeon.app.ui.weather.WeatherView;
 import retrofit.Callback;
@@ -23,7 +21,7 @@ import retrofit.client.Response;
 /**
  * Created by cristianoliveira on 29/06/15.
  */
-public class WeatherPresenter implements LocationListener, Callback<WeatherResponse> {
+public class WeatherPresenter implements LocationListener, Callback<WeatherInformation> {
 
     private final String TAG = "WeatherPresenter";
 
@@ -63,13 +61,13 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherRespo
     }
 
     @Override
-    public void success(WeatherResponse weatherResponse, Response response) {
+    public void success(WeatherInformation weatherResponse, Response response) {
         List<Weather> weathers = weatherResponse.getWeather();
         if(weathers!= null){
             view.showWeather(weathers.get(0));
         }
 
-        WeatherTemperature temperature = weatherResponse.getTemperature();
+        Temperature temperature = weatherResponse.getTemperature();
         if(temperature!=null) {
             view.showTemperature(temperature);
         }

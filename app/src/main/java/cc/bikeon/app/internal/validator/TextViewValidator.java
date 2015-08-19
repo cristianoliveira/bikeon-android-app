@@ -11,9 +11,9 @@ import java.util.HashSet;
  */
 public class TextViewValidator {
 
-    private Collection<TextViewValidation> validations;
+    private Collection<Validation<TextView>> validations;
 
-    public TextViewValidator(Collection<TextViewValidation> validations) {
+    public TextViewValidator(Collection<Validation<TextView>> validations) {
         this.validations = validations;
     }
 
@@ -24,7 +24,7 @@ public class TextViewValidator {
      * @return Error Message
      */
     public String validate(TextView textView) {
-        for(TextViewValidation validation : validations) {
+        for(Validation<TextView> validation : validations) {
             String error = validation.validate(textView);
             if(error != null){
                 return error;
@@ -34,9 +34,10 @@ public class TextViewValidator {
     }
 
     public static class Builder {
-        private Collection<TextViewValidation> listOfValidations = new HashSet<TextViewValidation>();
+        private Collection<Validation<TextView>> listOfValidations =
+                new HashSet<Validation<TextView>>();
 
-        public Builder addValidation(TextViewValidation validation) {
+        public Builder addValidation(Validation<TextView> validation) {
             listOfValidations.add(validation);
             return this;
         }

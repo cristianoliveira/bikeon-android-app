@@ -11,9 +11,9 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
-import cc.bikeon.app.domain.Weather;
-import cc.bikeon.app.domain.WeatherResponse;
-import cc.bikeon.app.domain.WeatherTemperature;
+import cc.bikeon.app.domain.weather.Weather;
+import cc.bikeon.app.domain.weather.WeatherInformation;
+import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
 import cc.bikeon.app.services.rest.weather.WeatherService;
@@ -171,9 +171,9 @@ public class WeatherPresenterTest {
         ArrayList<Weather> listWeather = new ArrayList<Weather>();
         listWeather.add(expectedWeather);
 
-        WeatherTemperature weatherTemperature = new WeatherTemperature();
+        Temperature weatherTemperature = new Temperature();
 
-        WeatherResponse stubWeatherResponse = mock(WeatherResponse.class);
+        WeatherInformation stubWeatherResponse = mock(WeatherInformation.class);
         when(stubWeatherResponse.getWeather()).thenReturn(listWeather);
 
         // when
@@ -186,11 +186,11 @@ public class WeatherPresenterTest {
     @Test
     public void whenWeatherDataRequestSuccessItShouldUpdateViewTemperature() {
         // given
-        WeatherTemperature expectedTemperature = new WeatherTemperature();
+        Temperature expectedTemperature = new Temperature();
         Weather expectedWeather = new Weather();
         ArrayList<Weather> listWeather = new ArrayList<Weather>();
         listWeather.add(expectedWeather);
-        WeatherResponse stubWeatherResponse = mock(WeatherResponse.class);
+        WeatherInformation stubWeatherResponse = mock(WeatherInformation.class);
         when(stubWeatherResponse.getWeather()).thenReturn(listWeather);
         when(stubWeatherResponse.getTemperature()).thenReturn(expectedTemperature);
 
