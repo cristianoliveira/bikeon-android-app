@@ -13,7 +13,7 @@ import cc.bikeon.app.domain.directions.Leg;
 import cc.bikeon.app.domain.directions.Route;
 import cc.bikeon.app.domain.directions.Step;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -60,7 +60,7 @@ public class DirectionsExtractorTest {
         Route route = mock(Route.class);
         given(route.getLegs()).willReturn(new Leg[0]);
 
-        Route[] routes = new Route[]{ route };
+        Route[] routes = new Route[]{route};
 
         given(googleDirection.getRoutes()).willReturn(routes);
 
@@ -79,9 +79,9 @@ public class DirectionsExtractorTest {
         given(leg.getSteps()).willReturn(new Step[0]);
 
         Route route = mock(Route.class);
-        given(route.getLegs()).willReturn(new Leg[] { leg });
+        given(route.getLegs()).willReturn(new Leg[]{leg});
 
-        Route[] routes = new Route[]{ route  };
+        Route[] routes = new Route[]{route};
         given(googleDirection.getRoutes()).willReturn(routes);
 
         // when
@@ -95,13 +95,13 @@ public class DirectionsExtractorTest {
     @Test
     public void whenDirectionHasStepsItShouldReturnTheStartAndEndPointAsListOfCoordinates() {
         // given
-        Coordinate firstPoint = new Coordinate(1,1);
-        Coordinate secondPoint = new Coordinate(2,2);
-        Coordinate thirdPoint = new Coordinate(3,3);
-        Coordinate endPoint = new Coordinate(4,4);
+        Coordinate firstPoint = new Coordinate(1, 1);
+        Coordinate secondPoint = new Coordinate(2, 2);
+        Coordinate thirdPoint = new Coordinate(3, 3);
+        Coordinate endPoint = new Coordinate(4, 4);
 
         List<Coordinate> expected =
-                Lists.newArrayList(firstPoint,secondPoint, thirdPoint, endPoint);
+                Lists.newArrayList(firstPoint, secondPoint, thirdPoint, endPoint);
 
         GoogleDirection googleDirection = mock(GoogleDirection.class);
 
@@ -114,12 +114,12 @@ public class DirectionsExtractorTest {
         given(secondStep.getEndPoint()).willReturn(endPoint);
 
         Leg leg = mock(Leg.class);
-        given(leg.getSteps()).willReturn(new Step[]{ firstStep, secondStep });
+        given(leg.getSteps()).willReturn(new Step[]{firstStep, secondStep});
 
         Route route = mock(Route.class);
-        given(route.getLegs()).willReturn(new Leg[] { leg });
+        given(route.getLegs()).willReturn(new Leg[]{leg});
 
-        Route[] routes = new Route[]{ route };
+        Route[] routes = new Route[]{route};
         given(googleDirection.getRoutes()).willReturn(routes);
 
         // when
@@ -128,7 +128,6 @@ public class DirectionsExtractorTest {
         // then
         assertEquals(expected, result);
     }
-
 
 
 }

@@ -7,9 +7,9 @@ import android.util.Log;
 
 import java.util.List;
 
+import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.WeatherInformation;
-import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
 import cc.bikeon.app.services.rest.weather.WeatherService;
@@ -67,12 +67,12 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
     @Override
     public void success(WeatherInformation weatherResponse, Response response) {
         List<Weather> weathers = weatherResponse.getWeather();
-        if(weathers!= null){
+        if (weathers != null) {
             view.showWeather(weathers.get(0));
         }
 
         Temperature temperature = weatherResponse.getTemperature();
-        if(temperature!=null) {
+        if (temperature != null) {
             view.showTemperature(temperature);
         }
     }
@@ -94,12 +94,12 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
 
     @Override
     public void onProviderEnabled(String s) {
-        Log.d(TAG, "onProviderEnabled "+s);
+        Log.d(TAG, "onProviderEnabled " + s);
     }
 
     @Override
     public void onProviderDisabled(String s) {
-        Log.d(TAG, "onProviderDisabled "+s);
+        Log.d(TAG, "onProviderDisabled " + s);
     }
 
 }

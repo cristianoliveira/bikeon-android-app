@@ -5,6 +5,6 @@ package cc.bikeon.app.account;
  */
 public interface LoginStrategy {
 
-	public void doLogin(LoginCallback callback);
+    public void doLogin(LoginCallback callback);
 
 }

@@ -28,3 +28,4 @@ proguard/
 .idea
 
 **/secrets.xml
+java_pid1546.hprof

@@ -3,10 +3,6 @@ package cc.bikeon.app.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
-
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -15,6 +11,10 @@ import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.account.Session;
 import cc.bikeon.app.ui.login.LoginView;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by cristianoliveira on 30/06/15.

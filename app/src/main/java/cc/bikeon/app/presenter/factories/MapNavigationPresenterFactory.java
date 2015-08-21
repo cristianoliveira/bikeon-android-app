@@ -10,7 +10,7 @@ import cc.bikeon.app.ui.navigation.MapNavigationView;
 /**
  * Responsible for create a new instance of {@link MapNavigationPresenter} for a given
  * {@link MapNavigationView}
- *
+ * <p/>
  * Created by cristianoliveira on 18/08/15.
  */
 public class MapNavigationPresenterFactory {

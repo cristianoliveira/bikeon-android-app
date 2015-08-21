@@ -12,21 +12,18 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.robolectric.annotation.Config;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by cristianoliveira on 01/07/15.
  */
 
 @RunWith(MockitoJUnitRunner.class)
-@Config(manifest= Config.NONE)
+@Config(manifest = Config.NONE)
 public class JsonTypeAdapterTest {
 
     @Test(expected = IllegalArgumentException.class)

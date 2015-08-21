@@ -11,9 +11,9 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.WeatherInformation;
-import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
 import cc.bikeon.app.services.rest.weather.WeatherService;
@@ -34,10 +34,14 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricTestRunner.class)
 public class WeatherPresenterTest {
 
-    @Mock WeatherView view;
-    @Mock WeatherService weatherService;
-    @Mock LocationTracker locationTracker;
-    @InjectMocks WeatherPresenter weatherPresenter;
+    @Mock
+    WeatherView view;
+    @Mock
+    WeatherService weatherService;
+    @Mock
+    LocationTracker locationTracker;
+    @InjectMocks
+    WeatherPresenter weatherPresenter;
 
     @Before
     public void setUp() {
@@ -202,7 +206,6 @@ public class WeatherPresenterTest {
     }
 
 
-
     private Location createStubLocation() {
         double stubLat = 0.2;
         double stubLng = 0.5;
@@ -213,6 +216,6 @@ public class WeatherPresenterTest {
     }
 
     private Response getStubRestResponse() {
-        return new Response("http://someurl.com", 200,"a", new ArrayList<Header>(), null);
+        return new Response("http://someurl.com", 200, "a", new ArrayList<Header>(), null);
     }
 }

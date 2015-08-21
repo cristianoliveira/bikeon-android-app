@@ -11,61 +11,55 @@ import com.facebook.UiLifecycleHelper;
  */
 public class FacebookLoginStrategy extends Activity implements LoginStrategy {
 
-	private Activity activity;
-	private UiLifecycleHelper uiHelper;
+    private Activity activity;
+    private UiLifecycleHelper uiHelper;
     private FacebookSessionCallback facebookSessionCallback;
 
-	public FacebookLoginStrategy(Activity activity)
-	{
-		this.activity = activity;
-	}
+    public FacebookLoginStrategy(Activity activity) {
+        this.activity = activity;
+    }
 
-	@Override
-	public void doLogin(LoginCallback callback) {
+    @Override
+    public void doLogin(LoginCallback callback) {
 
-	    closeActiveSession();
+        closeActiveSession();
 
-		FacebookSessionCallback facebookSessionCallback  = getCallBack(callback);
+        FacebookSessionCallback facebookSessionCallback = getCallBack(callback);
 
-		uiHelper = new UiLifecycleHelper(activity, facebookSessionCallback);
+        uiHelper = new UiLifecycleHelper(activity, facebookSessionCallback);
 
-		Session.openActiveSession( activity, true, facebookSessionCallback);
+        Session.openActiveSession(activity, true, facebookSessionCallback);
 
-	}
+    }
 
-	private void closeActiveSession()
-	{
-		if(Session.getActiveSession()!= null)
-		{
-			Session.getActiveSession().closeAndClearTokenInformation();
-		}
-	}
+    private void closeActiveSession() {
+        if (Session.getActiveSession() != null) {
+            Session.getActiveSession().closeAndClearTokenInformation();
+        }
+    }
 
-    public FacebookSessionCallback getCallBack(LoginCallback callback)
-	{
-		if(facebookSessionCallback==null)
-		{
-			facebookSessionCallback = new FacebookSessionCallback(callback);
-		}
-		return facebookSessionCallback;
-	}
+    public FacebookSessionCallback getCallBack(LoginCallback callback) {
+        if (facebookSessionCallback == null) {
+            facebookSessionCallback = new FacebookSessionCallback(callback);
+        }
+        return facebookSessionCallback;
+    }
 
-	public FacebookSessionCallback getFacebookSessionCallback() {
-		return facebookSessionCallback;
-	}
+    public FacebookSessionCallback getFacebookSessionCallback() {
+        return facebookSessionCallback;
+    }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-		getUiHelper().onActivityResult(requestCode, resultCode, data);
-	}
+        getUiHelper().onActivityResult(requestCode, resultCode, data);
+    }
 
-	private UiLifecycleHelper getUiHelper()
-	{
-		if(uiHelper == null)
-			uiHelper = new UiLifecycleHelper(this, getFacebookSessionCallback());
-		return uiHelper;
-	}
+    private UiLifecycleHelper getUiHelper() {
+        if (uiHelper == null)
+            uiHelper = new UiLifecycleHelper(this, getFacebookSessionCallback());
+        return uiHelper;
+    }
 
 }

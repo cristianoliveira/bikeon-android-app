@@ -1,19 +1,13 @@
 package cc.bikeon.app.internal.parsers;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.List;
-
 import cc.bikeon.app.domain.directions.Coordinate;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link LatLngParser}

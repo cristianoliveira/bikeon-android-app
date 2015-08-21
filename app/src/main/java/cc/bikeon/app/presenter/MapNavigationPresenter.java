@@ -12,7 +12,7 @@ import cc.bikeon.app.ui.navigation.MapNavigationView;
 
 /**
  * Presenter that contain logic for map navigation manager
- *
+ * <p/>
  * Created by cristianoliveira on 29/06/15.
  */
 public class MapNavigationPresenter implements DirectionCallback {
@@ -27,12 +27,12 @@ public class MapNavigationPresenter implements DirectionCallback {
         this.directionRequester = directionRequester;
     }
 
-    public void requestDirections(){
+    public void requestDirections() {
         try {
             directionRequester.request(origin, destination, this);
         } catch (UnsupportedEncodingException uenc) {
             view.showMessageError(
-               BikeOnApplication.getStringResource(R.string.message_error_encode)
+                    BikeOnApplication.getStringResource(R.string.message_error_encode)
             );
         }
     }

@@ -29,10 +29,10 @@ public class WelcomePresenter {
 
         application.setLocationTracker(locationTracker);
 
-        if(isServiceEnabled){
+        if (isServiceEnabled) {
             view.gotoLogin();
 
-        }else {
+        } else {
             view.showError(R.string.message_error_location);
         }
 

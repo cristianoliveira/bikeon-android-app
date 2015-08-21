@@ -10,7 +10,6 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.mock;
  * Created by cristianoliveira on 18/08/15.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest= Config.NONE)
+@Config(manifest = Config.NONE)
 public class EmptyTextViewValidationTest {
 
     String errorMessage = "Some error Message";

@@ -11,7 +11,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.mock;
  * Created by cristianoliveira on 18/08/15.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest= Config.NONE)
+@Config(manifest = Config.NONE)
 public class TextViewValidatorTest {
 
     Validator validator;

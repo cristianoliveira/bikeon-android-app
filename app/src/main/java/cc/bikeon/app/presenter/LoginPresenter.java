@@ -9,7 +9,7 @@ import cc.bikeon.app.ui.login.LoginView;
 
 /**
  * Responsible to implement logic for login
- *
+ * <p/>
  * Created by cristianoliveira on 30/06/15.
  */
 public class LoginPresenter implements LoginCallback {
