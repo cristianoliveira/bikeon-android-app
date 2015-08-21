@@ -59,6 +59,7 @@
             android:name=".ui.navigation.MapNavigationActivity"
             android:label="@string/title_activity_map_navigation" >
         </activity>
+
     </application>
 
 </manifest>

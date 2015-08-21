@@ -22,8 +22,6 @@ public class LoginActivity extends Activity
 
     private final String TAG = "MainActivity";
 
-    private final int LAST_VALUE_TOP_LOGO = 30;
-
     @InjectView(R.id.logo)
     ImageView logo;
     @InjectView(R.id.btnFacebookLogin)

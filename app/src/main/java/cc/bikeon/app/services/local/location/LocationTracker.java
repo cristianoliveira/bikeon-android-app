@@ -4,10 +4,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * Responsible for handle the location service provider.
  * Created by cristianoliveira on 25/05/15.
  */
 public class LocationTracker {
@@ -18,35 +16,44 @@ public class LocationTracker {
         this.locationManager = locationManager;
     }
 
-    public LocationManager getLocationManager() {
-        return locationManager;
-    }
-
-    public void setLocationManager(LocationManager locationManager) {
-        this.locationManager = locationManager;
-    }
-
-    public boolean isGpsLocationServiceEnabled()
-    {
+    /**
+     * Verify if GPS_PROVIDER is Available / Enabled
+     *
+     * @return boolean yes / no
+     */
+    public boolean isGpsLocationServiceEnabled() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    public boolean isNetworkLocationServiceEnabled()
-    {
+    /**
+     * Verify if NETWORK_PROVIDER is Available / Enabled
+     *
+     * @return boolean yes / no
+     */
+    public boolean isNetworkLocationServiceEnabled() {
         return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    public boolean isLocationServiceEnabled()
-    {
+    /**
+     * Verify there are at least one providers Available / Enabled
+     *
+     * @return boolean yes / no
+     */
+    public boolean isLocationServiceEnabled() {
         return isGpsLocationServiceEnabled() || isNetworkLocationServiceEnabled();
     }
 
-    public boolean startListener(LocationListener locationLinstener){
+    /**
+     * Register a LocationListener to the LocationService.
+     *
+     * @param locationLinstener interface
+     * @return boolean Listener was registered?
+     */
+    public boolean startListener(LocationListener locationLinstener) {
 
         boolean isGpsEnabled = isLocationServiceEnabled();
 
-        if(isGpsLocationServiceEnabled())
-        {
+        if (isGpsLocationServiceEnabled()) {
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER
                     , LocationConstants.TIME_SECONDS_REFRESH
@@ -60,7 +67,7 @@ public class LocationTracker {
 
             return true;
 
-        }else if(isLocationServiceEnabled()){
+        } else if (isLocationServiceEnabled()) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER
                     , LocationConstants.TIME_SECONDS_REFRESH
                     , LocationConstants.MIN_DISTANCE_REFRESH
@@ -77,12 +84,15 @@ public class LocationTracker {
         return false;
     }
 
-    public Location getLastKnowLocation()
-    {
+    /**
+     * Return last cached Location
+     *
+     * @return Location if it exists one cached (can return null)
+     */
+    public Location getLastKnowLocation() {
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(location == null)
-        {
-            location =  locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location == null) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
         return location;
     }
