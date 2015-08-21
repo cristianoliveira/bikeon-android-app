@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.ui.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;

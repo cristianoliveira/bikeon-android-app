@@ -42,6 +42,10 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
         return locationTracker.getLastKnowLocation();
     }
 
+    public void requestWeatherData() {
+        requestWeatherData(null);
+    }
+
     public void requestWeatherData(Location location) {
 
         if (location == null) {

@@ -14,7 +14,7 @@ import cc.bikeon.app.R;
 import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.account.Session;
-import cc.bikeon.app.ui.LoginView;
+import cc.bikeon.app.ui.login.LoginView;
 
 /**
  * Created by cristianoliveira on 30/06/15.

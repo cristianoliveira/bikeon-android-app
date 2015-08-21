@@ -5,7 +5,7 @@ import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.FakeLoginStrategy;
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
-import cc.bikeon.app.ui.LoginView;
+import cc.bikeon.app.ui.login.LoginView;
 
 /**
  * Responsible to implement logic for login
@@ -27,7 +27,7 @@ public class LoginPresenter implements LoginCallback {
             case R.id.btnFacebookLogin:
                 loginRequester.setStrategy(new FacebookLoginStrategy(view.getActivity()));
                 break;
-            case 10:
+            case 10: //TODO remove before release
                 loginRequester.setStrategy(new FakeLoginStrategy());
                 break;
         }

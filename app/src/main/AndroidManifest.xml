@@ -15,17 +15,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".BikeOnApplication"
         android:allowBackup="true"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme"
         android:icon="@drawable/bikeon_ic"
-        
-        >
-
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -46,21 +43,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/app_name" >
         </activity>
-        <!--<activity-->
-            <!--android:name="com.facebook.FacebookActivity"-->
-            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!-- <activity -->
+        <!-- android:name="com.facebook.FacebookActivity" -->
+        <!-- android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
         <activity
             android:name=".ui.main.MainActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
         </activity>
-
-
+        <activity
+            android:name=".ui.navigation.MapNavigationActivity"
+            android:label="@string/title_activity_map_navigation" >
+        </activity>
     </application>
 
 </manifest>

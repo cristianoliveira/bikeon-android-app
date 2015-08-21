@@ -18,6 +18,9 @@ import cc.bikeon.app.domain.directions.Step;
  * Created by cristianoliveira on 19/08/15.
  */
 public class DirectionsExtractor {
+
+    private final int FIRST = 0;
+
     /**
      * Extrac steps from a GoogleDirection Structure
      * @param direction
@@ -26,22 +29,20 @@ public class DirectionsExtractor {
     public List<Coordinate> extractSteps(GoogleDirection direction) {
         List<Coordinate> directions = new ArrayList<Coordinate>();
 
-        List<Route> routes = direction.getRoutes();
+        Route[] routes = direction.getRoutes();
 
-        if (routes.size() > 0) {
-            Gson parser = new Gson();
-
-            Leg[] legs = routes.get(0).getLegs();
+        if (routes.length > 0) {
+            Leg[] legs = routes[FIRST].getLegs();
 
             if (legs.length > 0) {
 
-                for (int i = 0; i < legs.length; i++) {
+                for (int i = FIRST; i < legs.length; i++) {
                     Leg leg = legs[i];
 
                     Step[] steps = leg.getSteps();
 
-                    for (int j = 0; j < steps.length; j++) {
-                        Step step = steps[i];
+                    for (int j = FIRST; j < steps.length; j++) {
+                        Step step = steps[j];
 
                         directions.add(step.getStartPoint());
                         directions.add(step.getEndPoint());

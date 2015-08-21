@@ -1,8 +1,8 @@
 package cc.bikeon.app.ui.navigation;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +12,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import cc.bikeon.app.R;
+import cc.bikeon.app.domain.directions.Coordinate;
+import cc.bikeon.app.internal.parsers.LatLngParser;
 import cc.bikeon.app.presenter.MapNavigationPresenter;
 import cc.bikeon.app.presenter.factories.MapNavigationPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
@@ -28,7 +29,7 @@ import cc.bikeon.app.ui.main.MainActivity;
  *
  * Created by cristianoliveira on 06/06/15.
  */
-public class MapNavigationFragment extends MapFragment
+public class MapNavigationFragment extends Fragment
                                    implements OnMapReadyCallback, MapNavigationView {
 
     private final String TAG = "MapNavigationFragment";
@@ -50,30 +51,32 @@ public class MapNavigationFragment extends MapFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater,container, savedInstanceState);
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_map_navigation, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View view = inflater.inflate(R.layout.fragment_map_navigation, container, false);
         ButterKnife.inject(this, view);
 
         mainActivity = (MainActivity) getActivity();
-        getMapAsync(this);
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         return view;
     }
 
     @Override
-    public void setMapRoute(List<LatLng> points) {
-        if (googleMap != null && points != null && points.size() > 0) {
+    public void setMapRoute(List<Coordinate> points) {
+        LatLngParser parser = new LatLngParser();
+
+        if (points.size() > 0) {
 
             CameraPosition cameraPosition =
                     new CameraPosition.Builder()
-                            .target(points.get(FIRST))
+                            .target(parser.parse(points.get(FIRST)))
                             .zoom(MapNavigationConstants.NAVIGATION_ZOOM)
                             .build();
 
-            googleMap.moveCamera(
-                    CameraUpdateFactory.newCameraPosition(cameraPosition)
-            );
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
             googleMap.animateCamera(
                     CameraUpdateFactory.zoomTo(
@@ -81,11 +84,13 @@ public class MapNavigationFragment extends MapFragment
                     MapNavigationConstants.ZOOM_DURATION, null);
 
             PolylineOptions polynesOpt = new PolylineOptions();
-            polynesOpt.addAll(points);
+
+            for(Coordinate coordinate:points){
+                polynesOpt.add(parser.parse(coordinate));
+            }
+            polynesOpt.geodesic(true);
 
             googleMap.addPolyline(polynesOpt);
-
-            googleMap.clear();
         }
     }
 
@@ -109,12 +114,6 @@ public class MapNavigationFragment extends MapFragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-
-        googleMap.animateCamera(
-                CameraUpdateFactory.zoomTo(
-                        MapNavigationConstants.NAVIGATION_ZOOM),
-                MapNavigationConstants.ZOOM_DURATION, null);
-
         presenter.requestDirections();
     }
 }

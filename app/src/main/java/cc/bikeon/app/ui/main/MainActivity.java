@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_drawer);
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer,
                 (DrawerLayout) findViewById(R.id.drawer),
                 mToolbar);
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
     }
 
@@ -99,7 +97,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showMapNavigationFragment(String destination) {
-        replaceFragmentWith(presenter.getMapFragment(destination));
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_content, presenter.getMapFragment(destination))
+                .commit();
     }
 
 }

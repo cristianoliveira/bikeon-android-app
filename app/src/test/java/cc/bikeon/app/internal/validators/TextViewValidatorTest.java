@@ -16,22 +16,22 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 /**
- * Tests for class {@link TextViewValidator}
+ * Tests for class {@link Validator}
  * Created by cristianoliveira on 18/08/15.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest= Config.NONE)
 public class TextViewValidatorTest {
 
-    TextViewValidator validator;
+    Validator validator;
 
     @Test
-    public void whenListOfValidationIsNullItShouldNotValidate() {
+    public void whenListOfValidationIsNullItShouldReturnNull() {
         // given
         TextView textView = mock(TextView.class);
         given(textView.getText()).willReturn("");
         Set<Validation<TextView>> validations = new HashSet<Validation<TextView>>();
-        validator = new TextViewValidator(validations);
+        validator = new Validator(validations);
 
         // when
         String result = validator.validate(textView);
@@ -58,7 +58,7 @@ public class TextViewValidatorTest {
         validations.add(failValidate);
         validations.add(notFailValidate);
 
-        validator = new TextViewValidator(validations);
+        validator = new Validator(validations);
 
         // when
         String result = validator.validate(textView);
@@ -84,7 +84,7 @@ public class TextViewValidatorTest {
         validations.add(notFailValidate);
         validations.add(notFailValidate2);
 
-        validator = new TextViewValidator(validations);
+        validator = new Validator(validations);
 
         // when
         String result = validator.validate(textView);

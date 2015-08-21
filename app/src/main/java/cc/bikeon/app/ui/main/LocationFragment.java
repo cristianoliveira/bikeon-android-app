@@ -15,7 +15,8 @@ import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.internal.validators.EmptyTextViewValidation;
-import cc.bikeon.app.internal.validators.TextViewValidator;
+import cc.bikeon.app.internal.validators.Validator;
+import cc.bikeon.app.internal.validators.ValidatorBuilder;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
@@ -49,18 +50,10 @@ public class LocationFragment extends Fragment implements WeatherView,
     TextView txtWeatherTemperatureMax;
 
     private WeatherPresenter presenter;
-    private TextViewValidator textViewValidator;
+    private Validator textViewValidator;
 
     public LocationFragment() {
         super();
-    }
-
-    @VisibleForTesting
-    protected WeatherPresenter getWeatherPresenter() {
-        if (presenter == null) {
-            presenter = WeatherPresenterFactory.createFor(this);
-        }
-        return presenter;
     }
 
     public void setPresenter(WeatherPresenter presenter) {
@@ -79,14 +72,18 @@ public class LocationFragment extends Fragment implements WeatherView,
         View view = inflater.inflate(R.layout.fragment_location, container, false);
         ButterKnife.inject(this, view);
 
-        getWeatherPresenter().requestWeatherData(null);
+        presenter = WeatherPresenterFactory.createFor(this);
+        presenter.requestWeatherData(null);
 
         btnWhereUGo.setOnClickListener(this);
 
         textViewValidator =
-                new TextViewValidator.Builder()
+                new ValidatorBuilder<TextView>()
                               .addValidation(new EmptyTextViewValidation("Campo deve ser informado."))
                               .build();
+
+        // TODO remove after tests
+        etxWhereYouGo.setText("Porto Alegre");
 
         return view;
     }
