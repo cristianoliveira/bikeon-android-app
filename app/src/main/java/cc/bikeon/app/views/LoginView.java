@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui.login;
+package cc.bikeon.app.views;
 
 import android.app.Activity;
 

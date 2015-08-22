@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui.navigation;
+package cc.bikeon.app.views;
 
 import com.google.android.gms.maps.model.LatLng;
 

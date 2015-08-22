@@ -85,15 +85,19 @@ public class LocationTracker {
     }
 
     /**
-     * Return last cached Location
+     * Return last cached Location from enabled providers
      *
      * @return Location if it exists one cached (can return null)
      */
     public Location getLastKnowLocation() {
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location == null) {
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        for (String providerName : locationManager.getProviders(true)) {
+            Location location = locationManager.getLastKnownLocation(providerName);
+            if (location !=  null) {
+                return location;
+            }
         }
-        return location;
+
+        return null;
     }
 }

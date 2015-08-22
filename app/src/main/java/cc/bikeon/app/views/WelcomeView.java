@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui;
+package cc.bikeon.app.views;
 
 /**
  * View for welcome

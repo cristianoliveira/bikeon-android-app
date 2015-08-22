@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui.weather;
+package cc.bikeon.app.views;
 
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.Temperature;
