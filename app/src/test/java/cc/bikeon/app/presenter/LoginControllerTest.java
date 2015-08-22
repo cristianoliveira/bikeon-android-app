@@ -19,7 +19,6 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by cristianoliveira on 30/06/15.
  */
-@RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class LoginControllerTest {
 

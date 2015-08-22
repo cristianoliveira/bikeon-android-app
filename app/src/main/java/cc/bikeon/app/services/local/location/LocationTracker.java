@@ -87,7 +87,7 @@ public class LocationTracker {
     /**
      * Return last cached Location from enabled providers
      *
-     * @return Location if it exists one cached (can return null)
+     * @return Cached Location if it exists else return null.
      */
     public Location getLastKnowLocation() {
 

@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
  * Tests for {@link WeatherPresenter}
  * Created by cristianoliveira on 06/07/15.
  */
-@RunWith(RobolectricTestRunner.class)
 public class WeatherPresenterTest {
 
     @Mock
