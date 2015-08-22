@@ -23,6 +23,7 @@ import cc.bikeon.app.internal.parsers.LatLngParser;
 import cc.bikeon.app.presenter.MapNavigationPresenter;
 import cc.bikeon.app.presenter.factories.MapNavigationPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
+import cc.bikeon.app.views.MapNavigationView;
 
 /**
  * Fragment View that contain a navigable map.

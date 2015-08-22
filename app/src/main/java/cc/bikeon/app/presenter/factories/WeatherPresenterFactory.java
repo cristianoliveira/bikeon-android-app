@@ -4,7 +4,7 @@ import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.presenter.WeatherPresenter;
 import cc.bikeon.app.services.rest.weather.WeatherService;
 import cc.bikeon.app.services.rest.weather.WeatherServiceFactory;
-import cc.bikeon.app.ui.weather.WeatherView;
+import cc.bikeon.app.views.WeatherView;
 
 /**
  * Responsible for create a new instance of {@link WeatherPresenter}

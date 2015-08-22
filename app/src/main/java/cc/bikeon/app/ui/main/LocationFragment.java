@@ -3,7 +3,6 @@ package cc.bikeon.app.ui.main;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
 import cc.bikeon.app.presenter.factories.WeatherPresenterFactory;
-import cc.bikeon.app.ui.weather.WeatherView;
+import cc.bikeon.app.views.WeatherView;
 
 
 /**

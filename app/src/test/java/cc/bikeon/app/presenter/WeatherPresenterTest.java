@@ -17,7 +17,7 @@ import cc.bikeon.app.domain.weather.WeatherInformation;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.services.rest.weather.WeatherConstants;
 import cc.bikeon.app.services.rest.weather.WeatherService;
-import cc.bikeon.app.ui.weather.WeatherView;
+import cc.bikeon.app.views.WeatherView;
 import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.Response;

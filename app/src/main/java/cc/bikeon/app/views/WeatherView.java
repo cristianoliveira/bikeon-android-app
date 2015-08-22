@@ -4,6 +4,7 @@ import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.Temperature;
 
 /**
+ * View interface for Weather Presentation
  * Created by cristianoliveira on 06/07/15.
  */
 public interface WeatherView {

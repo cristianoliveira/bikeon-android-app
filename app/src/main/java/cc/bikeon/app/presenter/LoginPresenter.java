@@ -5,7 +5,7 @@ import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.FakeLoginStrategy;
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
-import cc.bikeon.app.ui.login.LoginView;
+import cc.bikeon.app.views.LoginView;
 
 /**
  * Responsible to implement logic for login

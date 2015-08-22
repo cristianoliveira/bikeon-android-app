@@ -10,7 +10,7 @@ import cc.bikeon.app.R;
 import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.account.Session;
-import cc.bikeon.app.ui.login.LoginView;
+import cc.bikeon.app.views.LoginView;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;

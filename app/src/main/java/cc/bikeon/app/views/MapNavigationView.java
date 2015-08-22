@@ -7,6 +7,7 @@ import java.util.List;
 import cc.bikeon.app.domain.directions.Coordinate;
 
 /**
+ * View interface for MapNavigation Presentation
  * Created by cristianoliveira on 01/07/15.
  */
 public interface MapNavigationView {

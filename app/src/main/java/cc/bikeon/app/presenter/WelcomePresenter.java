@@ -3,7 +3,7 @@ package cc.bikeon.app.presenter;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.services.local.location.LocationTracker;
-import cc.bikeon.app.ui.WelcomeView;
+import cc.bikeon.app.views.WelcomeView;
 
 /**
  * Presenter responsible of manage {@link WelcomeView}

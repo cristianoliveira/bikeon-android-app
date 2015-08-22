@@ -1,14 +1,21 @@
 package cc.bikeon.app.services.local.location;
 
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
+import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.List;
+
+import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyFloat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -42,10 +49,11 @@ public class LocationTrackerTest {
         locationTracker.startListener(listener);
 
         // then
-        verify(mockedLocationManager, never()).requestLocationUpdates(LocationManager.GPS_PROVIDER
-                , anyInt()
-                , anyInt()
-                , listener);
+        verify(mockedLocationManager, never()).requestLocationUpdates(
+                eq(LocationManager.GPS_PROVIDER),
+                anyLong(),
+                anyFloat(),
+                eq(listener));
     }
 
     @Test
@@ -62,10 +70,11 @@ public class LocationTrackerTest {
         locationTracker.startListener(listener);
 
         // then
-        verify(mockedLocationManager).requestLocationUpdates(LocationManager.GPS_PROVIDER
-                , anyInt()
-                , anyInt()
-                , listener);
+        verify(mockedLocationManager).requestLocationUpdates(
+                eq(LocationManager.GPS_PROVIDER),
+                anyLong(),
+                anyFloat(),
+                eq(listener));
     }
 
     @Test
@@ -83,10 +92,33 @@ public class LocationTrackerTest {
 
         // then
         verify(mockedLocationManager)
-                .requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        anyInt(),
-                        anyInt(),
-                        listener);
+                .requestLocationUpdates(
+                        eq(LocationManager.NETWORK_PROVIDER),
+                        anyLong(),
+                        anyFloat(),
+                        eq(listener));
+    }
+
+
+    @Test
+    public void itShouldReturnNullFromLastKnowLocationIfAnyProviderIsAvailable() {
+        // given
+        List<String> providers =
+                Lists.newArrayList(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER);
+        given(mockedLocationManager.getProviders(true))
+                .willReturn(providers);
+        given(mockedLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                .willReturn(false);
+        given(mockedLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+                .willReturn(false);
+
+        LocationListener listener = mock(LocationListener.class);
+
+        // when
+        Location result = locationTracker.getLastKnowLocation();
+
+        // then
+        assertNull(result);
     }
 
 }

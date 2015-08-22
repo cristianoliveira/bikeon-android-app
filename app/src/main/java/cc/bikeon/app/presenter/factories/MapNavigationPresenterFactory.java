@@ -5,7 +5,7 @@ import cc.bikeon.app.R;
 import cc.bikeon.app.presenter.MapNavigationPresenter;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
 import cc.bikeon.app.services.rest.directions.google.GoogleDirectionRequester;
-import cc.bikeon.app.ui.navigation.MapNavigationView;
+import cc.bikeon.app.views.MapNavigationView;
 
 /**
  * Responsible for create a new instance of {@link MapNavigationPresenter} for a given
