@@ -19,6 +19,9 @@
     <color name="myTextPrimaryColor">#212121</color>
     <color name="myNavigationColor">#000</color>
 
+    <!-- MAPS COLORS -->
+    <color name="map_navigation_route">#6DC6D7</color>
+
     <drawable name="pressed_gray">#0c000000</drawable>
     <drawable name="selected_gray">#2c000000</drawable>
 </resources>

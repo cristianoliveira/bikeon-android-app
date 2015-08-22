@@ -12,7 +12,6 @@ import cc.bikeon.app.domain.directions.Coordinate;
  */
 public interface MapNavigationView {
     void setMapRoute(List<Coordinate> points);
-    void showMessageError(String message);
+    void showMessageError(int stringId);
     void setDestination(String destination);
-    void showInvalidDestinationError();
 }

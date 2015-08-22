@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.when;
  * Tests for {@link WeatherPresenter}
  * Created by cristianoliveira on 06/07/15.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class WeatherPresenterTest {
 
     @Mock

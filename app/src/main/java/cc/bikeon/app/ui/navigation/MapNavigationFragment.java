@@ -26,7 +26,7 @@ import cc.bikeon.app.ui.main.MainActivity;
 import cc.bikeon.app.views.MapNavigationView;
 
 /**
- * Fragment View that contain a navigable map.
+ * Fragment UI View that contain a navigable map.
  *
  * Created by cristianoliveira on 06/06/15.
  */
@@ -69,47 +69,39 @@ public class MapNavigationFragment extends Fragment
     public void setMapRoute(List<Coordinate> points) {
         LatLngParser parser = new LatLngParser();
 
-        if (points.size() > 0) {
+        CameraPosition cameraPosition =
+                new CameraPosition.Builder()
+                        .target(parser.parse(points.get(FIRST)))
+                        .zoom(MapNavigationConstants.NAVIGATION_ZOOM)
+                        .build();
 
-            CameraPosition cameraPosition =
-                    new CameraPosition.Builder()
-                            .target(parser.parse(points.get(FIRST)))
-                            .zoom(MapNavigationConstants.NAVIGATION_ZOOM)
-                            .build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.animateCamera(
+                CameraUpdateFactory.zoomTo(
+                        MapNavigationConstants.NAVIGATION_ZOOM),
+                MapNavigationConstants.ZOOM_DURATION, null);
 
-            googleMap.animateCamera(
-                    CameraUpdateFactory.zoomTo(
-                            MapNavigationConstants.NAVIGATION_ZOOM),
-                    MapNavigationConstants.ZOOM_DURATION, null);
+        PolylineOptions polynesOpt = new PolylineOptions();
+        polynesOpt.color(R.color.map_navigation_route);
 
-            PolylineOptions polynesOpt = new PolylineOptions();
-
-            for(Coordinate coordinate:points){
-                polynesOpt.add(parser.parse(coordinate));
-            }
-            polynesOpt.geodesic(true);
-
-            googleMap.addPolyline(polynesOpt);
+        for(Coordinate coordinate:points){
+            polynesOpt.add(parser.parse(coordinate));
         }
+        polynesOpt.geodesic(true);
+
+        googleMap.addPolyline(polynesOpt);
+
     }
 
-
-
     @Override
-    public void showMessageError(String message) {
+    public void showMessageError(int message) {
         new AlertDialog.Builder(mainActivity).setMessage(message).show();
     }
 
     @Override
     public void setDestination(String destination) {
         presenter.setDirections("Canoas", destination);
-    }
-
-    @Override
-    public void showInvalidDestinationError() {
-        new AlertDialog.Builder(getActivity()).setMessage(R.string.message_error_encode).show();
     }
 
     @Override

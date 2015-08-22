@@ -31,22 +31,19 @@ public class MapNavigationPresenter implements DirectionCallback {
         try {
             directionRequester.request(origin, destination, this);
         } catch (UnsupportedEncodingException uenc) {
-            view.showMessageError(
-                    BikeOnApplication.getStringResource(R.string.message_error_encode)
-            );
+            view.showMessageError(R.string.message_error_encode);
         }
     }
 
     @Override
     public void onSuccess(List<Coordinate> directions) {
-        view.setMapRoute(directions);
+        if (!directions.isEmpty())
+            view.setMapRoute(directions);
     }
 
     @Override
     public void onFailure(String error) {
-        view.showMessageError(
-                BikeOnApplication.getStringResource(R.string.message_error_unavailable_service)
-        );
+        view.showMessageError(R.string.message_error_unavailable_service);
     }
 
     public void setDirections(String origin, String destination) {
