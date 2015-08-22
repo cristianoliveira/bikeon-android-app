@@ -10,6 +10,7 @@ import java.util.List;
 import retrofit.Callback;
 
 /**
+ * Provide a common interface for Direction Requesters
  * Created by cristianoliveira on 09/06/15.
  */
 public interface DirectionRequester {

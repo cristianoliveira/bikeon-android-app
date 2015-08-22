@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Builder for make easier to create composte validator
+ * Builder for make easier to create composed validator
  * @param <T> type of validation
  */
 public class ValidatorBuilder<T> {

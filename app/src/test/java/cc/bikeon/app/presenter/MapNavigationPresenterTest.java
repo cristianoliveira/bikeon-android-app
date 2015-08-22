@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
@@ -63,14 +62,7 @@ public class MapNavigationPresenterTest {
         // given
         final List<Coordinate> emptyResult = Lists.newArrayList();
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                DirectionCallback callback = (DirectionCallback) invocation.getArguments()[2];
-                callback.onSuccess(emptyResult);
-                return emptyResult;
-            }
-        }).when(mockedDirectionRequester).request(anyString(),
+        doAnswer(new SuccessAnswer(emptyResult)).when(mockedDirectionRequester).request(anyString(),
                 anyString(),
                 any(DirectionCallback.class));
 
@@ -87,14 +79,7 @@ public class MapNavigationPresenterTest {
         Coordinate coordinate = new Coordinate(1,1);
         final List<Coordinate> result = Lists.newArrayList(coordinate);
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                DirectionCallback callback = (DirectionCallback) invocation.getArguments()[2];
-                callback.onSuccess(result);
-                return result;
-            }
-        }).when(mockedDirectionRequester).request(anyString(),
+        doAnswer(new SuccessAnswer(result)).when(mockedDirectionRequester).request(anyString(),
                 anyString(),
                 any(DirectionCallback.class));
 
@@ -103,6 +88,52 @@ public class MapNavigationPresenterTest {
 
         // then
         verify(mockedView).setMapRoute(result);
+    }
+
+    @Test
+    public void itShouldShowErrorWhenRequestRequestFail() throws UnsupportedEncodingException {
+        // given
+        Coordinate coordinate = new Coordinate(1,1);
+        final List<Coordinate> result = Lists.newArrayList(coordinate);
+
+        doAnswer(new ErrorAnswer()).when(mockedDirectionRequester).request(anyString(),
+                anyString(),
+                any(DirectionCallback.class));
+
+        // when
+        mapNavigationPresenter.requestDirections();
+
+        // then
+        verify(mockedView).showMessageError(R.string.message_error_unavailable_service);
+    }
+
+    /** Stub Answers **/
+    private class SuccessAnswer implements Answer {
+
+        List<Coordinate> result;
+
+        public SuccessAnswer(List<Coordinate> result) {
+            this.result = result;
+        }
+
+        @Override
+        public Object answer(InvocationOnMock invocation) throws Throwable {
+            DirectionCallback callback = (DirectionCallback) invocation.getArguments()[2];
+            callback.onSuccess(result);
+            return null;
+        }
+    }
+
+    private class ErrorAnswer implements Answer {
+
+        String ERROR_MESSAGE = "Some error";
+
+        @Override
+        public Object answer(InvocationOnMock invocation) throws Throwable {
+            DirectionCallback callback = (DirectionCallback) invocation.getArguments()[2];
+            callback.onFailure(ERROR_MESSAGE);
+            return null;
+        }
     }
 
 }
