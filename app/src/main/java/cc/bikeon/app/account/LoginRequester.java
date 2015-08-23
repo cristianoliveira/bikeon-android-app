@@ -1,25 +1,18 @@
 package cc.bikeon.app.account;
 
 /**
- * Responsible to manage login request with a given
- * login strategy.
- * <p/>
+ * Responsible to request login
+ *
  * Created by cristianoliveira on 04/05/15.
  */
 public class LoginRequester {
 
-    private LoginStrategy strategy;
-    private LoginCallback callback;
-
-    public void setStrategy(LoginStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void setCallback(LoginCallback callback) {
-        this.callback = callback;
-    }
-
-    public void requestLogin() {
+    /**
+     * Request login with a given strategy and callback.
+     * @param strategy Strategy to login
+     * @param callback to request
+     */
+    public void requestLogin(LoginStrategy strategy, LoginCallback callback) {
         strategy.doLogin(callback);
     }
 }

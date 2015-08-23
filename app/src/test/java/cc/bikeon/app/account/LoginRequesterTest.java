@@ -20,11 +20,9 @@ public class LoginRequesterTest {
         LoginCallback loginCallback = mock(LoginCallback.class);
 
         LoginRequester loginRequester = new LoginRequester();
-        loginRequester.setStrategy(loginStrategy);
-        loginRequester.setCallback(loginCallback);
 
         // when
-        loginRequester.requestLogin();
+        loginRequester.requestLogin(loginStrategy, loginCallback);
 
         // then
         verify(loginStrategy).doLogin(loginCallback);

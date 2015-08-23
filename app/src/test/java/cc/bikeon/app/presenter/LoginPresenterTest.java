@@ -2,13 +2,11 @@ package cc.bikeon.app.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.FacebookLoginStrategy;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.account.LoginStrategy;
 import cc.bikeon.app.account.Session;
 import cc.bikeon.app.views.LoginView;
 
@@ -17,50 +15,39 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
+ * Tests for {@link LoginPresenter}
  * Created by cristianoliveira on 30/06/15.
  */
 @Config(manifest = Config.NONE)
-public class LoginControllerTest {
+public class LoginPresenterTest {
 
     LoginView view;
     LoginRequester loginRequester;
-    LoginPresenter loginController;
+    LoginPresenter loginPresenter;
 
     @Before
     public void setUp() {
         view = mock(LoginView.class);
         loginRequester = mock(LoginRequester.class);
-        loginController = new LoginPresenter(view, loginRequester);
+        loginPresenter = new LoginPresenter(view, loginRequester);
     }
 
     @Test
-    public void whenButtonLoginClickItShouldRequestLogin() {
+    public void itShouldRequestLoginWithAGivenStrategyUsingItSelfAsCallback() {
         // given
-        int viewId = R.id.btnFacebookLogin;
+        LoginStrategy loginStrategy = mock(LoginStrategy.class);
 
         // when
-        loginController.requestLogin(viewId);
+        loginPresenter.requestLogin(loginStrategy);
 
         // then
-        verify(loginRequester).requestLogin();
-    }
-
-    @Test
-    public void whenRequestLoginWithFacebookButtonClickItShouldSetFacebookStragy() {
-        // given
-        int viewId = R.id.btnFacebookLogin;
-
-        // when
-        loginController.requestLogin(viewId);
-
-        // then
-        verify(loginRequester).setStrategy(any(FacebookLoginStrategy.class));
+        verify(loginRequester).requestLogin(loginStrategy, loginPresenter);
     }
 
     @Test
     public void whenLoginRequestIsSuccessItShouldRequestViewChange() {
         // when
-        loginController.onLoginSuccess(mock(Session.class));
+        loginPresenter.onLoginSuccess(mock(Session.class));
 
         // then
         verify(view).gotoMainActivity();
@@ -69,13 +56,13 @@ public class LoginControllerTest {
     @Test
     public void whenLoginRequestFailItShouldShowMessageOnView() {
         // given
-        String expectedMessage = "Some message";
+        String someError = "Some message error";
 
         // when
-        loginController.onLoginError(expectedMessage);
+        loginPresenter.onLoginError(someError);
 
         // then
-        verify(view).showLoginError(expectedMessage);
+        verify(view).showError(R.string.message_error_login);
 
     }
 }
