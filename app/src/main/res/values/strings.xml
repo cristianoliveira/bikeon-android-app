@@ -40,6 +40,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="button_gps_setting_option">Configurações</string>
+    <string name="main_navigation_menu_profile">Perfil</string>
+    <string name="main_navigation_menu_prefered_routes">Rotas Preferidas</string>
+    <string name="main_navigation_menu_logout">Sair</string>
 
 
 </resources>

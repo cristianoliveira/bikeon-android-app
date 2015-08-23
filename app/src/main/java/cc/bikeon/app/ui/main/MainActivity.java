@@ -12,6 +12,9 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import cc.bikeon.app.R;
 import cc.bikeon.app.presenter.MainPresenter;
+import cc.bikeon.app.ui.main.menu.NavigationDrawerCallbacks;
+import cc.bikeon.app.ui.main.menu.NavigationDrawerFragment;
+import cc.bikeon.app.ui.main.menu.NavigationMenuItems;
 
 
 public class MainActivity extends AppCompatActivity
@@ -51,10 +54,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+    public void onNavigationDrawerItemSelected(int menuItem) {
+        switch (menuItem){
+            case NavigationMenuItems.PROFILE:
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+            case NavigationMenuItems.FAVORITE_ROUTES:
+                Toast.makeText(this, "Favorite Routes", Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     @Override
     public void onBackPressed() {

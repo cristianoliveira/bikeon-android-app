@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cc.bikeon.app.R;
@@ -32,6 +31,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
     private NavigationDrawerCallbacks mCallbacks;
+    private NavigationMenuItems navigationMenuItems;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
@@ -66,7 +66,10 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         mDrawerList.setLayoutManager(layoutManager);
         mDrawerList.setHasFixedSize(true);
 
-        final List<NavigationItem> navigationItems = getMenu();
+        navigationMenuItems = new NavigationMenuItems();
+
+        final List<NavigationItem> navigationItems = navigationMenuItems.getMenuItems(getResources());
+
         NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(navigationItems);
         adapter.setNavigationDrawerCallbacks(this);
         mDrawerList.setAdapter(adapter);
@@ -89,14 +92,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         selectItem(position);
-    }
-
-    public List<NavigationItem> getMenu() {
-        List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("Perfil", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Rotas Favoritas", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Sair", getResources().getDrawable(R.drawable.ic_menu_check)));
-        return items;
     }
 
     /**
