@@ -2,6 +2,9 @@ package cc.bikeon.app.ui.main;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +19,13 @@ import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.internal.validators.EmptyTextViewValidation;
 import cc.bikeon.app.internal.validators.Validator;
 import cc.bikeon.app.internal.validators.ValidatorBuilder;
+import cc.bikeon.app.presenter.LocationPresenter;
+import cc.bikeon.app.presenter.factories.LocationPresenterFactory;
 import cc.bikeon.app.services.rest.weather.WeatherFormatter;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.presenter.WeatherPresenter;
 import cc.bikeon.app.presenter.factories.WeatherPresenterFactory;
+import cc.bikeon.app.views.LocationView;
 import cc.bikeon.app.views.WeatherView;
 
 
@@ -31,7 +37,7 @@ import cc.bikeon.app.views.WeatherView;
  *  Also is the first fragment after login
  *
  */
-public class LocationFragment extends Fragment implements WeatherView,
+public class LocationFragment extends Fragment implements WeatherView, LocationView,
         View.OnClickListener {
 
     @InjectView(R.id.etxWhereYouGo)
@@ -48,15 +54,12 @@ public class LocationFragment extends Fragment implements WeatherView,
     @InjectView(R.id.txtWeatherTemperatureMax)
     TextView txtWeatherTemperatureMax;
 
-    private WeatherPresenter presenter;
+    private WeatherPresenter weatherPresenter;
+    private LocationPresenter locationPresenter;
     private Validator textViewValidator;
 
     public LocationFragment() {
         super();
-    }
-
-    public void setPresenter(WeatherPresenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -71,8 +74,10 @@ public class LocationFragment extends Fragment implements WeatherView,
         View view = inflater.inflate(R.layout.fragment_location, container, false);
         ButterKnife.inject(this, view);
 
-        presenter = WeatherPresenterFactory.createFor(this);
-        presenter.requestWeatherData(null);
+        locationPresenter = LocationPresenterFactory.createFor(this);
+        weatherPresenter = WeatherPresenterFactory.createFor(this);
+
+        locationPresenter.startListen();
 
         btnWhereUGo.setOnClickListener(this);
 
@@ -124,15 +129,46 @@ public class LocationFragment extends Fragment implements WeatherView,
 
     @Override
     public void showMessageOnRequestError() {
-        new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.message_error_unavailable_service)
-                .show();
+        if (isVisible()) {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.message_error_unavailable_service)
+                    .show();
+        }
     }
 
     @Override
-    public void showLocationRequestError() {
-        new AlertDialog.Builder(getActivity())
+    public void onUpdateLocation(Location location) {
+        weatherPresenter.requestWeatherData(location);
+    }
+
+    @Override
+    public void onProviderChange(String s) {
+
+    }
+
+    @Override
+    public void showMessageLocationServiceDisabled() {
+        new AlertDialog
+                .Builder(getActivity())
                 .setMessage(R.string.message_error_location)
+                .setNeutralButton(getString(R.string.button_gps_setting_option), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getActivity().finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        getActivity().finish();
+                    }
+                });
+    }
+
+    @Override
+    public void showError(int resId) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(resId)
                 .show();
     }
 }

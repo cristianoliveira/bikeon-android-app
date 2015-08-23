@@ -12,5 +12,5 @@ public interface WeatherView {
     void showWeather(Weather weather);
     void showTemperature(Temperature temperature);
     void showMessageOnRequestError();
-    void showLocationRequestError();
+    void showError(int messageId);
 }

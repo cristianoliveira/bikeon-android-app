@@ -16,7 +16,6 @@ public class BikeOnApplication extends Application {
 
     private final String TAG = "BikeOnApplication";
 
-    private LocationTracker locationTracker;
     private static Session facebookSession;
 
     private static BikeOnApplication instance;
@@ -34,23 +33,6 @@ public class BikeOnApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-    }
-
-    public LocationTracker getLocationTracker() {
-
-        if (locationTracker == null)
-        {
-            LocationManager locationManager = (LocationManager)
-                    this.getSystemService(Context.LOCATION_SERVICE);
-
-            locationTracker = new LocationTracker(locationManager);
-        }
-
-        return locationTracker;
-    }
-
-    public void setLocationTracker(LocationTracker locationTracker) {
-        this.locationTracker = locationTracker;
     }
 
     public static void setFacebookSession(Session session)

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import cc.bikeon.app.R;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.WeatherInformation;
@@ -19,6 +20,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
+ * Contain logic for a Weather View
+ *
  * Created by cristianoliveira on 29/06/15.
  */
 public class WeatherPresenter implements LocationListener, Callback<WeatherInformation> {
@@ -27,31 +30,13 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
 
     private WeatherView view;
     private WeatherService weatherService;
-    private LocationTracker locationTracker;
 
-    public WeatherPresenter(WeatherView view, WeatherService weatherService,
-                            LocationTracker locationTracker) {
+    public WeatherPresenter(WeatherView view, WeatherService weatherService) {
         this.view = view;
         this.weatherService = weatherService;
-        this.locationTracker = locationTracker;
-        view.setEnableRequestDirections(false);
-        locationTracker.startListener(this);
-    }
-
-    public Location getLastLocation() {
-        return locationTracker.getLastKnowLocation();
-    }
-
-    public void requestWeatherData() {
-        requestWeatherData(null);
     }
 
     public void requestWeatherData(Location location) {
-
-        if (location == null) {
-            location = locationTracker.getLastKnowLocation();
-        }
-
         if (location != null) {
             weatherService.getWeatherByGeo(WeatherConstants.METRIC,
                     WeatherConstants.LANGUAGE,
@@ -60,8 +45,9 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
                     this);
             view.setEnableRequestDirections(true);
         } else {
-            view.showLocationRequestError();
+            view.showError(R.string.message_error_location);
         }
+
     }
 
     @Override

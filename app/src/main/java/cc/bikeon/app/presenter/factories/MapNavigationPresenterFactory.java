@@ -14,6 +14,12 @@ import cc.bikeon.app.views.MapNavigationView;
  * Created by cristianoliveira on 18/08/15.
  */
 public class MapNavigationPresenterFactory {
+
+    /**
+     * Create Presenter for a given View
+     * @param view
+     * @return new Instance of MapNavigationPresenter
+     */
     public static MapNavigationPresenter createFor(MapNavigationView view) {
 
         DirectionRequester requester =

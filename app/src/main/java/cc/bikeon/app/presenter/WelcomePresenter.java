@@ -3,6 +3,7 @@ package cc.bikeon.app.presenter;
 import cc.bikeon.app.BikeOnApplication;
 import cc.bikeon.app.R;
 import cc.bikeon.app.services.local.location.LocationTracker;
+import cc.bikeon.app.services.local.location.LocationTrakerFactory;
 import cc.bikeon.app.views.WelcomeView;
 
 /**
@@ -24,10 +25,9 @@ public class WelcomePresenter {
 
         BikeOnApplication application = BikeOnApplication.getInstance();
 
-        LocationTracker locationTracker = application.getLocationTracker();
-        boolean isServiceEnabled = locationTracker.isLocationServiceEnabled();
+        LocationTracker locationTracker = LocationTrakerFactory.create(application);
 
-        application.setLocationTracker(locationTracker);
+        boolean isServiceEnabled = locationTracker.isLocationServiceEnabled();
 
         if (isServiceEnabled) {
             view.gotoLogin();

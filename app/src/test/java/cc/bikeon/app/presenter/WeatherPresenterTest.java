@@ -12,6 +12,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import cc.bikeon.app.R;
 import cc.bikeon.app.domain.weather.Temperature;
 import cc.bikeon.app.domain.weather.Weather;
 import cc.bikeon.app.domain.weather.WeatherInformation;
@@ -44,55 +45,16 @@ public class WeatherPresenterTest {
     @InjectMocks
     WeatherPresenter weatherPresenter;
 
-    @Before
-    public void setUp() {
-        view = mock(WeatherView.class);
-        weatherService = mock(WeatherService.class);
-        locationTracker = mock(LocationTracker.class);
-        weatherPresenter = new WeatherPresenter(view, weatherService, locationTracker);
-    }
-
     @Test
-    public void whenCreateNewWeatherPresenterItShouldStartToListnenLocation() {
+    public void whenRequestWeatherDataWithNullLocationItShouldShowError() {
         // given
-        LocationTracker mockedLocationTracker = mock(LocationTracker.class);
+        Location location = null;
 
         // when
-        weatherPresenter = new WeatherPresenter(view, weatherService, mockedLocationTracker);
+        weatherPresenter.requestWeatherData(location);
 
         // then
-        verify(mockedLocationTracker).startListener(weatherPresenter);
-    }
-
-    @Test
-    public void whenRequestLocationItshouldRetrieveLastKnowLocation() {
-        // given
-        Location expectedLocation = createStubLocation();
-        when(locationTracker.getLastKnowLocation()).thenReturn(expectedLocation);
-
-        // when
-        Location result = weatherPresenter.getLastLocation();
-
-        // then
-        assertEquals(expectedLocation, result);
-    }
-
-    @Test
-    public void whenRequestWeatherDataItShouldUseLastKnowLocationAsDefault() {
-        // given
-        Location expectedLocation = createStubLocation();
-
-        when(locationTracker.getLastKnowLocation()).thenReturn(expectedLocation);
-
-        // when
-        weatherPresenter.requestWeatherData(null);
-
-        // then
-        verify(weatherService).getWeatherByGeo(WeatherConstants.METRIC,
-                WeatherConstants.LANGUAGE,
-                expectedLocation.getLatitude(),
-                expectedLocation.getLongitude(),
-                weatherPresenter);
+        verify(view).showError(R.string.message_error_location);
     }
 
     @Test
@@ -141,19 +103,6 @@ public class WeatherPresenterTest {
 
         // then
         verify(view).setEnableRequestDirections(true);
-    }
-
-    @Test
-    public void whenLastKnowLocationIsNullItShouldRequestViewToShowError() {
-        // given
-        when(locationTracker.getLastKnowLocation()).thenReturn(null);
-
-        // when
-        weatherPresenter.requestWeatherData(null);
-
-        // then
-        verify(view).showLocationRequestError();
-
     }
 
     @Test

@@ -19,8 +19,7 @@ public class WeatherPresenterFactory {
      * @return new instance of presenter
      */
     public static WeatherPresenter createFor(WeatherView view) {
-        BikeOnApplication application = BikeOnApplication.getInstance();
         WeatherService service = WeatherServiceFactory.createWeatherService();
-        return new WeatherPresenter(view, service, application.getLocationTracker());
+        return new WeatherPresenter(view, service);
     }
 }
