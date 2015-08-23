@@ -12,7 +12,7 @@ import cc.bikeon.app.views.MapNavigationView;
 
 /**
  * Presenter that contain logic for map navigation manager
- * <p/>
+ *
  * Created by cristianoliveira on 29/06/15.
  */
 public class MapNavigationPresenter implements DirectionCallback {

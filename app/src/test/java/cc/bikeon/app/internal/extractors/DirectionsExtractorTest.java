@@ -34,20 +34,19 @@ public class DirectionsExtractorTest {
     @Test(expected = NullPointerException.class)
     public void whenReceiveNullDirectionItShouldRaiseNullPointerException() {
         // given
-        GoogleDirection googleDirection = null;
+        List<Route> googleDirection = null;
 
         // when
-        List<Coordinate> result = directionsExtractor.extractSteps(googleDirection);
+        List<Coordinate> result = directionsExtractor.extract(googleDirection);
     }
 
     @Test
     public void whenDirectionHasNoRouteItShouldReturnEmptyList() {
         // given
-        GoogleDirection googleDirection = mock(GoogleDirection.class);
-        given(googleDirection.getRoutes()).willReturn(new Route[0]);
+        List<Route> googleDirection = Lists.newArrayList();
 
         // when
-        List<Coordinate> result = directionsExtractor.extractSteps(googleDirection);
+        List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
         assertEquals(emptyList, result);
@@ -56,16 +55,14 @@ public class DirectionsExtractorTest {
     @Test
     public void whenRouteHasNoLegsItShouldReturnEmptyList() {
         // given
-        GoogleDirection googleDirection = mock(GoogleDirection.class);
+        List<Route> googleDirection = Lists.newArrayList();
         Route route = mock(Route.class);
         given(route.getLegs()).willReturn(new Leg[0]);
 
-        Route[] routes = new Route[]{route};
-
-        given(googleDirection.getRoutes()).willReturn(routes);
+        googleDirection.add(route);
 
         // when
-        List<Coordinate> result = directionsExtractor.extractSteps(googleDirection);
+        List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
         assertEquals(emptyList, result);
@@ -74,18 +71,17 @@ public class DirectionsExtractorTest {
     @Test
     public void whenLegsHasNoStepsItShouldReturnEmptyList() {
         // given
-        GoogleDirection googleDirection = mock(GoogleDirection.class);
+        List<Route> googleDirection = Lists.newArrayList();
         Leg leg = mock(Leg.class);
         given(leg.getSteps()).willReturn(new Step[0]);
 
         Route route = mock(Route.class);
         given(route.getLegs()).willReturn(new Leg[]{leg});
 
-        Route[] routes = new Route[]{route};
-        given(googleDirection.getRoutes()).willReturn(routes);
+        googleDirection.add(route);
 
         // when
-        List<Coordinate> result = directionsExtractor.extractSteps(googleDirection);
+        List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
         assertEquals(emptyList, result);
@@ -103,7 +99,7 @@ public class DirectionsExtractorTest {
         List<Coordinate> expected =
                 Lists.newArrayList(firstPoint, secondPoint, thirdPoint, endPoint);
 
-        GoogleDirection googleDirection = mock(GoogleDirection.class);
+        List<Route> googleDirection = Lists.newArrayList();
 
         Step firstStep = mock(Step.class);
         given(firstStep.getStartPoint()).willReturn(firstPoint);
@@ -119,11 +115,10 @@ public class DirectionsExtractorTest {
         Route route = mock(Route.class);
         given(route.getLegs()).willReturn(new Leg[]{leg});
 
-        Route[] routes = new Route[]{route};
-        given(googleDirection.getRoutes()).willReturn(routes);
+        googleDirection.add(route);
 
         // when
-        List<Coordinate> result = directionsExtractor.extractSteps(googleDirection);
+        List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
         assertEquals(expected, result);

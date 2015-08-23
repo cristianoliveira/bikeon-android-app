@@ -92,10 +92,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    public void showLocationFragment() {
-        replaceFragmentWith(presenter.getLocationFragment());
-    }
-
     public void showMapNavigationFragment(String destination) {
         getFragmentManager()
                 .beginTransaction()

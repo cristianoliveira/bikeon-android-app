@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import cc.bikeon.app.domain.directions.Coordinate;
@@ -17,31 +18,28 @@ import cc.bikeon.app.domain.directions.Step;
  * Responsible for extract formatted data from a Direction
  * Created by cristianoliveira on 19/08/15.
  */
-public class DirectionsExtractor {
-
-    private final int FIRST = 0;
+public class DirectionsExtractor implements Extractor<List<Coordinate>, Collection<Route>> {
 
     /**
-     * Extrac steps from a GoogleDirection Structure
-     * @param direction
-     * @return list of coordinates
+     * Extract Coordination Points from a Collection of Routes
+     * @param Collection<Routes> of roiutes
+     * @return list of coordinates or empty if has no routes.
      */
-    public List<Coordinate> extractSteps(GoogleDirection direction) {
+    public List<Coordinate> extract(Collection<Route> routes) {
         List<Coordinate> directions = new ArrayList<Coordinate>();
 
-        Route[] routes = direction.getRoutes();
-
-        if (routes.length > 0) {
-            Leg[] legs = routes[FIRST].getLegs();
+        if (!routes.isEmpty()) {
+            Route route = (Route) routes.iterator().next();
+            Leg[] legs = route.getLegs();
 
             if (legs.length > 0) {
 
-                for (int i = FIRST; i < legs.length; i++) {
+                for (int i = 0; i < legs.length; i++) {
                     Leg leg = legs[i];
 
                     Step[] steps = leg.getSteps();
 
-                    for (int j = FIRST; j < steps.length; j++) {
+                    for (int j = 0; j < steps.length; j++) {
                         Step step = steps[j];
 
                         directions.add(step.getStartPoint());
@@ -52,6 +50,5 @@ public class DirectionsExtractor {
             }
         }
         return directions;
-
     }
 }

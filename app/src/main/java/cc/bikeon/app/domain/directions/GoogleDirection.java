@@ -3,6 +3,7 @@ package cc.bikeon.app.domain.directions;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,13 +16,13 @@ public class GoogleDirection {
     private String status;
 
     @SerializedName("routes")
-    private Route[] routes;
+    private Collection<Route> routes;
 
     public String getStatus() {
         return status;
     }
 
-    public Route[] getRoutes() {
+    public Collection<Route> getRoutes() {
         return routes;
     }
 }

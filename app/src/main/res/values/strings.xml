@@ -39,6 +39,7 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="button_gps_setting_option">Configurações</string>
 
 
 </resources>
