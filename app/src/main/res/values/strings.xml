@@ -43,6 +43,7 @@
     <string name="main_navigation_menu_profile">Perfil</string>
     <string name="main_navigation_menu_prefered_routes">Rotas Preferidas</string>
     <string name="main_navigation_menu_logout">Sair</string>
+    <string name="button_cancel">Cancelar</string>
 
 
 </resources>

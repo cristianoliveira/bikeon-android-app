@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,6 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
         locationPresenter = LocationPresenterFactory.createFor(this);
         weatherPresenter = WeatherPresenterFactory.createFor(this);
 
-        locationPresenter.startListen();
-
         btnWhereUGo.setOnClickListener(this);
 
         textViewValidator =
@@ -86,10 +85,18 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
                               .addValidation(new EmptyTextViewValidation("Campo deve ser informado."))
                               .build();
 
+
+
         // TODO remove after tests
         etxWhereYouGo.setText("Porto Alegre");
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        locationPresenter.startListen();
     }
 
     @Override
@@ -129,7 +136,7 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
 
     @Override
     public void showMessageOnRequestError() {
-        if (isVisible()) {
+        if (isResumed()) {
             new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.message_error_unavailable_service)
                     .show();
@@ -148,27 +155,32 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
 
     @Override
     public void showMessageLocationServiceDisabled() {
-        new AlertDialog
-                .Builder(getActivity())
-                .setMessage(R.string.message_error_location)
-                .setNeutralButton(getString(R.string.button_gps_setting_option), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        getActivity().finish();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        getActivity().finish();
-                    }
-                });
+        if(isResumed()) {
+            new AlertDialog
+                    .Builder(getActivity())
+                    .setMessage(R.string.message_error_location)
+                    .setPositiveButton(getString(R.string.button_gps_setting_option), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent settings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(settings);
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getActivity().finish();
+                        }
+                    }).show();
+        }
     }
 
     @Override
     public void showError(int resId) {
-        new AlertDialog.Builder(getActivity())
-                .setMessage(resId)
-                .show();
+        if (isResumed()) {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(resId)
+                    .show();
+        }
     }
 }

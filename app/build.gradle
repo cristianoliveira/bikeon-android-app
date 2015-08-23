@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     dexOptions {
@@ -27,6 +28,7 @@ android {
 
     lintOptions {
         warning 'InvalidPackage'
+        abortOnError false
     }
 
     packagingOptions {

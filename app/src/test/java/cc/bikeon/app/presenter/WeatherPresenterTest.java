@@ -25,7 +25,12 @@ import retrofit.client.Header;
 import retrofit.client.Response;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +51,7 @@ public class WeatherPresenterTest {
     WeatherPresenter weatherPresenter;
 
     @Test
-    public void whenRequestWeatherDataWithNullLocationItShouldShowError() {
+    public void whenRequestWeatherDataWithNullLocationItShouldNotRequestWeatherData() {
         // given
         Location location = null;
 
@@ -54,7 +59,12 @@ public class WeatherPresenterTest {
         weatherPresenter.requestWeatherData(location);
 
         // then
-        verify(view).showError(R.string.message_error_location);
+        verify(weatherService, never())
+                .getWeatherByGeo(anyString(),
+                        anyString(),
+                        anyDouble(),
+                        anyDouble(),
+                        any(WeatherPresenter.class));
     }
 
     @Test

@@ -20,8 +20,7 @@ public class BikeOnApplication extends Application {
 
     private static BikeOnApplication instance;
 
-    public static BikeOnApplication getInstance()
-    {
+    public static BikeOnApplication getInstance() {
         return instance;
     }
 

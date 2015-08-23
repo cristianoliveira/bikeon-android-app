@@ -44,10 +44,7 @@ public class WeatherPresenter implements LocationListener, Callback<WeatherInfor
                     location.getLongitude(),
                     this);
             view.setEnableRequestDirections(true);
-        } else {
-            view.showError(R.string.message_error_location);
         }
-
     }
 
     @Override
