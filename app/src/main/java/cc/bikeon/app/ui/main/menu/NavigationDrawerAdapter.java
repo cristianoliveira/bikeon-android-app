@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui.main;
+package cc.bikeon.app.ui.main.menu;
 
 
 import android.support.v7.widget.RecyclerView;

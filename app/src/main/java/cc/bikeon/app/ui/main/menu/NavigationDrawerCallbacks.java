@@ -1,4 +1,4 @@
-package cc.bikeon.app.ui.main;
+package cc.bikeon.app.ui.main.menu;
 
 public interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);
