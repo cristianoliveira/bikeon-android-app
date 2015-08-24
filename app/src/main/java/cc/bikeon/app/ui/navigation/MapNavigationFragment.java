@@ -95,7 +95,7 @@ public class MapNavigationFragment extends Fragment
     }
 
     @Override
-    public void showMessageError(int message) {
+    public void showError(int message) {
         new AlertDialog.Builder(mainActivity).setMessage(message).show();
     }
 

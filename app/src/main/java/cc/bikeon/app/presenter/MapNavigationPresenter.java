@@ -31,7 +31,7 @@ public class MapNavigationPresenter implements DirectionCallback {
         try {
             directionRequester.request(origin, destination, this);
         } catch (UnsupportedEncodingException uenc) {
-            view.showMessageError(R.string.message_error_encode);
+            view.showError(R.string.message_error_encode);
         }
     }
 
@@ -43,7 +43,7 @@ public class MapNavigationPresenter implements DirectionCallback {
 
     @Override
     public void onFailure(String error) {
-        view.showMessageError(R.string.message_error_unavailable_service);
+        view.showError(R.string.message_error_unavailable_service);
     }
 
     public void setDirections(String origin, String destination) {

@@ -7,10 +7,9 @@ import cc.bikeon.app.domain.weather.Temperature;
  * View interface for Weather Presentation
  * Created by cristianoliveira on 06/07/15.
  */
-public interface WeatherView {
+public interface WeatherView extends View {
     void setEnableRequestDirections(boolean isEnabled);
     void showWeather(Weather weather);
     void showTemperature(Temperature temperature);
     void showMessageOnRequestError();
-    void showError(int messageId);
 }

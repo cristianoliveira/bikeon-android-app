@@ -54,7 +54,7 @@ public class MapNavigationPresenterTest {
         mapNavigationPresenter.requestDirections();
 
         // then
-        verify(mockedView).showMessageError(R.string.message_error_encode);
+        verify(mockedView).showError(R.string.message_error_encode);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class MapNavigationPresenterTest {
         mapNavigationPresenter.requestDirections();
 
         // then
-        verify(mockedView).showMessageError(R.string.message_error_unavailable_service);
+        verify(mockedView).showError(R.string.message_error_unavailable_service);
     }
 
     /** Stub Answers **/

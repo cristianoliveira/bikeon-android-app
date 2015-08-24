@@ -24,7 +24,7 @@ import retrofit.client.Response;
  *
  * Created by cristianoliveira on 29/06/15.
  */
-public class WeatherPresenter implements LocationListener, Callback<WeatherInformation> {
+public class WeatherPresenter implements Presenter<WeatherView>, LocationListener, Callback<WeatherInformation> {
 
     private final String TAG = "WeatherPresenter";
 

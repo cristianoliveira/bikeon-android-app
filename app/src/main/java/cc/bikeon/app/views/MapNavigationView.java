@@ -10,8 +10,7 @@ import cc.bikeon.app.domain.directions.Coordinate;
  * View interface for MapNavigation Presentation
  * Created by cristianoliveira on 01/07/15.
  */
-public interface MapNavigationView {
+public interface MapNavigationView extends View {
     void setMapRoute(List<Coordinate> points);
-    void showMessageError(int stringId);
     void setDestination(String destination);
 }

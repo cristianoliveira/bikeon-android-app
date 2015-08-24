@@ -1,6 +1,7 @@
 package cc.bikeon.app.presenter.factories;
 
 import cc.bikeon.app.BikeOnApplication;
+import cc.bikeon.app.presenter.Presenter;
 import cc.bikeon.app.presenter.WeatherPresenter;
 import cc.bikeon.app.services.rest.weather.WeatherService;
 import cc.bikeon.app.services.rest.weather.WeatherServiceFactory;

@@ -35,4 +35,8 @@ public class LoginPresenter implements LoginCallback {
         view.showError(R.string.message_error_login);
     }
 
+    public void validateSession() {
+
+        onLoginSuccess(null);
+    }
 }
