@@ -33,17 +33,14 @@
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_map_navigation">Bike GO</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="button_gps_setting_option">Configurações</string>
+    <string name="button_cancel">Cancelar</string>
+
     <string name="main_navigation_menu_profile">Perfil</string>
     <string name="main_navigation_menu_prefered_routes">Rotas Preferidas</string>
     <string name="main_navigation_menu_logout">Sair</string>
-    <string name="button_cancel">Cancelar</string>
 
 
 </resources>
