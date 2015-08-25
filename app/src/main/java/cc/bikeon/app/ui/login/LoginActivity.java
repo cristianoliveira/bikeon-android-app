@@ -12,11 +12,11 @@ import android.widget.ImageView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.FacebookLoginStrategy;
-import cc.bikeon.app.account.FakeLoginStrategy;
-import cc.bikeon.app.account.LoginStrategy;
+import cc.bikeon.app.account.facebook.FacebookLoginRequester;
+import cc.bikeon.app.account.facebook.FacebookSessionCallback;
+import cc.bikeon.app.account.facebook.FakeLoginRequester;
+import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.presenter.LoginPresenter;
-import cc.bikeon.app.presenter.factories.LoginPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
 import cc.bikeon.app.views.LoginView;
 
@@ -35,7 +35,7 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-        presenter = LoginPresenterFactory.createFor(this);
+        presenter = new LoginPresenter(this);
     }
 
     @Override
@@ -73,17 +73,18 @@ public class LoginActivity extends Activity
 
     @Override
     public void onClick(View view) {
-        LoginStrategy loginStrategy = null;
+        LoginRequester loginRequester = null;
 
         switch (view.getId()) {
             case R.id.btnFacebookLogin:
-                loginStrategy = new FacebookLoginStrategy(getActivity());
+                loginRequester =
+                        new FacebookLoginRequester(new FacebookSessionCallback());
                 break;
         }
 
         //TODO remove after tests
-        loginStrategy = new FakeLoginStrategy();
+        loginRequester = new FakeLoginRequester();
 
-        presenter.requestLogin(loginStrategy);
+        presenter.requestLogin(loginRequester);
     }
 }

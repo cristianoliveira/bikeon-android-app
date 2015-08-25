@@ -3,7 +3,6 @@ package cc.bikeon.app.presenter;
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
-import cc.bikeon.app.account.LoginStrategy;
 import cc.bikeon.app.views.LoginView;
 
 /**
@@ -13,16 +12,14 @@ import cc.bikeon.app.views.LoginView;
  */
 public class LoginPresenter implements LoginCallback {
 
-    private LoginRequester loginRequester;
     private LoginView view;
 
-    public LoginPresenter(LoginView view, LoginRequester loginRequester) {
+    public LoginPresenter(LoginView view) {
         this.view = view;
-        this.loginRequester = loginRequester;
     }
 
-    public void requestLogin(LoginStrategy loginStrategy) {
-        loginRequester.requestLogin(loginStrategy, this);
+    public void requestLogin(LoginRequester loginRequester) {
+        loginRequester.doLogin(this);
     }
 
     @Override

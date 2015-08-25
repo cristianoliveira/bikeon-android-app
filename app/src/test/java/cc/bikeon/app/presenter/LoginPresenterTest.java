@@ -6,11 +6,8 @@ import org.robolectric.annotation.Config;
 
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.LoginRequester;
-import cc.bikeon.app.account.LoginStrategy;
-import cc.bikeon.app.account.Session;
 import cc.bikeon.app.views.LoginView;
 
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -22,32 +19,30 @@ import static org.mockito.Mockito.verify;
 public class LoginPresenterTest {
 
     LoginView view;
-    LoginRequester loginRequester;
     LoginPresenter loginPresenter;
 
     @Before
     public void setUp() {
         view = mock(LoginView.class);
-        loginRequester = mock(LoginRequester.class);
-        loginPresenter = new LoginPresenter(view, loginRequester);
+        loginPresenter = new LoginPresenter(view);
     }
 
     @Test
     public void itShouldRequestLoginWithAGivenStrategyUsingItSelfAsCallback() {
         // given
-        LoginStrategy loginStrategy = mock(LoginStrategy.class);
+        LoginRequester loginRequester = mock(LoginRequester.class);
 
         // when
-        loginPresenter.requestLogin(loginStrategy);
+        loginPresenter.requestLogin(loginRequester);
 
         // then
-        verify(loginRequester).requestLogin(loginStrategy, loginPresenter);
+        verify(loginRequester).doLogin(loginPresenter);
     }
 
     @Test
     public void whenLoginRequestIsSuccessItShouldRequestViewChange() {
         // when
-        loginPresenter.onLoginSuccess(mock(Session.class));
+        loginPresenter.onLoginSuccess(null);
 
         // then
         verify(view).gotoMainActivity();

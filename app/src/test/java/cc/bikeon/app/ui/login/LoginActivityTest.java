@@ -1,5 +1,6 @@
 package cc.bikeon.app.ui.login;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
@@ -16,9 +17,9 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class LoginActivityTest {
 
+    @Test
     public void itShouldShowLoginOptionsWhenUserHasNoSession() {
-
-
+        assertTrue(true); //TODO implement.
     }
 
 }
