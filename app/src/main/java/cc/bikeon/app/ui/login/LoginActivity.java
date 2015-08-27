@@ -12,11 +12,12 @@ import android.widget.ImageView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.facebook.FacebookLoginRequester;
-import cc.bikeon.app.account.facebook.FacebookSessionCallback;
-import cc.bikeon.app.account.facebook.FakeLoginRequester;
+import cc.bikeon.app.account.requesters.FacebookLoginRequester;
+import cc.bikeon.app.account.callbacks.FacebookSessionCallback;
+import cc.bikeon.app.account.requesters.BikeOnLoginRequester;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.presenter.LoginPresenter;
+import cc.bikeon.app.presenter.factories.LoginPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
 import cc.bikeon.app.views.LoginView;
 
@@ -35,13 +36,15 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-        presenter = new LoginPresenter(this);
+        presenter = LoginPresenterFactory.createFor(this, getApplicationContext());
+
+        btnFacebookLogin.setOnClickListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.validateSession();
+        presenter.verifySession();
     }
 
     /**
@@ -83,7 +86,7 @@ public class LoginActivity extends Activity
         }
 
         //TODO remove after tests
-        loginRequester = new FakeLoginRequester();
+        loginRequester = new BikeOnLoginRequester();
 
         presenter.requestLogin(loginRequester);
     }

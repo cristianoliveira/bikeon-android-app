@@ -10,8 +10,13 @@ public class FacebookSession implements SessionAccount {
 
     private Session session;
 
-    public FacebookSession(Session session) {
-        this.session = session;
+    public FacebookSession() {
+        this.session = Session.getActiveSession();
+    }
+
+    @Override
+    public SessionProvider getProvider() {
+        return SessionProvider.FACEBOOK;
     }
 
     @Override

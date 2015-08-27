@@ -1,4 +1,4 @@
-package cc.bikeon.app.account.facebook;
+package cc.bikeon.app.account.requesters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,9 +8,10 @@ import com.facebook.UiLifecycleHelper;
 
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.account.callbacks.FacebookSessionCallback;
 
 /**
- * Facebook Implementation of Login Strategy.
+ * Facebook Implementation of Login Requester.
  * Created by cristianoliveira on 04/05/15.
  */
 public class FacebookLoginRequester extends Activity implements LoginRequester {

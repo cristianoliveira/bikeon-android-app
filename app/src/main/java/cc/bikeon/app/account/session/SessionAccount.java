@@ -7,6 +7,12 @@ package cc.bikeon.app.account.session;
 public interface SessionAccount {
 
     /**
+     * Return Provider for this session account.
+     * @return Provider
+     */
+    SessionProvider getProvider();
+
+    /**
      * Close current session if it exists
      */
     void closeSession();
@@ -16,4 +22,10 @@ public interface SessionAccount {
      * @return
      */
     boolean hasSessionActive();
+
+
+    /**
+     * Retrieve token
+     */
+    String getToken();
 }

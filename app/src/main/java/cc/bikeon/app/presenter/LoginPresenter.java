@@ -3,6 +3,8 @@ package cc.bikeon.app.presenter;
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.account.session.SessionAccount;
+import cc.bikeon.app.account.session.SessionManager;
 import cc.bikeon.app.views.LoginView;
 
 /**
@@ -13,9 +15,19 @@ import cc.bikeon.app.views.LoginView;
 public class LoginPresenter implements LoginCallback {
 
     private LoginView view;
+    private SessionManager sessionManager;
 
-    public LoginPresenter(LoginView view) {
+    public LoginPresenter(LoginView view, SessionManager sessionManager) {
         this.view = view;
+        this.sessionManager = sessionManager;
+    }
+
+    public void verifySession() {
+        SessionAccount sessionAccount = sessionManager.getCurrentSession();
+
+        if (sessionAccount.hasSessionActive()) {
+            view.gotoMainActivity();
+        }
     }
 
     public void requestLogin(LoginRequester loginRequester) {
@@ -23,8 +35,13 @@ public class LoginPresenter implements LoginCallback {
     }
 
     @Override
-    public void onLoginSuccess(Object SessionType) {
-        view.gotoMainActivity();
+    public void onLoginSuccess(SessionAccount session) {
+        if (session != null) {
+            sessionManager.saveCurrentProvider(session);
+            view.gotoMainActivity();
+        } else {
+            view.showError(R.string.message_error_login);
+        }
     }
 
     @Override
@@ -32,8 +49,4 @@ public class LoginPresenter implements LoginCallback {
         view.showError(R.string.message_error_login);
     }
 
-    public void validateSession() {
-
-        onLoginSuccess(null);
-    }
 }
