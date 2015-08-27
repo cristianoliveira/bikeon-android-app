@@ -47,7 +47,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void whenLoginRequestRespondNullItShouldShowErrorMessage() {
+    public void itShouldShowErrorMessageWhenLoginRequestRespondNull() {
         // when
         loginPresenter.onLoginSuccess(null);
 
@@ -57,7 +57,7 @@ public class LoginPresenterTest {
 
 
     @Test
-    public void whenLoginRequestIsSuccessSessionManagerShouldSaveSessionProvider() {
+    public void itShouldSaveSessionProviderWhenLoginRequestIsSuccessSessionManager() {
         // given
         SessionAccount sessionAccount = mock(SessionAccount.class);
         given(sessionAccount.getProvider()).willReturn(SessionProvider.BIKEON);
@@ -70,7 +70,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void whenHasNoActiveSessionItShouldNotGoToMain() {
+    public void itShouldNotGoToMainWhenHasNoActiveSession() {
         // given
         SessionAccount notActiveSession = mock(SessionAccount.class);
         given(notActiveSession.hasSessionActive()).willReturn(false);
@@ -85,7 +85,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void whenHasActiveSessionItShouldGoToMain() {
+    public void itShouldGoToMainWhenHasActiveSession() {
         // given
         SessionAccount activeSession = mock(SessionAccount.class);
         given(activeSession.hasSessionActive()).willReturn(true);
@@ -100,7 +100,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void whenLoginRequestIsSuccessItShouldGoToMain() {
+    public void itShouldGoToMainWhenLoginRequestIsSuccess() {
         // given
         SessionAccount sessionAccount = mock(SessionAccount.class);
         given(sessionAccount.getProvider()).willReturn(SessionProvider.BIKEON);
@@ -113,7 +113,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void whenLoginRequestFailItShouldShowErrorMessageOnView() {
+    public void itShouldShowErrorMessageOnViewWhenLoginRequestFail() {
         // given
         String someError = "Some message error";
 
@@ -122,6 +122,35 @@ public class LoginPresenterTest {
 
         // then
         verify(view).showError(R.string.message_error_login);
+    }
+
+    @Test
+    public void itShouldNotRedirectToMainIfHasNoSessionActive() {
+        // given
+        SessionAccount closedSession = mock(SessionAccount.class);
+        given(closedSession.hasSessionActive()).willReturn(false);
+        given(sessionManager.getCurrentSession()).willReturn(closedSession);
+
+        // when
+        loginPresenter.verifySession();
+
+        // then
+        verify(view, never()).gotoMainActivity();
+
+    }
+
+    @Test
+    public void itShouldRedirectToMainIfHasSessionActive() {
+        // given
+        SessionAccount activeSession = mock(SessionAccount.class);
+        given(activeSession.hasSessionActive()).willReturn(true);
+        given(sessionManager.getCurrentSession()).willReturn(activeSession);
+
+        // when
+        loginPresenter.verifySession();
+
+        // then
+        verify(view).gotoMainActivity();
 
     }
 }

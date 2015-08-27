@@ -14,10 +14,6 @@ import cc.bikeon.app.services.local.location.LocationTracker;
  */
 public class BikeOnApplication extends Application {
 
-    private final String TAG = "BikeOnApplication";
-
-    private static Session facebookSession;
-
     private static BikeOnApplication instance;
 
     public static BikeOnApplication getInstance() {
@@ -32,26 +28,6 @@ public class BikeOnApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-    }
-
-    public static void setFacebookSession(Session session)
-    {
-        facebookSession = session;
-    }
-
-    public static Session getFacebookSession()
-    {
-        return facebookSession;
-    }
-
-    public static boolean hasSessionOpen()
-    {
-        return facebookSession!=null? facebookSession.isOpened() : false;
-    }
-
-    public static boolean isSessionClosed()
-    {
-        return facebookSession!=null? facebookSession.isClosed() : true;
     }
 
 }

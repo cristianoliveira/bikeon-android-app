@@ -10,21 +10,27 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import cc.bikeon.app.R;
 import cc.bikeon.app.presenter.MainPresenter;
 import cc.bikeon.app.ui.main.menu.NavigationDrawerCallbacks;
 import cc.bikeon.app.ui.main.menu.NavigationDrawerFragment;
 import cc.bikeon.app.ui.main.menu.NavigationMenuItems;
+import cc.bikeon.app.views.MainView;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationDrawerCallbacks {
+        implements MainView, NavigationDrawerCallbacks {
 
 
     private static final String TAG = "MainActivity";
 
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar mToolbar;
+    @InjectView(R.id.toolbar_actionbar)
+    Toolbar mToolbar;
+
+    NavigationDrawerFragment mNavigationDrawerFragment;
+    @InjectView(R.id.drawer)
+    DrawerLayout drawerLayout;
 
     private MainPresenter presenter;
 
@@ -32,20 +38,24 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+
+        ButterKnife.inject(this);
+
         setSupportActionBar(mToolbar);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_drawer);
 
-        mNavigationDrawerFragment.setup(R.id.fragment_drawer,
-                (DrawerLayout) findViewById(R.id.drawer),
+
+        mNavigationDrawerFragment.setup(
+                R.id.fragment_drawer,
+                drawerLayout,
                 mToolbar);
 
         mNavigationDrawerFragment.closeDrawer();
 
-        ButterKnife.inject(this);
-        presenter = new MainPresenter();
+
+        presenter = new MainPresenter(this);
         replaceFragmentWith(presenter.getLocationFragment());
     }
 
@@ -58,8 +68,13 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem){
             case NavigationMenuItems.PROFILE:
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+                break;
             case NavigationMenuItems.FAVORITE_ROUTES:
                 Toast.makeText(this, "Favorite Routes", Toast.LENGTH_SHORT).show();
+                break;
+            case NavigationMenuItems.LOGOUT:
+                presenter.doLogout(getBaseContext());
+
         }
     }
 
@@ -100,10 +115,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showMapNavigationFragment(String destination) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_content, presenter.getMapFragment(destination))
-                .commit();
+        replaceFragmentWith(presenter.getMapFragment(destination));
     }
 
+    @Override
+    public void onLogout() {
+        finish();
+    }
 }
