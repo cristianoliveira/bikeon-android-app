@@ -73,7 +73,7 @@ public class LoginPresenterTest {
     public void itShouldNotGoToMainWhenHasNoActiveSession() {
         // given
         SessionAccount notActiveSession = mock(SessionAccount.class);
-        given(notActiveSession.hasSessionActive()).willReturn(false);
+        given(notActiveSession.isActive()).willReturn(false);
 
         given(sessionManager.getCurrentSession()).willReturn(notActiveSession);
 
@@ -88,7 +88,7 @@ public class LoginPresenterTest {
     public void itShouldGoToMainWhenHasActiveSession() {
         // given
         SessionAccount activeSession = mock(SessionAccount.class);
-        given(activeSession.hasSessionActive()).willReturn(true);
+        given(activeSession.isActive()).willReturn(true);
 
         given(sessionManager.getCurrentSession()).willReturn(activeSession);
 
@@ -128,7 +128,7 @@ public class LoginPresenterTest {
     public void itShouldNotRedirectToMainIfHasNoSessionActive() {
         // given
         SessionAccount closedSession = mock(SessionAccount.class);
-        given(closedSession.hasSessionActive()).willReturn(false);
+        given(closedSession.isActive()).willReturn(false);
         given(sessionManager.getCurrentSession()).willReturn(closedSession);
 
         // when
@@ -143,7 +143,7 @@ public class LoginPresenterTest {
     public void itShouldRedirectToMainIfHasSessionActive() {
         // given
         SessionAccount activeSession = mock(SessionAccount.class);
-        given(activeSession.hasSessionActive()).willReturn(true);
+        given(activeSession.isActive()).willReturn(true);
         given(sessionManager.getCurrentSession()).willReturn(activeSession);
 
         // when

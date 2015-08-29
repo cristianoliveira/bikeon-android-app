@@ -8,6 +8,7 @@ import java.util.List;
 import cc.bikeon.app.domain.directions.Coordinate;
 import cc.bikeon.app.domain.directions.GoogleDirection;
 import cc.bikeon.app.domain.directions.Route;
+import cc.bikeon.app.internal.decoder.PolylinePointDecoder;
 import cc.bikeon.app.internal.extractors.DirectionsExtractor;
 import cc.bikeon.app.internal.extractors.Extractor;
 import cc.bikeon.app.services.rest.RestServiceFactory;
@@ -47,7 +48,8 @@ public class GoogleDirectionRequester implements DirectionRequester {
                 new Callback<GoogleDirection>() {
                     @Override
                     public void success(GoogleDirection googleDirectionResponse, Response response) {
-                        DirectionsExtractor extractor = new DirectionsExtractor();
+                        PolylinePointDecoder decoder = new PolylinePointDecoder();
+                        DirectionsExtractor extractor = new DirectionsExtractor(decoder);
                         List<Coordinate> steps =
                                 extractor.extract(googleDirectionResponse.getRoutes());
                         callback.onSuccess(steps);

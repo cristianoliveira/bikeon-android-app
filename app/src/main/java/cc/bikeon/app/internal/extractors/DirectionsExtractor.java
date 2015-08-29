@@ -1,18 +1,14 @@
 package cc.bikeon.app.internal.extractors;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import cc.bikeon.app.domain.directions.Coordinate;
-import cc.bikeon.app.domain.directions.GoogleDirection;
 import cc.bikeon.app.domain.directions.Leg;
 import cc.bikeon.app.domain.directions.Route;
 import cc.bikeon.app.domain.directions.Step;
+import cc.bikeon.app.internal.decoder.PolylinePointDecoder;
 
 /**
  * Responsible for extract formatted data from a Direction
@@ -20,6 +16,12 @@ import cc.bikeon.app.domain.directions.Step;
  */
 public class DirectionsExtractor implements Extractor<List<Coordinate>, Collection<Route>> {
 
+
+    private final PolylinePointDecoder polylinePointDecoder;
+
+    public DirectionsExtractor(PolylinePointDecoder polylinePointDecoder) {
+        this.polylinePointDecoder = polylinePointDecoder;
+    }
     /**
      * Extract Coordination Points from a Collection of Routes
      * @param Collection<Routes> of roiutes
@@ -38,11 +40,14 @@ public class DirectionsExtractor implements Extractor<List<Coordinate>, Collecti
                     Leg leg = legs[i];
 
                     Step[] steps = leg.getSteps();
-
+ 
                     for (int j = 0; j < steps.length; j++) {
                         Step step = steps[j];
 
                         directions.add(step.getStartPoint());
+
+                        directions.addAll(polylinePointDecoder.decode(step.getEncodedPoints()));
+
                         directions.add(step.getEndPoint());
 
                     }

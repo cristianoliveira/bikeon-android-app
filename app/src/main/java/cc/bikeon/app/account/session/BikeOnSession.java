@@ -30,14 +30,14 @@ public class BikeOnSession implements SessionAccount {
     }
 
     @Override
-    public void closeSession() {
+    public void close() {
         SharedPreferences.Editor editor = getEditor();
         editor.putBoolean(SESSION, false);
         editor.commit();
     }
 
     @Override
-    public boolean hasSessionActive() {
+    public boolean isActive() {
         Application application = BikeOnApplication.getInstance();
         SharedPreferences preferences =
                 application.getSharedPreferences(SESSION, application.MODE_PRIVATE);

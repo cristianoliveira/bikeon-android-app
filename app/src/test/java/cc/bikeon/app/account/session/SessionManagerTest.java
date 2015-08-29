@@ -68,7 +68,7 @@ public class SessionManagerTest {
     }
 
     @Test
-    public void itShouldReturnTrueWhenProviderWasNotSaved() {
+    public void itShouldReturnFalseWhenProviderWasNotSaved() {
         // given
         SessionAccount sessionAccount = new BikeOnSession();
 

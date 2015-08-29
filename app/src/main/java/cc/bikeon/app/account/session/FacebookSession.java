@@ -14,18 +14,22 @@ public class FacebookSession implements SessionAccount {
         this.session = Session.getActiveSession();
     }
 
+    public FacebookSession(Session session) {
+        this.session = session;
+    }
+
     @Override
     public SessionProvider getProvider() {
         return SessionProvider.FACEBOOK;
     }
 
     @Override
-    public void closeSession() {
+    public void close() {
         session.close();
     }
 
     @Override
-    public boolean hasSessionActive() {
+    public boolean isActive() {
         return session != null? session.isOpened() : false;
     }
 

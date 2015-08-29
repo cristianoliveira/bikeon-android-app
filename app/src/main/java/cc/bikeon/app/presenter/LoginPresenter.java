@@ -25,7 +25,7 @@ public class LoginPresenter implements LoginCallback {
     public void verifySession() {
         SessionAccount sessionAccount = sessionManager.getCurrentSession();
 
-        if (sessionAccount.hasSessionActive()) {
+        if (sessionAccount.isActive()) {
             view.gotoMainActivity();
         }
     }

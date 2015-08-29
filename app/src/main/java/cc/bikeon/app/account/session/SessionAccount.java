@@ -15,13 +15,13 @@ public interface SessionAccount {
     /**
      * Close current session if it exists
      */
-    void closeSession();
+    void close();
 
     /**
      * Verify if has an Active Session.
      * @return
      */
-    boolean hasSessionActive();
+    boolean isActive();
 
 
     /**

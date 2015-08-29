@@ -22,7 +22,7 @@ public class FacebookSessionCallback implements Session.StatusCallback {
     @Override
     public void call(Session session, SessionState sessionState, Exception e) {
         if (session.isOpened()) {
-            SessionAccount sessionAccount = new FacebookSession();
+            SessionAccount sessionAccount = new FacebookSession(session);
             callback.onLoginSuccess(sessionAccount);
         } else {
             if (e != null) {

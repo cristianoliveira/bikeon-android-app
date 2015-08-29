@@ -4,6 +4,10 @@ import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
@@ -12,8 +16,10 @@ import cc.bikeon.app.domain.directions.GoogleDirection;
 import cc.bikeon.app.domain.directions.Leg;
 import cc.bikeon.app.domain.directions.Route;
 import cc.bikeon.app.domain.directions.Step;
+import cc.bikeon.app.internal.decoder.PolylinePointDecoder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -21,15 +27,13 @@ import static org.mockito.Mockito.mock;
  * Tests for {@link DirectionsExtractor}
  * Created by cristianoliveira on 21/08/15.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DirectionsExtractorTest {
 
+    @Mock
+    PolylinePointDecoder polylinePointDecoder;
+    @InjectMocks
     DirectionsExtractor directionsExtractor;
-    List<Coordinate> emptyList = Lists.newArrayList();
-
-    @Before
-    public void setUp() {
-        directionsExtractor = new DirectionsExtractor();
-    }
 
     @Test(expected = NullPointerException.class)
     public void whenReceiveNullDirectionItShouldRaiseNullPointerException() {
@@ -49,7 +53,7 @@ public class DirectionsExtractorTest {
         List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
-        assertEquals(emptyList, result);
+        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -65,7 +69,7 @@ public class DirectionsExtractorTest {
         List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
-        assertEquals(emptyList, result);
+        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -84,7 +88,7 @@ public class DirectionsExtractorTest {
         List<Coordinate> result = directionsExtractor.extract(googleDirection);
 
         // then
-        assertEquals(emptyList, result);
+        assertTrue(result.isEmpty());
     }
 
 

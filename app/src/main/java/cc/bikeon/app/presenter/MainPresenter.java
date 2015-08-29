@@ -54,7 +54,7 @@ public class MainPresenter {
                 );
 
         SessionAccount sessionAccount = sessionManager.getCurrentSession();
-        sessionAccount.closeSession();
+        sessionAccount.close();
 
         view.onLogout();
     }
