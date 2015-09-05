@@ -23,9 +23,10 @@ public class MainPresenter {
         this.view = view;
     }
 
-    public LocationFragment getLocationFragment() {
+    public LocationFragment getLocationFragment(LocationFragment.DestinationListener selectListener) {
         if (locationFragment == null) {
             locationFragment = new LocationFragment();
+            locationFragment.setDestinationListener(selectListener);
         }
         return locationFragment;
     }
@@ -53,8 +54,7 @@ public class MainPresenter {
                                 context.MODE_PRIVATE)
                 );
 
-        SessionAccount sessionAccount = sessionManager.getCurrentSession();
-        sessionAccount.close();
+        sessionManager.closeSession();
 
         view.onLogout();
     }

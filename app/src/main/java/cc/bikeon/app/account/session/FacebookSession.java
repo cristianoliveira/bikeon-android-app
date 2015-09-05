@@ -1,20 +1,25 @@
 package cc.bikeon.app.account.session;
 
-import com.facebook.Session;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+
+import cc.bikeon.app.BikeOnApplication;
 
 /**
- * Facebook implementation of SessionAccount
+ * Facebook implementation of SessionAccount for Facebook SDK 4.0
  * Created by cristianoliveira on 24/08/15.
  */
 public class FacebookSession implements SessionAccount {
 
-    private Session session;
+    private AccessToken session;
 
     public FacebookSession() {
-        this.session = Session.getActiveSession();
+        FacebookSdk.sdkInitialize(BikeOnApplication.getInstance());
+        this.session = AccessToken.getCurrentAccessToken();
     }
 
-    public FacebookSession(Session session) {
+    public FacebookSession(AccessToken session) {
         this.session = session;
     }
 
@@ -25,17 +30,18 @@ public class FacebookSession implements SessionAccount {
 
     @Override
     public void close() {
-        session.close();
+        LoginManager login = LoginManager.getInstance();
+        login.logOut();
     }
 
     @Override
     public boolean isActive() {
-        return session != null? session.isOpened() : false;
+        return session != null? true : false;
     }
 
     @Override
     public String getToken() {
-        return session.getAccessToken();
+        return session.getToken();
     }
 
 }

@@ -22,12 +22,12 @@ public class WelcomeActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        presenter = new WelcomePresenter(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter = new WelcomePresenter(this);
         presenter.verifyLocation();
     }
 
@@ -66,6 +66,8 @@ public class WelcomeActivity extends Activity
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
                     }
-                }).show();
+                })
+                .setCancelable(false)
+                .show();
     }
 }

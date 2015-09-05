@@ -20,7 +20,7 @@ import cc.bikeon.app.views.MainView;
 
 
 public class MainActivity extends AppCompatActivity
-        implements MainView, NavigationDrawerCallbacks {
+        implements MainView, NavigationDrawerCallbacks, LocationFragment.DestinationListener {
 
 
     private static final String TAG = "MainActivity";
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
 
 
         presenter = new MainPresenter(this);
-        replaceFragmentWith(presenter.getLocationFragment());
+        replaceFragmentWith(presenter.getLocationFragment(this));
     }
 
     public MainPresenter getPresenter() {
@@ -114,12 +114,13 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    public void showMapNavigationFragment(String destination) {
-        replaceFragmentWith(presenter.getMapFragment(destination));
-    }
-
     @Override
     public void onLogout() {
         finish();
+    }
+
+    @Override
+    public void onDestinationSelect(String destination) {
+        replaceFragmentWith(presenter.getMapFragment(destination));
     }
 }

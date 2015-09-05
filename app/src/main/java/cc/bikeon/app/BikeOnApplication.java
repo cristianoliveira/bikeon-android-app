@@ -1,13 +1,6 @@
 package cc.bikeon.app;
 
 import android.app.Application;
-import android.content.Context;
-import android.location.LocationManager;
-
-import com.facebook.Session;
-
-import cc.bikeon.app.services.local.location.LocationTracker;
-
 
 /**
  * Created by cristian.rosa on 1/19/2015.

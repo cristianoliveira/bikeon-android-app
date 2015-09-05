@@ -4,10 +4,14 @@ import android.content.SharedPreferences;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -15,7 +19,7 @@ import static org.mockito.Mockito.verify;
  * Tests for {@link SessionManager}
  * Created by cristianoliveira on 24/08/15.
  */
-
+@RunWith(RobolectricTestRunner.class)
 public class SessionManagerTest {
 
     SharedPreferences sharedPreferences;
@@ -88,7 +92,7 @@ public class SessionManagerTest {
         // given
         SessionProvider provider = SessionProvider.BIKEON;
 
-        given(sharedPreferences.getString(SessionManager.SESSION_PROVIDER, null))
+        given(sharedPreferences.getString(eq(SessionManager.SESSION_PROVIDER), anyString()))
                 .willReturn(provider.toString());
 
         // when
@@ -103,7 +107,7 @@ public class SessionManagerTest {
         // given
         SessionProvider provider = SessionProvider.FACEBOOK;
 
-        given(sharedPreferences.getString(SessionManager.SESSION_PROVIDER, null))
+        given(sharedPreferences.getString(eq(SessionManager.SESSION_PROVIDER), anyString()))
                 .willReturn(provider.toString());
 
         // when
@@ -111,6 +115,21 @@ public class SessionManagerTest {
 
         // then
         assertTrue(result instanceof FacebookSession);
+    }
+
+
+    @Test
+    public void itShouldRemovedataSessionWhenCloseSession() {
+        // given
+        SharedPreferences.Editor mockedEditor = mock(SharedPreferences.Editor.class);
+        given(sharedPreferences.edit()).willReturn(mockedEditor);
+        given(mockedEditor.commit()).willReturn(false);
+
+        // when
+        sessionManager.closeSession();
+
+        // then
+        verify(mockedEditor).remove(SessionManager.SHARED_SESSION_PREFERENCE);
     }
 
 

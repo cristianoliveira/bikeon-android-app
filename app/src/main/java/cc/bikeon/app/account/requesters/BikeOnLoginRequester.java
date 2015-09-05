@@ -1,5 +1,7 @@
 package cc.bikeon.app.account.requesters;
 
+import android.content.Intent;
+
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.LoginRequester;
 import cc.bikeon.app.account.session.BikeOnSession;
@@ -16,4 +18,8 @@ public class BikeOnLoginRequester implements LoginRequester {
         session.open();
         callback.onLoginSuccess(session);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {}
+
 }

@@ -58,6 +58,7 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
     private WeatherPresenter weatherPresenter;
     private LocationPresenter locationPresenter;
     private Validator textViewValidator;
+    private DestinationListener onLocationListener;
 
     public LocationFragment() {
         super();
@@ -101,17 +102,19 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
 
     @Override
     public void onClick(View view) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-
         String error = textViewValidator.validate(etxWhereYouGo);
 
         if (error == null) {
             String destination = etxWhereYouGo.getText().toString();
             etxWhereYouGo.clearFocus();
-            mainActivity.showMapNavigationFragment(destination);
+            onLocationListener.onDestinationSelect(destination);
         } else {
             etxWhereYouGo.setError(error);
         }
+    }
+
+    public void setTextViewValidator(Validator validator) {
+        this.textViewValidator = validator;
     }
 
     @Override
@@ -182,5 +185,20 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
                     .setMessage(resId)
                     .show();
         }
+    }
+
+    /**
+     * Set listener for Destination Selection.
+     * @param destinationListener The listener to receive destinations.
+     */
+    public void setDestinationListener(DestinationListener destinationListener) {
+        this.onLocationListener = destinationListener;
+    }
+
+    /**
+     * Public interface to implement Destination Listener
+     */
+    public interface DestinationListener {
+        void onDestinationSelect(String destionation);
     }
 }
