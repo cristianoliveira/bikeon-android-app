@@ -1,33 +1,36 @@
 package cc.bikeon.app.account.callbacks;
 
-import com.facebook.Session;
-import com.facebook.SessionState;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
 
 import cc.bikeon.app.account.LoginCallback;
 import cc.bikeon.app.account.session.FacebookSession;
-import cc.bikeon.app.account.session.SessionAccount;
 
 /**
  * Facebook Callback responsible to handle Facebook Login Request.
  * Created by cristianoliveira on 05/05/15.
  */
-public class FacebookSessionCallback implements Session.StatusCallback {
+public class FacebookSessionCallback implements FacebookCallback<LoginResult> {
 
-    LoginCallback callback;
+    private LoginCallback loginCallback;
 
-    public void delegateTo(LoginCallback callback) {
-        this.callback = callback;
+    public void delegate(LoginCallback loginCallback) {
+        this.loginCallback = loginCallback;
     }
 
     @Override
-    public void call(Session session, SessionState sessionState, Exception e) {
-        if (session.isOpened()) {
-            SessionAccount sessionAccount = new FacebookSession(session);
-            callback.onLoginSuccess(sessionAccount);
-        } else {
-            if (e != null) {
-                callback.onLoginError(e.getMessage());
-            }
-        }
+    public void onSuccess(LoginResult loginResult) {
+        loginCallback.onLoginSuccess(new FacebookSession(loginResult.getAccessToken()));
+    }
+
+    @Override
+    public void onCancel() {
+        loginCallback.onLoginError("Cancel");
+    }
+
+    @Override
+    public void onError(FacebookException e) {
+        loginCallback.onLoginError("Error: "+e.getMessage());
     }
 }

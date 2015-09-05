@@ -27,7 +27,8 @@ public class SessionManager {
      */
     public SessionAccount getCurrentSession() {
 
-        String providerName = preferences.getString(SESSION_PROVIDER, null);
+        String providerName =
+                preferences.getString(SESSION_PROVIDER, SessionProvider.FACEBOOK.toString());
         SessionProvider sessionProvider = SessionProvider.valueOf(providerName);
 
         if (sessionProvider == SessionProvider.FACEBOOK) {
@@ -47,6 +48,18 @@ public class SessionManager {
 
         SharedPreferences.Editor editor =  preferences.edit();
         editor.putString(SESSION_PROVIDER, provider.toString());
+
+        return editor.commit();
+    }
+
+    /**
+     * Clean all data of Sessions
+     */
+    public boolean closeSession() {
+        getCurrentSession().close();
+
+        SharedPreferences.Editor editor =  preferences.edit();
+        editor.remove(SESSION_PROVIDER);
 
         return editor.commit();
     }

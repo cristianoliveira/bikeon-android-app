@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cc.bikeon.app.internal.decoder;
+package cc.bikeon.app.internal.decoders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 import cc.bikeon.app.domain.directions.Coordinate;
 
 /**
- * Responsible for decode Polyline
+ * Responsible for decode Polyline point from Google Directions API
  *
  * This algorithm is the same used on:
  * https://github.com/googlemaps/android-maps-utils

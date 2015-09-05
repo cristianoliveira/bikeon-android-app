@@ -1,5 +1,7 @@
 package cc.bikeon.app.presenter;
 
+import android.app.Activity;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,12 +11,15 @@ import org.robolectric.annotation.Config;
 
 import cc.bikeon.app.R;
 import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.account.LoginStrategy;
+import cc.bikeon.app.account.LoginStrategyChooser;
 import cc.bikeon.app.account.session.SessionAccount;
 import cc.bikeon.app.account.session.SessionManager;
 import cc.bikeon.app.account.session.SessionProvider;
 import cc.bikeon.app.views.LoginView;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -37,10 +42,16 @@ public class LoginPresenterTest {
     @Test
     public void itShouldRequestLoginUsingItSelfAsCallback() {
         // given
+        Activity currentActivity = mock(Activity.class);
+        LoginStrategyChooser loginStrategyChooser = mock(LoginStrategyChooser.class);
+        LoginStrategy loginStrategy = LoginStrategy.BIKEON;
         LoginRequester loginRequester = mock(LoginRequester.class);
 
+        given(loginStrategyChooser.get(loginStrategy, currentActivity))
+                .willReturn(loginRequester);
+
         // when
-        loginPresenter.requestLogin(loginRequester);
+        loginPresenter.requestLogin(loginStrategyChooser, loginStrategy, currentActivity);
 
         // then
         verify(loginRequester).doLogin(loginPresenter);

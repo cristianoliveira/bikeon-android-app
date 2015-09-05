@@ -8,7 +8,7 @@ import cc.bikeon.app.domain.directions.Coordinate;
 import cc.bikeon.app.domain.directions.Leg;
 import cc.bikeon.app.domain.directions.Route;
 import cc.bikeon.app.domain.directions.Step;
-import cc.bikeon.app.internal.decoder.PolylinePointDecoder;
+import cc.bikeon.app.internal.decoders.PolylinePointDecoder;
 
 /**
  * Responsible for extract formatted data from a Direction

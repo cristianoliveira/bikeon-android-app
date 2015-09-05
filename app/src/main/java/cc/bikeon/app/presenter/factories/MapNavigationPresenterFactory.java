@@ -1,10 +1,8 @@
 package cc.bikeon.app.presenter.factories;
 
-import cc.bikeon.app.BikeOnApplication;
-import cc.bikeon.app.R;
 import cc.bikeon.app.presenter.MapNavigationPresenter;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
-import cc.bikeon.app.services.rest.directions.google.GoogleDirectionRequester;
+import cc.bikeon.app.services.rest.directions.DirectionRequesterFactory;
 import cc.bikeon.app.views.MapNavigationView;
 
 /**
@@ -22,10 +20,7 @@ public class MapNavigationPresenterFactory {
      */
     public static MapNavigationPresenter createFor(MapNavigationView view) {
 
-        DirectionRequester requester =
-                new GoogleDirectionRequester(
-                        BikeOnApplication.getStringResource(R.string.google_maps_key)
-                );
+        DirectionRequester requester = DirectionRequesterFactory.create();
 
         MapNavigationPresenter presenter = new MapNavigationPresenter(view, requester);
 

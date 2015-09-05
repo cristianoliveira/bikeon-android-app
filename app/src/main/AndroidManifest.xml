@@ -23,9 +23,11 @@
         android:icon="@drawable/bikeon_ic"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -46,11 +48,13 @@
             android:name=".ui.login.LoginActivity"
             android:label="@string/app_name" >
         </activity>
-        <!-- <activity -->
-        <!-- android:name="com.facebook.FacebookActivity" -->
-        <!-- android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+
+        <activity android:name="com.facebook.FacebookActivity"
+                  android:configChanges=
+                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:label="@string/app_name" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name" >

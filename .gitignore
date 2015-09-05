@@ -29,3 +29,5 @@ proguard/
 
 **/secrets.xml
 java_pid1546.hprof
+
+*.orig

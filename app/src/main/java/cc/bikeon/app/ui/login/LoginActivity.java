@@ -4,18 +4,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
+import com.facebook.CallbackManager;
+import com.facebook.login.widget.LoginButton;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cc.bikeon.app.R;
-import cc.bikeon.app.account.requesters.FacebookLoginRequester;
-import cc.bikeon.app.account.callbacks.FacebookSessionCallback;
-import cc.bikeon.app.account.requesters.BikeOnLoginRequester;
-import cc.bikeon.app.account.LoginRequester;
+import cc.bikeon.app.account.LoginStrategy;
+import cc.bikeon.app.account.LoginStrategyChooser;
 import cc.bikeon.app.presenter.LoginPresenter;
 import cc.bikeon.app.presenter.factories.LoginPresenterFactory;
 import cc.bikeon.app.ui.main.MainActivity;
@@ -29,14 +31,24 @@ public class LoginActivity extends Activity
     @InjectView(R.id.btnFacebookLogin)
     ImageButton btnFacebookLogin;
 
-    private LoginPresenter presenter;
+    @VisibleForTesting
+    LoginPresenter presenter;
+
+    private LoginStrategyChooser loginStrategyChooser;
+
+    private CallbackManager mCallbackManager;
+    private LoginButton mFbLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         ButterKnife.inject(this);
+
         presenter = LoginPresenterFactory.createFor(this, getApplicationContext());
+
+        loginStrategyChooser = presenter.getStrategyChooser();
 
         btnFacebookLogin.setOnClickListener(this);
     }
@@ -70,24 +82,25 @@ public class LoginActivity extends Activity
         finish();
     }
 
-    public Activity getActivity() {
-        return this;
-    }
-
     @Override
     public void onClick(View view) {
-        LoginRequester loginRequester = null;
 
+        LoginStrategy loginStrategy;
         switch (view.getId()) {
             case R.id.btnFacebookLogin:
-                loginRequester =
-                        new FacebookLoginRequester(new FacebookSessionCallback());
+                loginStrategy = LoginStrategy.FACEBOOK;
+                break;
+            default:
+                loginStrategy = LoginStrategy.BIKEON;
                 break;
         }
 
-        //TODO remove after tests
-        loginRequester = new BikeOnLoginRequester();
+        presenter.requestLogin(new LoginStrategyChooser(), loginStrategy, this);
+    }
 
-        presenter.requestLogin(loginRequester);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        presenter.onResult(requestCode, resultCode, data);
     }
 }

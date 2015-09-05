@@ -26,4 +26,5 @@
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:background="@color/bikeon_blue"/>
+
 </RelativeLayout>
