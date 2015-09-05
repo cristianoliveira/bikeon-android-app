@@ -31,3 +31,4 @@ proguard/
 java_pid1546.hprof
 
 *.orig
+.DS_Store
