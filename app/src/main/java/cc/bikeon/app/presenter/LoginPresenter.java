@@ -59,6 +59,11 @@ public class LoginPresenter implements LoginCallback {
     }
 
     @Override
+    public void onCancel() {
+
+    }
+
+    @Override
     public void onLoginError(String messageError) {
         view.showError(R.string.message_error_login);
     }

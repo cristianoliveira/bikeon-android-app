@@ -8,7 +8,9 @@ import cc.bikeon.app.account.session.SessionAccount;
  */
 public interface LoginCallback {
 
-    public void onLoginSuccess(SessionAccount sessionAccount);
+    void onLoginSuccess(SessionAccount sessionAccount);
 
-    public void onLoginError(String messageError);
+    void onCancel();
+
+    void onLoginError(String messageError);
 }

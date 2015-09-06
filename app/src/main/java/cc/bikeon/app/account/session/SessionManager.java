@@ -63,4 +63,17 @@ public class SessionManager {
 
         return editor.commit();
     }
+
+    /**
+     * Responsible for create new instance of {@link SessionManager}
+     */
+    public static class Factory {
+        public static SessionManager create(Context context) {
+            return new SessionManager(
+                    context.getSharedPreferences(
+                            SessionManager.SHARED_SESSION_PREFERENCE,
+                            context.MODE_PRIVATE)
+            );
+        }
+    }
 }
