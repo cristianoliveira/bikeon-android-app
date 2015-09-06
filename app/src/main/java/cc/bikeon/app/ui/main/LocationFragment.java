@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.VisibleForTesting;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,12 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
     @InjectView(R.id.txtWeatherTemperatureMax)
     TextView txtWeatherTemperatureMax;
 
-    private WeatherPresenter weatherPresenter;
-    private LocationPresenter locationPresenter;
+    @VisibleForTesting
+    WeatherPresenter weatherPresenter;
+
+    @VisibleForTesting
+    LocationPresenter locationPresenter;
+
     private Validator textViewValidator;
     private DestinationListener onLocationListener;
 
@@ -79,17 +84,13 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
         locationPresenter = LocationPresenterFactory.createFor(this);
         weatherPresenter = WeatherPresenterFactory.createFor(this);
 
-        btnWhereUGo.setOnClickListener(this);
-
         textViewValidator =
                 new ValidatorBuilder<TextView>()
                               .addValidation(new EmptyTextViewValidation("Campo deve ser informado."))
                               .build();
 
-
-
-        // TODO remove after tests
-        etxWhereYouGo.setText("Porto Alegre");
+        btnWhereUGo.setVisibility(View.INVISIBLE);
+        btnWhereUGo.setOnClickListener(this);
 
         return view;
     }
@@ -103,11 +104,12 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
     @Override
     public void onClick(View view) {
         String error = textViewValidator.validate(etxWhereYouGo);
-
         if (error == null) {
             String destination = etxWhereYouGo.getText().toString();
             etxWhereYouGo.clearFocus();
-            onLocationListener.onDestinationSelect(destination);
+
+            String origin = locationPresenter.getOrigin();
+            onLocationListener.onDestinationSelect(origin, destination);
         } else {
             etxWhereYouGo.setError(error);
         }
@@ -119,6 +121,7 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
 
     @Override
     public void setEnableRequestDirections(boolean isEnabled) {
+        btnWhereUGo.setVisibility(View.VISIBLE);
         etxWhereYouGo.setEnabled(isEnabled);
     }
 
@@ -148,6 +151,7 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
 
     @Override
     public void onUpdateLocation(Location location) {
+        btnWhereUGo.setVisibility(View.VISIBLE);
         weatherPresenter.requestWeatherData(location);
     }
 
@@ -199,6 +203,6 @@ public class LocationFragment extends Fragment implements WeatherView, LocationV
      * Public interface to implement Destination Listener
      */
     public interface DestinationListener {
-        void onDestinationSelect(String destionation);
+        void onDestinationSelect(String origin, String destionation);
     }
 }

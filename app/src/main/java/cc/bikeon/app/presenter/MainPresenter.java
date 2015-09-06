@@ -2,7 +2,6 @@ package cc.bikeon.app.presenter;
 
 import android.content.Context;
 
-import cc.bikeon.app.account.session.SessionAccount;
 import cc.bikeon.app.account.session.SessionManager;
 import cc.bikeon.app.ui.main.LocationFragment;
 import cc.bikeon.app.ui.navigation.MapNavigationFragment;
@@ -31,12 +30,12 @@ public class MainPresenter {
         return locationFragment;
     }
 
-    public MapNavigationFragment getMapFragment(String destination) {
+    public MapNavigationFragment getMapFragment(String origin, String destination) {
         if (mapFragment == null) {
             mapFragment = new MapNavigationFragment();
         }
 
-        mapFragment.setDestination(destination);
+        mapFragment.setDestination(origin, destination);
 
         return mapFragment;
     }
@@ -47,13 +46,7 @@ public class MainPresenter {
      */
     public void doLogout(Context context) {
 
-        SessionManager sessionManager =
-                new SessionManager(
-                        context.getSharedPreferences(
-                                SessionManager.SHARED_SESSION_PREFERENCE,
-                                context.MODE_PRIVATE)
-                );
-
+        SessionManager sessionManager = SessionManager.Factory.create(context);
         sessionManager.closeSession();
 
         view.onLogout();

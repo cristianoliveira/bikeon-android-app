@@ -5,6 +5,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 
 import cc.bikeon.app.R;
+import cc.bikeon.app.internal.formatters.DirectionFormatter;
 import cc.bikeon.app.services.local.location.LocationTracker;
 import cc.bikeon.app.views.LocationView;
 
@@ -62,5 +63,14 @@ public class LocationPresenter implements LocationListener {
             return locationTracker.getLastKnowLocation();
         }
         return currentLocation;
+    }
+
+    /**
+     * Get origin based on current location
+     * @return String that represent the origin point.
+     */
+    public String getOrigin() {
+        String origin = DirectionFormatter.format(getCurrentLocation());
+        return origin;
     }
 }

@@ -1,6 +1,7 @@
 package cc.bikeon.app.ui.main;
 
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDestinationSelect(String destination) {
-        replaceFragmentWith(presenter.getMapFragment(destination));
+    public void onDestinationSelect(String origin ,String destination) {
+        replaceFragmentWith(presenter.getMapFragment(origin, destination));
     }
 }

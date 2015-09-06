@@ -2,6 +2,7 @@ package cc.bikeon.app.ui.navigation;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import butterknife.ButterKnife;
 import cc.bikeon.app.R;
@@ -100,8 +103,8 @@ public class MapNavigationFragment extends Fragment
     }
 
     @Override
-    public void setDestination(String destination) {
-        presenter.setDirections("Canoas", destination);
+    public void setDestination(String origin, String destination) {
+        presenter.setDirections(origin, destination);
     }
 
     @Override

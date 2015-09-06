@@ -1,4 +1,4 @@
-package cc.bikeon.app.services.rest.directions;
+package cc.bikeon.app.internal.formatters;
 
 import android.location.Location;
 

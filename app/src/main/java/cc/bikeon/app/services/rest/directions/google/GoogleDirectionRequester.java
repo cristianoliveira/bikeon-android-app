@@ -10,7 +10,7 @@ import cc.bikeon.app.internal.extractors.DirectionsExtractor;
 import cc.bikeon.app.services.rest.RestServiceFactory;
 import cc.bikeon.app.services.rest.directions.DirectionCallback;
 import cc.bikeon.app.services.rest.directions.DirectionConstants;
-import cc.bikeon.app.services.rest.directions.DirectionFormatter;
+import cc.bikeon.app.internal.formatters.DirectionFormatter;
 import cc.bikeon.app.services.rest.directions.DirectionRequester;
 import retrofit.Callback;
 import retrofit.RetrofitError;
